@@ -1,7 +1,7 @@
 ---
 title:  "<big><u>IMAP-PART5</u></big><br><br>Microbiome Machine Learning<br><br>"
 subtitle: |
-  | ![](images/placeholder.png)<br>
+  | ![](images/ml.png)<br>
   | Integrated Microbiome Analysis Pipelines<br>( IMAP-PART5 ) <br><br><small>[Latest GitHub-Repo](https://github.com/tmbuza/imap-machine-learning/)</small>
 date: |
   |  Updated on `r Sys.Date()`
