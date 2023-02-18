@@ -108,14 +108,14 @@ body img{
   display: block;
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
+  /* background-color: white; */
 }
 #header img{
   width:100%;
-  /* background-image: url("../images/bkgd1.png"); */
-  background: linear-gradient(to bottom, orange, white);
+  /* background: linear-gradient(to bottom, orange, white); */
   background-size: cover;
   padding: 20px;
+  background-color: none;
 }
 blockquote {
   padding: 10px 20px;
