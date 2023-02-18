@@ -1,0 +1,7 @@
+name: mothur
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - mothur =1.48.0
+  - vsearch =2.15.2

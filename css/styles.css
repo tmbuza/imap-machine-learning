@@ -1,0 +1,141 @@
+body{
+  font-size: 14px;
+  text-align: left;
+}
+#inprogress {
+  color: red;
+  background: white;
+}
+#related-work {
+  color: black;
+  background: white;
+  padding: 20px;
+}
+#related-work h1{
+  color: black;
+}
+.main-container {
+  max-width: 80%;
+  background-color: black;
+  color: white;
+  padding: 3% 3% 3% 3%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#header {
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(to bottom, rgb(74, 163, 2, 1), rgb(74, 163, 2, 1));
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  line-height: 1.5;
+  width: 100%;
+  padding: 5%;
+  text-transform: none;
+  font-weight: bold;
+  background-image: url("../images/bkgd1.png");
+  /* background-image: url("../images/bkgd2.png"); */
+  background-repeat: no-repeat;
+  height: 100%; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  opacity: 1;
+}
+#header .subtitle{
+  font-family: "Anton", sans-serif;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.5;
+  color: #212121;
+} 
+#header .date{
+  font-size: 14px;
+} 
+#header a{
+  color: #0786f3;
+} 
+#header .title small, .subtitle big{
+  font-size: 24px;
+  text-decoration: none;
+  font-family: "Anton", sans-serif;
+} 
+.subtitle small{
+  font-size: 18px;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+} 
+#header h1{
+  font-size: 2.8em;
+  text-transform: capitalize;
+  color: black;
+  font-family: "Anton", sans-serif;
+}
+#header big{
+  color: black;
+  font-family: "Anton", sans-serif;
+} 
+a{
+  color: #0786f3;
+} 
+.author{
+  display: none;
+} 
+.date{
+  /* color: white; */
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+}
+
+
+body h1{
+  color: white;
+  font-size: 2.5em;
+  text-transform: capitalize;
+  font-family: "Anton", sans-serif;
+}
+
+/* ############
+# BODY CSS
+############ */
+
+table tbody tr td {
+  font-size: 14px;
+  text-transform: capitalize;
+}
+body img{
+  width: 95%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+}
+#header img{
+  width:100%;
+  /* background-image: url("../images/bkgd1.png"); */
+  background: linear-gradient(to bottom, orange, white);
+  background-size: cover;
+  padding: 20px;
+}
+blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 16px;
+  border-left: 5px solid #eee;
+}
+
+hr {
+  display: inline-block;
+  text-align: left;
+  margin: 0px;
+  color: #AAAAAA;
+}
+
+/* #######################################*/
+/* #######################################*/
+@media only screen and (max-width: 768px) {
+  .main-container {
+  max-width: 100%;
+  padding: 2% 2% 2% 2%;
+  }
+}
