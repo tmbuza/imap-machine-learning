@@ -1,8 +1,8 @@
 ---
-title:  "<big><u>IMAP-PART{NO}</u></big><br><br>Title Goes Here<br><br>"
+title:  "<big><u>IMAP-PART5</u></big><br><br>Microbiome Machine Learning<br><br>"
 subtitle: |
   | ![](images/placeholder.png)<br>
-  | Integrated Microbiome Analysis Pipelines<br>( IMAP-PART{NO} ) <br><br><small>[Latest GitHub-Repo](https://github.com/tmbuza/{name}/)</small>
+  | Integrated Microbiome Analysis Pipelines<br>( IMAP-PART5 ) <br><br><small>[Latest GitHub-Repo](https://github.com/tmbuza/imap-machine-learning/)</small>
 date: |
   |  Updated on `r Sys.Date()`
 author: Teresia Mrema-Buza
@@ -17,8 +17,8 @@ link-citations: true
 mainfont:
 biblio-style: apalike
 email_address: "tmbuza@complexdatainsights.com"
-github_repo: "https://github.com/tmbuza/{name}"
-related_website: "https://complexdatainsights.com/microbiome-analysis/imap-part{NO}"
+github_repo: "https://github.com/tmbuza/imap-machine-learning"
+related_website: "https://complexdatainsights.com/microbiome-analysis/imap-part5"
 description: |
   This repo provides integrated and highly curated solutions for reproducible research.
 ---
