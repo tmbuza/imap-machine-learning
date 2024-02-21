@@ -2,7 +2,7 @@
 
 ---In Progress---
 
-## :tada:IMAP GitHub Repos
+## IMAP GitHub Repos
 
 | Repo | Description | Status |
 |:-----------------------|----------------------------------|--------------:|
