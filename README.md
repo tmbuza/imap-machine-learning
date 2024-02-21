@@ -2,10 +2,11 @@
 
 ---In Progress---
 
+# Related Works
 ## IMAP GitHub Repos
 
 | Repo | Description | Status |
-|:----------------|---------------------|--------------:|
+|:----------------|:---------------------|--------------:|
 | [IMAP-OVERVIEW](https://github.com/datainsights/imap-project-overview/) | IMAP project overview | [In-progress](https://datainsights.github.io/imap-project-overview/) |
 | [IMAP-PART 01](https://github.com/tmbuza/imap-essential-software/) | Software requirement for microbiome data analysis with Snakemake workflows | [In-progress](https://tmbuza.github.io/imap-essential-software/) |
 | [IMAP-PART 02](https://github.com/tmbuza/imap-sample-metadata/) | Downloading and exploring microbiome sample metadata from SRA Database | [In-progress](https://tmbuza.github.io/imap-sample-metadata/) |
@@ -20,16 +21,14 @@
 
 
 ## Session information
-For a detailed overview of the tools and versions suitable for this guide, I encourage you to explore the session information saved in the accompanying text file at [Session Information](session_info.txt)
 
+For a detailed overview of the tools and versions suitable for this guide, explore the [session information](session_info.txt).
 
 ## Citation
-  > Please consider citing the [iMAP article](https://rdcu.be/b5iVj) (see below) if you find any part of the IMAP practical user guides helpful in your microbiome data analysis.
+> Please consider citing the [iMAP article](https://rdcu.be/b5iVj) if you find any part of the iMAP practical user guides helpful in your microbiome data analysis.
 
-  **APA-like citation style**
-
-  Buza, T. M., Tonui, T., Stomeo, F., Tiambo, C., Katani, R., Schilling, M., … Kapur, V. (2019). iMAP: An integrated bioinformatics and visualization pipeline for microbiome data analysis. BMC Bioinformatics, 20. https://doi.org/10.1186/S12859-019-2965-4
+Buza, T. M., Tonui, T., Stomeo, F., Tiambo, C., Katani, R., Schilling, M., … Kapur, V. (2019). iMAP: An integrated bioinformatics and visualization pipeline for microbiome data analysis. BMC Bioinformatics, 20. https://doi.org/10.1186/S12859-019-2965-4
 
 ## :tada: Raise awareness
-  > Please help increase awareness of freely available tools for microbiome data analysis.
-  Status of [iMAP manuscript dimensions](https://badge.dimensions.ai/details/id/pub.1117740326)
+> Please help increase awareness of freely available tools for microbiome data analysis.
+Status of [iMAP manuscript dimensions](https://badge.dimensions.ai/details/id/pub.1117740326)
