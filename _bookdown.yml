@@ -1,0 +1,22 @@
+book_filename: "read-qc"
+new_session: true
+language:
+  label: "en"
+  ui:
+  chapter_name: Chapter
+before_chapter_script: #["_common.R"]
+delete_merged_file: true
+
+output_dir: docs
+
+rmd_files:
+  html:
+    - index.Rmd
+    - 00-preface.Rmd
+    - 99-appendix.Rmd
+    - 999-references.Rmd
+    - 9999-footer.Rmd
+  
+
+
+                

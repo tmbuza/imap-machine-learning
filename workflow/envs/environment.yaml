@@ -1,0 +1,5 @@
+channels:
+  - conda-forge
+  - R
+dependencies:
+  - r-tidyverse =1.3.2

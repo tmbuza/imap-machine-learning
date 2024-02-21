@@ -1,0 +1,8 @@
+name: wget
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - libidn2 =2.3.3
+  - libunistring =0.9.10
+  - wget =1.20.3

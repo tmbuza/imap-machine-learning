@@ -1,0 +1,31 @@
+bookdown::bs4_book:
+  css: style.css
+  split_by: chapter
+  encoding: UTF-8
+  template: bs4_template.html
+  favicon: "favicon.ico"
+  footnotes_inline: false
+  split_bib: true
+  repo:
+    base: https://github.com/tmbuza/imap-machine-learning
+    branch: gh-pages
+    icon: "fas fa-air-freshener"
+  theme:
+    fg: "black"
+    bg: "#FFFEFA"
+    primary: "#277DB0"
+    secondary: "#277DB0"
+    success: "#277DB0"
+    info: "#277DB0"
+    warning: "#277DB0"
+    danger: "#277DB0"
+    base_font:
+      google: Sen
+    heading_font:
+      google:
+        family: Bitter
+        wght: 300
+    code_font:
+      google:
+        family: DM Mono
+        local: false

@@ -1,0 +1,64 @@
+from snakemake.utils import min_version
+
+min_version("6.10.0")
+
+# Configuration file containing all user-specified settings
+configfile: "config/config.yml"
+
+# # Debug information
+# print("Configuration:")
+# print(config)
+
+rule FINAL_TARGET:
+	input: 
+		"docs/index.html",
+
+# Rule to generate the rule graph and create the dags folder if it doesn't exist
+rule generate_rulegraph:
+    output:
+        directory("dags"),
+        "dags/rulegraph.png",
+        "dags/rulegraph.svg",
+
+    shell:
+        """
+        snakemake --unlock;
+        mkdir -p {output[0]};
+        snakemake --rulegraph | dot -Tpng > {output[1]};
+        snakemake --rulegraph | dot -Tsvg > {output[2]};
+        """
+
+# Rule to generate a directory tree
+rule project_tree:
+    output:
+        directory("output"),
+        "reports/project_tree.txt"
+    shell:
+        """
+        snakemake --unlock \
+        && mkdir -p {output[0]} \
+        && echo "Project Tree" > {output[1]} \
+        && tree -L 2 . >> {output[1]}
+        """
+
+# Rule to generate SnakeMake report
+rule snakemake_report:
+    output:
+        "reports/snakemake_report.html"
+    shell:
+        "snakemake --keep-going --use-conda --report {output[0]}"
+
+
+rule render_bs4_book:
+	input:
+		"index.Rmd",
+		"reports/project_tree.txt",
+		"reports/snakemake_report.html",
+		"dags/rulegraph.svg",
+
+	output:
+		"docs/index.html"
+	shell:
+		"R -e 'bookdown::render_book(input = \"index.Rmd\", output_format = \"bookdown::bs4_book\", output_dir = \"docs\")'"
+
+
