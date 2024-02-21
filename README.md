@@ -32,4 +32,4 @@ For a detailed overview of the tools and versions suitable for this guide, I enc
 
 ## :tada: Raise awareness
   > Please help increase awareness of freely available tools for microbiome data analysis.
-  Current [iMAP manuscript dimensions](https://badge.dimensions.ai/details/id/pub.1117740326)
+  Status of [iMAP manuscript dimensions](https://badge.dimensions.ai/details/id/pub.1117740326)
