@@ -1,0 +1,13 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.Rapp.history
+
+.snakemake
+
+.DS_Store
+
+data/*
+images/*
+sample_gps_files/*
