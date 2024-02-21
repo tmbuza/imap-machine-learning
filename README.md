@@ -31,4 +31,4 @@ Buza, T. M., Tonui, T., Stomeo, F., Tiambo, C., Katani, R., Schilling, M., … K
 
 ## :tada: Raise awareness
 > Please help increase awareness of freely available tools for microbiome data analysis.
-Status of [iMAP manuscript dimensions](https://badge.dimensions.ai/details/id/pub.1117740326)
+See [Dimensions of the iMAP article](https://badge.dimensions.ai/details/id/pub.1117740326)
