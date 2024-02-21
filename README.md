@@ -5,7 +5,7 @@
 ## IMAP GitHub Repos
 
 | Repo | Description | Status |
-|:----------------|--------------------------|--------------:|
+|:----------------|---------------------|--------------:|
 | [IMAP-OVERVIEW](https://github.com/datainsights/imap-project-overview/) | IMAP project overview | [In-progress](https://datainsights.github.io/imap-project-overview/) |
 | [IMAP-PART 01](https://github.com/tmbuza/imap-essential-software/) | Software requirement for microbiome data analysis with Snakemake workflows | [In-progress](https://tmbuza.github.io/imap-essential-software/) |
 | [IMAP-PART 02](https://github.com/tmbuza/imap-sample-metadata/) | Downloading and exploring microbiome sample metadata from SRA Database | [In-progress](https://tmbuza.github.io/imap-sample-metadata/) |
