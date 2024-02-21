@@ -30,6 +30,6 @@ For a detailed overview of the tools and versions suitable for this guide, I enc
 
   Buza, T. M., Tonui, T., Stomeo, F., Tiambo, C., Katani, R., Schilling, M., … Kapur, V. (2019). iMAP: An integrated bioinformatics and visualization pipeline for microbiome data analysis. BMC Bioinformatics, 20. https://doi.org/10.1186/S12859-019-2965-4
 
-## Raise awareness
+## :tada: Raise awareness
   > Please help increase awareness of freely available tools for microbiome data analysis.
   Current [iMAP manuscript dimensions](https://badge.dimensions.ai/details/id/pub.1117740326)
