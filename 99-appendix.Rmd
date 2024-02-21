@@ -27,7 +27,7 @@
 
 Reproducibility relies on the ability to precisely recreate the working environment, and session information serves as a vital reference to achieve this consistency. Here we record details about the R environment, package versions, and system settings of the computing environment at the time of analysis. 
 
-```{r sessioninfo}
+```{r r_sessioninfo}
 library(knitr)
 library(sessioninfo)
 
@@ -40,9 +40,10 @@ if (!dir.exists("resources")) {
 }
 
 # Save the session information to a text file without line numbers
-cat(info, file = "session_info.txt", sep = "\n")
+cat(info, file = "r_session_info.txt", sep = "\n")
 ```
 
-> For a detailed overview of the tools and versions suitable for this guide, I encourage you to explore the session information saved in the accompanying text file named `session_info.txt`,
+
+
 
 
