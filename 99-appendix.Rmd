@@ -18,7 +18,7 @@
 | [IMAP-SUMMARY](https://github.com/tmbuza/imap-snakemake-workflows/) | Summary of snakemake workflows for microbiome data analysis | [In-progress](https://tmbuza.github.io/imap-snakemake-workflows/) |
 ```
 
-# Read QC Rulegraph
+# Statistical Analysis Rulegraph
 
 ![](dags/rulegraph.svg)
 
