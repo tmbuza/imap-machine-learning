@@ -1,4 +1,4 @@
 ml-getting-started
 imap-github-repos
-read-qc-rulegraph
+statistical-analysis-rulegraph
 session-information

@@ -103,7 +103,7 @@ href="https://tmbuza.github.io/imap-snakemake-workflows/">In-progress</a></td>
 </table>
 </div>
 
-# Read QC Rulegraph
+# Statistical Analysis Rulegraph
 
 ![](dags/rulegraph.svg)
 
