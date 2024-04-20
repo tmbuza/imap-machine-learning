@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>5 Specificity and Sensitivity function | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<meta name="author" content="Teresia Mrema-Buza">
+<meta name="description" content='library(purrr) get_sens_spec &lt;- function(threshold, score, actual, direction){   predicted &lt;- if(direction == "greaterthan") {   score &gt; threshold   } else {    score &lt; threshold   }   tp &lt;-...'>
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="5 Specificity and Sensitivity function | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/specificity-and-sensitivity-function.html">
+<meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<meta property="og:description" content='library(purrr) get_sens_spec &lt;- function(threshold, score, actual, direction){   predicted &lt;- if(direction == "greaterthan") {   score &gt; threshold   } else {    score &lt; threshold   }   tp &lt;-...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5 Specificity and Sensitivity function | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:description" content='library(purrr) get_sens_spec &lt;- function(threshold, score, actual, direction){   predicted &lt;- if(direction == "greaterthan") {   score &gt; threshold   } else {    score &lt; threshold   }   tp &lt;-...'>
+<meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Sen-0.4.9/font.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet">
+<link href="libs/Bitter-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">IMAP-Machine Learning: Predictive Modeling Using Microbiome Data</a></li>
+<li class="book-part">ML COMPONENTS</li>
+<li><a class="" href="key-components-of-microbiome-machine-learning.html"><span class="header-section-number">1</span> Key Components of Microbiome Machine Learning</a></li>
+<li class="book-part">ML FRAMEWORKS</li>
+<li><a class="" href="ml-framework_R.html"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
+<li class="book-part">CASE STUDY</li>
+<li><a class="" href="case-study-applied-machine-learning-for-microbiome-data-analysis.html"><span class="header-section-number">3</span> Case Study: Applied Machine Learning for Microbiome Data Analysis</a></li>
+<li><a class="" href="data-for-machine-learning-analysis.html"><span class="header-section-number">4</span> Data for Machine Learning Analysis</a></li>
+<li class="book-part">PERFORMANCE METRICS</li>
+<li><a class="active" href="specificity-and-sensitivity-function.html"><span class="header-section-number">5</span> Specificity and Sensitivity function</a></li>
+<li class="book-part">USE CASES IDEAS</li>
+<li><a class="" href="case-study-predictive-model-performance-affected-by-information-leakage.html"><span class="header-section-number">6</span> Case Study: Predictive Model Performance Affected by Information Leakage</a></li>
+<li><a class="" href="common-packages-for-machine-learning-in-r.html"><span class="header-section-number">7</span> Common Packages for Machine Learning in R</a></li>
+<li><a class="" href="parallelization-training.html"><span class="header-section-number">8</span> Parallelization training</a></li>
+<li><a class="" href="exploring-model-performance.html"><span class="header-section-number">9</span> Exploring model performance</a></li>
+<li class="book-part">APPENDIX</li>
+<li><a class="" href="imap-github-repos.html"><span class="header-section-number">A</span> IMAP GitHub Repos</a></li>
+<li><a class="" href="machine-learning-rulegraph.html"><span class="header-section-number">B</span> Machine Learning Rulegraph</a></li>
+<li><a class="" href="session-information.html"><span class="header-section-number">C</span> Session Information</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/tmbuza/imap-machine-learning">View book source <i class="fas fa-air-freshener"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="specificity-and-sensitivity-function" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Specificity and Sensitivity function<a class="anchor" aria-label="anchor" href="#specificity-and-sensitivity-function"><i class="fas fa-link"></i></a>
+</h1>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">get_sens_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">threshold</span>, <span class="va">score</span>, <span class="va">actual</span>, <span class="va">direction</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">predicted</span> <span class="op">&lt;-</span> <span class="kw">if</span><span class="op">(</span><span class="va">direction</span> <span class="op">==</span> <span class="st">"greaterthan"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">score</span> <span class="op">&gt;</span> <span class="va">threshold</span> </span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="va">score</span> <span class="op">&lt;</span> <span class="va">threshold</span></span>
+<span>    <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">predicted</span> <span class="op">&amp;</span> <span class="va">actual</span><span class="op">)</span></span>
+<span>  <span class="va">tn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">!</span><span class="va">predicted</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">actual</span><span class="op">)</span></span>
+<span>  <span class="va">fp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">predicted</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">actual</span><span class="op">)</span></span>
+<span>  <span class="va">fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">!</span><span class="va">predicted</span> <span class="op">&amp;</span> <span class="va">actual</span><span class="op">)</span>  </span>
+<span>  </span>
+<span>  <span class="va">specificity</span> <span class="op">&lt;-</span> <span class="va">tn</span> <span class="op">/</span> <span class="op">(</span><span class="va">tn</span> <span class="op">+</span> <span class="va">fp</span><span class="op">)</span></span>
+<span>  <span class="va">sensitivity</span> <span class="op">&lt;-</span> <span class="va">tp</span> <span class="op">/</span> <span class="op">(</span><span class="va">tp</span> <span class="op">+</span> <span class="va">fn</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="st">"specificity"</span> <span class="op">=</span> <span class="va">specificity</span>, <span class="st">"sensitivity"</span> <span class="op">=</span> <span class="va">sensitivity</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">get_roc_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">direction</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="co"># x &lt;- test</span></span>
+<span>  <span class="co"># direction &lt;- "greaterthan"</span></span>
+<span>  </span>
+<span>  <span class="va">thresholds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">score</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfr</a></span><span class="op">(</span>.x<span class="op">=</span><span class="va">thresholds</span>, <span class="op">~</span><span class="fu">get_sens_spec</span><span class="op">(</span><span class="va">.x</span>, <span class="va">x</span><span class="op">$</span><span class="va">score</span>, <span class="va">x</span><span class="op">$</span><span class="va">srn</span>, <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>specificity <span class="op">=</span> <span class="fl">0</span>, sensitivity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div id="significant-genera-with-wilcox.test" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Significant genera with <code>wilcox.test</code><a class="anchor" aria-label="anchor" href="#significant-genera-with-wilcox.test"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">all_genera</span> <span class="op">&lt;-</span> <span class="va">composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="op">-</span><span class="va">taxonomy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>test <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.x<span class="op">=</span><span class="va">data</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/wilcox.test.html">wilcox.test</a></span><span class="op">(</span><span class="va">rel_abund</span><span class="op">~</span><span class="va">hyper</span>, data<span class="op">=</span><span class="va">.x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">tidy</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span>, method<span class="op">=</span><span class="st">"BH"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sig_genera</span> <span class="op">&lt;-</span> <span class="va">all_genera</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">p.value</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">p.adjust</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="va">p.value</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="view-distribution-of-significant-genera" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> View distribution of significant genera<a class="anchor" aria-label="anchor" href="#view-distribution-of-significant-genera"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">sig_genera</span>, by<span class="op">=</span><span class="st">"taxonomy"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rel_abund <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="op">(</span><span class="va">rel_abund</span> <span class="op">+</span> <span class="fl">1</span><span class="op">/</span><span class="fl">20000</span><span class="op">)</span>,</span>
+<span>         taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">"(.*)"</span>, <span class="st">"*\\1*"</span><span class="op">)</span>,</span>
+<span>         taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">"\\*(.*)_unclassified\\*"</span>,</span>
+<span>                                <span class="st">"Unclassified&lt;br&gt;*\\1*"</span><span class="op">)</span>,</span>
+<span>         hyper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">hyper</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">T</span>, <span class="cn">F</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">rel_abund</span>, y<span class="op">=</span><span class="va">taxonomy</span>, color<span class="op">=</span><span class="va">hyper</span>, fill<span class="op">=</span><span class="va">hyper</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># geom_vline(xintercept = 100/10530, size=0.5, color="gray") +</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_jitterdodge.html">position_jitterdodge</a></span><span class="op">(</span>dodge.width <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>                                              jitter.width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>              shape<span class="op">=</span><span class="fl">21</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span>fun.data <span class="op">=</span> <span class="va">median_hilow</span>, fun.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>conf.int<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>               geom<span class="op">=</span><span class="st">"pointrange"</span>,</span>
+<span>               position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span>,</span>
+<span>               color<span class="op">=</span><span class="st">"black"</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Hypertension"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Hypertension"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span> <span class="st">"Relative abundance (%)"</span>, y<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02_case_study_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"figures/significant_genera.tiff"</span>, width<span class="op">=</span><span class="fl">6</span>, height<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="significant-pathways" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Significant pathways<a class="anchor" aria-label="anchor" href="#significant-pathways"><i class="fas fa-link"></i></a>
+</h2>
+<p>Compute the significant pathways using <code>wilcox.test</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">all_metabopwy</span> <span class="op">&lt;-</span> <span class="va">metabo_composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="op">-</span><span class="va">metabopwy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>test <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.x<span class="op">=</span><span class="va">data</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/wilcox.test.html">wilcox.test</a></span><span class="op">(</span><span class="va">rel_abund</span><span class="op">~</span><span class="va">hyper</span>, data<span class="op">=</span><span class="va">.x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">tidy</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span>, method<span class="op">=</span><span class="st">"BH"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sig_metabopwy</span> <span class="op">&lt;-</span> <span class="va">all_metabopwy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">p.value</span> <span class="op">&lt;</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># Typically, the best significant p-value is set at 0.05</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">metabopwy</span>, <span class="va">p.value</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="view-distribution-of-significant-metabolic-pathways" class="section level2" number="5.4">
+<h2>
+<span class="header-section-number">5.4</span> View distribution of significant metabolic pathways<a class="anchor" aria-label="anchor" href="#view-distribution-of-significant-metabolic-pathways"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>Compute the significant pathways, then</li>
+<li>P-values or Adjusted P-values (p.adjust) can be used to measure the significance levels.</li>
+<li>View the distribution of the significant pathways.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">metabo_composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">sig_metabopwy</span>, by<span class="op">=</span><span class="st">"metabopwy"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rel_abund <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="op">(</span><span class="va">rel_abund</span> <span class="op">+</span> <span class="fl">1</span><span class="op">/</span><span class="fl">20000</span><span class="op">)</span>,</span>
+<span>         metabopwy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">metabopwy</span>, <span class="st">"(.*)"</span>, <span class="st">"*\\1*"</span><span class="op">)</span>,</span>
+<span>         metabopwy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">metabopwy</span>, <span class="st">"\\*(.*)_unclassified\\*"</span>,</span>
+<span>                                <span class="st">"Unclassified&lt;br&gt;*\\1*"</span><span class="op">)</span>,</span>
+<span>         hyper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">hyper</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">T</span>, <span class="cn">F</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">rel_abund</span>, y<span class="op">=</span><span class="va">metabopwy</span>, color<span class="op">=</span><span class="va">hyper</span>, fill<span class="op">=</span><span class="va">hyper</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_jitterdodge.html">position_jitterdodge</a></span><span class="op">(</span>dodge.width <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>                                              jitter.width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>              shape<span class="op">=</span><span class="fl">21</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span>fun.data <span class="op">=</span> <span class="va">median_hilow</span>, fun.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>conf.int<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>               geom<span class="op">=</span><span class="st">"pointrange"</span>,</span>
+<span>               position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span>,</span>
+<span>               color<span class="op">=</span><span class="st">"black"</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Hypertension"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Hypertension"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span> <span class="st">"Relative abundance (%)"</span>, y<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02_case_study_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"figures/significant_genera.tiff"</span>, width<span class="op">=</span><span class="fl">6</span>, height<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p>Here we filter the metabolic pathways at a lesser stringent <code>p.values</code> (p &lt; 0.25) for demo purposes.</p>
+</blockquote>
+</div>
+<div id="roc-curve-receiver-operating-characteristic-curve" class="section level2" number="5.5">
+<h2>
+<span class="header-section-number">5.5</span> ROC curve: Receiver Operating Characteristic curve<a class="anchor" aria-label="anchor" href="#roc-curve-receiver-operating-characteristic-curve"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>Shows the performance of a classification model at all classification thresholds.</li>
+<li>Plots <strong>True Positive Rate (TPR = Sensitivity)</strong> and <strong>False Positive Rate (FPR = 1 - Specificity)</strong> at all classification thresholds.</li>
+</ul>
+</div>
+<div id="auc-area-under-the-roc-curve" class="section level2" number="5.6">
+<h2>
+<span class="header-section-number">5.6</span> AUC: Area Under the ROC Curve<a class="anchor" aria-label="anchor" href="#auc-area-under-the-roc-curve"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>It measures the entire two-dimensional area underneath the entire ROC curve.</li>
+<li>In calculus it can be represented as (0,0) to (1,1).</li>
+<li>AUC provides an aggregate measure of performance across all possible classification thresholds.</li>
+</ul>
+<p>AUC is desirable for the following two reasons:</p>
+<ul>
+<li>AUC is <strong>scale-invariant</strong>. It measures how well predictions are ranked, rather than their absolute values.</li>
+<li>AUC is <strong>classification-threshold-invariant</strong>. It measures the quality of the model’s predictions irrespective of what classification threshold is chosen</li>
+</ul>
+<p>[]</p>
+</div>
+<div id="load-functions-and-data-objects" class="section level2" number="5.7">
+<h2>
+<span class="header-section-number">5.7</span> Load functions and data objects<a class="anchor" aria-label="anchor" href="#load-functions-and-data-objects"><i class="fas fa-link"></i></a>
+</h2>
+<p>Functions for computing:</p>
+<ul>
+<li>Sensitivity</li>
+<li>Specificity</li>
+<li>ROC</li>
+</ul>
+<p>Data objects for the ROC curve
+- composite
+- metabo_composite</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">get_sens_spec</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">threshold</span>, <span class="va">score</span>, <span class="va">actual</span>, <span class="va">direction</span><span class="op">)</span><span class="op">{</span></span>
+<span></span>
+<span>  <span class="va">predicted</span> <span class="op">&lt;-</span> <span class="kw">if</span><span class="op">(</span><span class="va">direction</span> <span class="op">==</span> <span class="st">"greaterthan"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">score</span> <span class="op">&gt;</span> <span class="va">threshold</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="va">score</span> <span class="op">&lt;</span> <span class="va">threshold</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">predicted</span> <span class="op">&amp;</span> <span class="va">actual</span><span class="op">)</span></span>
+<span>  <span class="va">tn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">!</span><span class="va">predicted</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">actual</span><span class="op">)</span></span>
+<span>  <span class="va">fp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">predicted</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">actual</span><span class="op">)</span></span>
+<span>  <span class="va">fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">!</span><span class="va">predicted</span> <span class="op">&amp;</span> <span class="va">actual</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">specificity</span> <span class="op">&lt;-</span> <span class="va">tn</span> <span class="op">/</span> <span class="op">(</span><span class="va">tn</span> <span class="op">+</span> <span class="va">fp</span><span class="op">)</span></span>
+<span>  <span class="va">sensitivity</span> <span class="op">&lt;-</span> <span class="va">tp</span> <span class="op">/</span> <span class="op">(</span><span class="va">tp</span> <span class="op">+</span> <span class="va">fn</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="st">"specificity"</span> <span class="op">=</span> <span class="va">specificity</span>, <span class="st">"sensitivity"</span> <span class="op">=</span> <span class="va">sensitivity</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">get_roc_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">direction</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">thresholds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">score</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfr</a></span><span class="op">(</span>.x<span class="op">=</span><span class="va">thresholds</span>, <span class="op">~</span><span class="fu">get_sens_spec</span><span class="op">(</span><span class="va">.x</span>, <span class="va">x</span><span class="op">$</span><span class="va">score</span>, <span class="va">x</span><span class="op">$</span><span class="va">hyper</span>, <span class="va">direction</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>specificity <span class="op">=</span> <span class="fl">0</span>, sensitivity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/composite_object.rda"</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Loading objects:
+##   otutable
+##   metabolites
+##   taxonomy
+##   metadata
+##   composite
+##   metabo_composite</code></pre>
+</div>
+<div id="prepare-roc-data" class="section level2" number="5.8">
+<h2>
+<span class="header-section-number">5.8</span> Prepare ROC data<a class="anchor" aria-label="anchor" href="#prepare-roc-data"><i class="fas fa-link"></i></a>
+</h2>
+<!-- - Use map2(.x, .y, .f, ...) from purrr package -->
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span> <span class="co"># for nest() &amp; unnest()</span></span>
+<span></span>
+<span><span class="va">roc_data</span> <span class="op">&lt;-</span> <span class="va">composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="va">tolower</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">sig_genera</span>, by<span class="op">=</span><span class="st">"taxonomy"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">taxonomy</span>, <span class="va">rel_abund</span>, <span class="va">hyper</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from<span class="op">=</span><span class="va">taxonomy</span>, values_from<span class="op">=</span><span class="va">rel_abund</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols<span class="op">=</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">hyper</span><span class="op">)</span>, names_to<span class="op">=</span><span class="st">"feature"</span>, values_to<span class="op">=</span><span class="st">"score"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="op">-</span><span class="va">feature</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">feature</span> <span class="op">==</span> <span class="st">"Ruminiclostridium"</span>, <span class="st">"lessthan"</span>,<span class="st">"greaterthan"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>roc_data <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">data</span>, .y<span class="op">=</span><span class="va">direction</span>, <span class="op">~</span> <span class="fu">get_roc_data</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">roc_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">feature</span>, <span class="va">specificity</span>, <span class="va">sensitivity</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot ROC data</span></span>
+<span><span class="va">roc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">1</span><span class="op">-</span><span class="va">specificity</span>, y<span class="op">=</span><span class="va">sensitivity</span>, color <span class="op">=</span> <span class="va">feature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, color<span class="op">=</span><span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"False Positive Rate"</span>, y <span class="op">=</span> <span class="st">"True Positive Rate"</span>, color <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02_case_study_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"figures/roc_figure.tiff"</span>, width<span class="op">=</span><span class="fl">6</span>, height<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p>Note: We have separate lines for each biomarker for the feature shown on the legend!</p>
+</blockquote>
+</div>
+<div id="metabolic-pathway-data" class="section level2" number="5.9">
+<h2>
+<span class="header-section-number">5.9</span> Metabolic pathway data<a class="anchor" aria-label="anchor" href="#metabolic-pathway-data"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span> <span class="co"># for nest() &amp; unnest()</span></span>
+<span></span>
+<span><span class="va">metabo_roc_data</span> <span class="op">&lt;-</span> <span class="va">metabo_composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="va">tolower</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">sig_metabopwy</span>, by<span class="op">=</span><span class="st">"metabopwy"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">metabopwy</span>, <span class="va">rel_abund</span>, <span class="va">hyper</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from<span class="op">=</span><span class="va">metabopwy</span>, values_from<span class="op">=</span><span class="va">rel_abund</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols<span class="op">=</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">hyper</span><span class="op">)</span>, names_to<span class="op">=</span><span class="st">"feature"</span>, values_to<span class="op">=</span><span class="st">"score"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="op">-</span><span class="va">feature</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">feature</span> <span class="op">==</span> <span class="st">"BCAA_transport"</span>, <span class="st">"lessthan"</span>,<span class="st">"greaterthan"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>roc_data <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">data</span>, .y<span class="op">=</span><span class="va">direction</span>, <span class="op">~</span> <span class="fu">get_roc_data</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">roc_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">feature</span>, <span class="va">specificity</span>, <span class="va">sensitivity</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">metabo_roc_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">1</span><span class="op">-</span><span class="va">specificity</span>, y<span class="op">=</span><span class="va">sensitivity</span>, color <span class="op">=</span> <span class="va">feature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, color<span class="op">=</span><span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"False Positive Rate"</span>, y <span class="op">=</span> <span class="st">"True Positive Rate"</span>, color <span class="op">=</span> <span class="st">"Feature"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02_case_study_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"figures/roc_figure.tiff"</span>, width<span class="op">=</span><span class="fl">6</span>, height<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p>Note: We have separate lines for each biomarker for the feature shown on the legend!
+More data can be added to get a better improved classification.</p>
+</blockquote>
+</div>
+</div>
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="data-for-machine-learning-analysis.html"><span class="header-section-number">4</span> Data for Machine Learning Analysis</a></div>
+<div class="next"><a href="case-study-predictive-model-performance-affected-by-information-leakage.html"><span class="header-section-number">6</span> Case Study: Predictive Model Performance Affected by Information Leakage</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#specificity-and-sensitivity-function"><span class="header-section-number">5</span> Specificity and Sensitivity function</a></li>
+<li><a class="nav-link" href="#significant-genera-with-wilcox.test"><span class="header-section-number">5.1</span> Significant genera with wilcox.test</a></li>
+<li><a class="nav-link" href="#view-distribution-of-significant-genera"><span class="header-section-number">5.2</span> View distribution of significant genera</a></li>
+<li><a class="nav-link" href="#significant-pathways"><span class="header-section-number">5.3</span> Significant pathways</a></li>
+<li><a class="nav-link" href="#view-distribution-of-significant-metabolic-pathways"><span class="header-section-number">5.4</span> View distribution of significant metabolic pathways</a></li>
+<li><a class="nav-link" href="#roc-curve-receiver-operating-characteristic-curve"><span class="header-section-number">5.5</span> ROC curve: Receiver Operating Characteristic curve</a></li>
+<li><a class="nav-link" href="#auc-area-under-the-roc-curve"><span class="header-section-number">5.6</span> AUC: Area Under the ROC Curve</a></li>
+<li><a class="nav-link" href="#load-functions-and-data-objects"><span class="header-section-number">5.7</span> Load functions and data objects</a></li>
+<li><a class="nav-link" href="#prepare-roc-data"><span class="header-section-number">5.8</span> Prepare ROC data</a></li>
+<li><a class="nav-link" href="#metabolic-pathway-data"><span class="header-section-number">5.9</span> Metabolic pathway data</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/03_logistic_regression.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/03_logistic_regression.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-21</b>.</p>
+<br>
+</div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

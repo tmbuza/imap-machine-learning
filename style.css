@@ -1,3 +1,7 @@
+  .book-extra {
+    display: none;
+  }
+  
 #quick-glimpse img{
   float: right;
   width: 60%;

@@ -1,4 +1,4 @@
-book_filename: "read-qc"
+book_filename: "machine-learning"
 new_session: true
 language:
   label: "en"
@@ -13,9 +13,12 @@ rmd_files:
   html:
     - index.Rmd
     - 00-preface.Rmd
+    - 01_ml-R_framework.Rmd
+    - 02_case_study.Rmd
+    - 03_logistic_regression.Rmd
     - 99-appendix.Rmd
     - 999-references.Rmd
-    - 9999-footer.Rmd
+    # - 9999-footer.Rmd
   
 
 
