@@ -54,8 +54,8 @@ end
 
 
 ```{=html}
-<div id="htmlwidget-07cfabf9d9f6312d0482" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-07cfabf9d9f6312d0482">{"x":{"diagram":"graph TD\nsubgraph A\nA[Data Preprocessing: Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Features selection]\nC --> D[Feature Balancing]\nD --> |Multi-Model Testing| E[Model Selection]\nE --> F[Parameters Tuning]\nF --> G[Parameter cross Validation]\nend \n\nsubgraph B\nG --> QC{Model Evaluation}\nQC --> H1[ROC: Receiver Operating <br> Characteristic Curve]\nQC --> H2[Precision Recall Curve]\nend\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-354fd138371c799510d1" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-354fd138371c799510d1">{"x":{"diagram":"graph TD\nsubgraph A\nA[Data Preprocessing: Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Features selection]\nC --> D[Feature Balancing]\nD --> |Multi-Model Testing| E[Model Selection]\nE --> F[Parameters Tuning]\nF --> G[Parameter cross Validation]\nend \n\nsubgraph B\nG --> QC{Model Evaluation}\nQC --> H1[ROC: Receiver Operating <br> Characteristic Curve]\nQC --> H2[Precision Recall Curve]\nend\n"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
