@@ -1238,8 +1238,9 @@ server <- function(input, output) {
 ```
 
 
-## Example with Qualitative data using Burro package
-```{block type="infoicon, echo=TRUE"}
+## Example APP with Qualitative data using Burro package
+
+```{block, type="infoicon", echo=TRUE}
 library(burro)
 
 library(NHANES)

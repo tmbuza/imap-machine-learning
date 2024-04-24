@@ -58,7 +58,7 @@ application-process
 creating-shiny-app
 load-regularized-model
 create-user-interfale-object
-example-with-qualitative-data-using-burro-package
+example-app-with-qualitative-data-using-burro-package
 modeling-ideas
 identifying-the-issue
 implications

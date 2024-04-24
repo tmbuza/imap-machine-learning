@@ -45,13 +45,14 @@ source("_common.R")
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 
-# <u>IMAP-Machine Learning</u>: Predictive Modeling Using Microbiome Data {-#machine-learning}
+# <u>IMAP-Part 10</u>: Predictive Modeling Using Microbiome Data {-#machine-learning}
 
 <br>
 <br>
 ![](images/ml.png){width=80%}
 
-## Welcome to Machine Learning for Microbiome Data {-}
+
+## Welcome to IMAP chapter 10: Machine Learning Guide for Microbiome Data {-}
 
 Welcome to the exploration of machine learning's pivotal role in deciphering microbiome data. In the realm of biomedical research, understanding microbial communities and their interactions with host organisms is crucial for unraveling the complexities of health and disease.
 

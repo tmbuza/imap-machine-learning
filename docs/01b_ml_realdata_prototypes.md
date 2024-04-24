@@ -54,8 +54,8 @@ end
 
 
 ```{=html}
-<div id="htmlwidget-41d6d847ed558e017e91" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-41d6d847ed558e017e91">{"x":{"diagram":"graph TD\nsubgraph A\nA[Data Preprocessing: Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Features selection]\nC --> D[Feature Balancing]\nD --> |Multi-Model Testing| E[Model Selection]\nE --> F[Parameters Tuning]\nF --> G[Parameter cross Validation]\nend \n\nsubgraph B\nG --> QC{Model Evaluation}\nQC --> H1[ROC: Receiver Operating <br> Characteristic Curve]\nQC --> H2[Precision Recall Curve]\nend\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-07cfabf9d9f6312d0482" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-07cfabf9d9f6312d0482">{"x":{"diagram":"graph TD\nsubgraph A\nA[Data Preprocessing: Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Features selection]\nC --> D[Feature Balancing]\nD --> |Multi-Model Testing| E[Model Selection]\nE --> F[Parameters Tuning]\nF --> G[Parameter cross Validation]\nend \n\nsubgraph B\nG --> QC{Model Evaluation}\nQC --> H1[ROC: Receiver Operating <br> Characteristic Curve]\nQC --> H2[Precision Recall Curve]\nend\n"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -1129,8 +1129,9 @@ Loading objects:
 
 
 
-## Example with Qualitative data using Burro package
-<div class="infoicon, echo=TRUE">
+## Example APP with Qualitative data using Burro package
+
+<div class="infoicon">
 <p>library(burro)</p>
 <p>library(NHANES)</p>
 <p>data(NHANES)</p>
