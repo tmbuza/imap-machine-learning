@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>4 Exploratory Data Analysis (EDA) | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<meta name="author" content="Teresia Mrema-Buza">
+<meta name="description" content="In machine learning we start by exploring the data to understand the structure, patterns, and relationships within the data. This involves visualizing distributions, correlations, and other...">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="4 Exploratory Data Analysis (EDA) | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/exploratory-data-analysis-eda.html">
+<meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<meta property="og:description" content="In machine learning we start by exploring the data to understand the structure, patterns, and relationships within the data. This involves visualizing distributions, correlations, and other...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4 Exploratory Data Analysis (EDA) | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:description" content="In machine learning we start by exploring the data to understand the structure, patterns, and relationships within the data. This involves visualizing distributions, correlations, and other...">
+<meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Sen-0.4.9/font.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet">
+<link href="libs/Bitter-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="libs/d3-3.3.8/d3.min.js"></script><script src="libs/dagre-0.4.0/dagre-d3.min.js"></script><link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/chromatography-0.1/chromatography.js"></script><script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">IMAP-Machine Learning: Predictive Modeling Using Microbiome Data</a></li>
+<li class="book-part">ML COMPONENTS</li>
+<li><a class="" href="key-components-of-microbiome-machine-learning.html"><span class="header-section-number">1</span> Key Components of Microbiome Machine Learning</a></li>
+<li class="book-part">ML FRAMEWORKS</li>
+<li><a class="" href="ml-framework_R.html"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
+<li class="book-part">ML PROTOTYPES</li>
+<li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
+<li class="book-part">MODEL DEVELOPMENT</li>
+<li><a class="active" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
+<li class="book-part">MODEL TRAINING</li>
+<li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
+<li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
+<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
+<li class="book-part">PERFORMANCE METRICS</li>
+<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li class="book-part">MODEL DEPLOYMENT</li>
+<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li class="book-part">APPENDIX</li>
+<li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
+<li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
+<li><a class="" href="imap-github-repos.html"><span class="header-section-number">C</span> IMAP GitHub Repos</a></li>
+<li><a class="" href="session-information.html"><span class="header-section-number">D</span> Session Information</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/tmbuza/imap-machine-learning">View book source <i class="fas fa-air-freshener"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="exploratory-data-analysis-eda" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Exploratory Data Analysis (EDA)<a class="anchor" aria-label="anchor" href="#exploratory-data-analysis-eda"><i class="fas fa-link"></i></a>
+</h1>
+<p>In machine learning we start by exploring the data to understand the structure, patterns, and relationships within the data. This involves visualizing distributions, correlations, and other relevant statistics to gain insights into the dataset.</p>
+<div id="example-dataset-1-metagenomics-data" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Example dataset 1: Metagenomics data<a class="anchor" aria-label="anchor" href="#example-dataset-1-metagenomics-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>Source: <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJEB13870">PRJEB13870</a>. The project titled “Gut microbiota dysbiosis contributes to the development of hypertension” serves as an ideal resource for metagenomics dataset. This dataset offers valuable insights into the association between gut microbiota composition and hypertension development, a critical area of research within the fields of microbiology and cardiovascular health.</p>
+<p><strong>Study description</strong></p>
+<p>This study employed a multifaceted approach, integrating metagenomics and metabonomics analyses alongside fecal microbiota transplantation (FMT). By investigating the dysbiosis of the gut microbiome, the study elucidated its role as a contributing factor to the pathogenesis of hypertension, primarily through alterations in metabolic effects. Through these methodologies, the research aimed to provide a comprehensive understanding of the intricate relationship between gut microbiota composition and the development of hypertension.</p>
+</div>
+<div id="metagenomics-data-integration" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Metagenomics data integration<a class="anchor" aria-label="anchor" href="#metagenomics-data-integration"><i class="fas fa-link"></i></a>
+</h2>
+<p>This section outlines the steps involved in processing the OTU table, taxonomy data, metabolites, and metadata.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load necessary libraries with suppressed startup messages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span>, <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com">data.table</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set seed for reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Read and process the OTU table data</span></span>
+<span><span class="va">otutable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/HypertensionProject.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">Prevotella</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/transpose.html">transpose</a></span><span class="op">(</span>keep.names <span class="op">=</span> <span class="st">"taxonomy"</span>, make.names <span class="op">=</span> <span class="st">"SampleID"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">taxonomy</span>, names_to<span class="op">=</span><span class="st">"sample_id"</span>, values_to<span class="op">=</span><span class="st">"rel_abund"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Read and process the metabolites data</span></span>
+<span><span class="va">metabolites</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/HypertensionProjectMetabolites.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/transpose.html">transpose</a></span><span class="op">(</span>keep.names <span class="op">=</span> <span class="st">"metabopwy"</span>, make.names <span class="op">=</span> <span class="st">"SampleID"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">metabopwy</span>, names_to<span class="op">=</span><span class="st">"sample_id"</span>, values_to<span class="op">=</span><span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rel_abund <span class="op">=</span> <span class="va">value</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Read and process the taxonomy data</span></span>
+<span><span class="va">taxonomy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">"data/mo_demodata/baxter.cons.taxonomy"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="va">tolower</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">otu</span>, <span class="va">taxonomy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">"\\(\\d+\\)"</span>, <span class="st">""</span><span class="op">)</span>,</span>
+<span>         taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">";unclassified"</span>, <span class="st">"_unclassified"</span><span class="op">)</span>,</span>
+<span>         taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">";unclassified"</span>, <span class="st">""</span><span class="op">)</span>,</span>
+<span>         taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">";$"</span>, <span class="st">""</span><span class="op">)</span>,</span>
+<span>         taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">".*;"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Read and process the metadata</span></span>
+<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/HypertensionProject.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hyper <span class="op">=</span> <span class="va">Disease_State</span> <span class="op">==</span> <span class="st">"HTN"</span> <span class="op">|</span> <span class="va">Disease_State</span> <span class="op">==</span> <span class="st">"pHTN"</span>,</span>
+<span>         control <span class="op">=</span> <span class="va">Disease_State</span> <span class="op">==</span> <span class="st">"healthy"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>sample_id <span class="op">=</span> <span class="va">SampleID</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Data joining</span></span>
+<span></span>
+<span><span class="co"># Join metadata with OTU table to create composite dataset</span></span>
+<span><span class="va">composite</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">metadata</span>, <span class="va">otutable</span>, by<span class="op">=</span><span class="st">"sample_id"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Join metadata with metabolites data to create composite metabolites dataset</span></span>
+<span><span class="va">metabo_composite</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">metadata</span>, <span class="va">metabolites</span>, by<span class="op">=</span><span class="st">"sample_id"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="microbiome-data-integration" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Microbiome data integration<a class="anchor" aria-label="anchor" href="#microbiome-data-integration"><i class="fas fa-link"></i></a>
+</h2>
+<p>For an outline of the steps involved in processing and integrating microbiome (16S rRNA) OTU table, taxonomy data, and metadata, please refer to <a href="https://tmbuza.github.io/imap-data-preparation">imap-data-preparation</a>. Our primary dataset is sourced from the publicly available Dietswap dataset, retrieved from the microbiome package. This dataset has been preprocessed and integrated into a long-form dataframe format.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="exploratory-data-analysis-eda.html#cb3-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/phyloseq_raw_rel_psextra_df_objects.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="exploratory-data-analysis-eda.html#cb3-2" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb3-3"><a href="exploratory-data-analysis-eda.html#cb3-3" tabindex="-1"></a>  ps_raw</span>
+<span id="cb3-4"><a href="exploratory-data-analysis-eda.html#cb3-4" tabindex="-1"></a>  ps_rel</span>
+<span id="cb3-5"><a href="exploratory-data-analysis-eda.html#cb3-5" tabindex="-1"></a>  psextra_raw</span>
+<span id="cb3-6"><a href="exploratory-data-analysis-eda.html#cb3-6" tabindex="-1"></a>  psextra_rel</span>
+<span id="cb3-7"><a href="exploratory-data-analysis-eda.html#cb3-7" tabindex="-1"></a>  ps_df</span>
+<span id="cb3-8"><a href="exploratory-data-analysis-eda.html#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="exploratory-data-analysis-eda.html#cb3-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"We will use object ps_df, here is the ps_df structure</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb3-10"><a href="exploratory-data-analysis-eda.html#cb3-10" tabindex="-1"></a>We will use object ps_df, here is the ps_df structure</span>
+<span id="cb3-11"><a href="exploratory-data-analysis-eda.html#cb3-11" tabindex="-1"></a><span class="fu">head</span>(ps_df[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>)])</span>
+<span id="cb3-12"><a href="exploratory-data-analysis-eda.html#cb3-12" tabindex="-1"></a><span class="co"># A tibble: 6 × 6</span></span>
+<span id="cb3-13"><a href="exploratory-data-analysis-eda.html#cb3-13" tabindex="-1"></a>  sample_id  nationality bmi        rel_abund level  taxon                      </span>
+<span id="cb3-14"><a href="exploratory-data-analysis-eda.html#cb3-14" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>fct<span class="sc">&gt;</span>       <span class="er">&lt;</span>fct<span class="sc">&gt;</span>          <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                      </span>
+<span id="cb3-15"><a href="exploratory-data-analysis-eda.html#cb3-15" tabindex="-1"></a><span class="dv">1</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> phylum <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
+<span id="cb3-16"><a href="exploratory-data-analysis-eda.html#cb3-16" tabindex="-1"></a><span class="dv">2</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> family <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
+<span id="cb3-17"><a href="exploratory-data-analysis-eda.html#cb3-17" tabindex="-1"></a><span class="dv">3</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> genus  <span class="sc">*</span>Prevotella melaninogenica<span class="sc">*</span></span>
+<span id="cb3-18"><a href="exploratory-data-analysis-eda.html#cb3-18" tabindex="-1"></a><span class="dv">4</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> otu    <span class="sc">*</span>Prevotella melaninogenica<span class="sc">*</span></span>
+<span id="cb3-19"><a href="exploratory-data-analysis-eda.html#cb3-19" tabindex="-1"></a><span class="dv">5</span> Sample<span class="dv">-212</span> AFR         obese          <span class="fl">0.702</span> phylum <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
+<span id="cb3-20"><a href="exploratory-data-analysis-eda.html#cb3-20" tabindex="-1"></a><span class="dv">6</span> Sample<span class="dv">-212</span> AFR         obese          <span class="fl">0.702</span> family <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span></code></pre></div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></div>
+<div class="next"><a href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exploratory-data-analysis-eda"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li><a class="nav-link" href="#example-dataset-1-metagenomics-data"><span class="header-section-number">4.1</span> Example dataset 1: Metagenomics data</a></li>
+<li><a class="nav-link" href="#metagenomics-data-integration"><span class="header-section-number">4.2</span> Metagenomics data integration</a></li>
+<li><a class="nav-link" href="#microbiome-data-integration"><span class="header-section-number">4.3</span> Microbiome data integration</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01b_ml_realdata_prototypes.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01b_ml_realdata_prototypes.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-24</b>.</p>
+<br>
+</div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+</body>
+</html>

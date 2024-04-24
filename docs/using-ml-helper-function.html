@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>B Using ML helper function | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<meta name="author" content="Teresia Mrema-Buza">
+<meta name="description" content='load("data/ml_n_composite_object.rda", verbose = TRUE) Loading objects:  composite  metabo_composite  ml_genus_dsestate  ps_df  ml_genus_enttype  ml_genus_nationality  ml_genus_bmi How do you know...'>
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="B Using ML helper function | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/using-ml-helper-function.html">
+<meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<meta property="og:description" content='load("data/ml_n_composite_object.rda", verbose = TRUE) Loading objects:  composite  metabo_composite  ml_genus_dsestate  ps_df  ml_genus_enttype  ml_genus_nationality  ml_genus_bmi How do you know...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="B Using ML helper function | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:description" content='load("data/ml_n_composite_object.rda", verbose = TRUE) Loading objects:  composite  metabo_composite  ml_genus_dsestate  ps_df  ml_genus_enttype  ml_genus_nationality  ml_genus_bmi How do you know...'>
+<meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Sen-0.4.9/font.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet">
+<link href="libs/Bitter-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="libs/d3-3.3.8/d3.min.js"></script><script src="libs/dagre-0.4.0/dagre-d3.min.js"></script><link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/chromatography-0.1/chromatography.js"></script><script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">IMAP-Machine Learning: Predictive Modeling Using Microbiome Data</a></li>
+<li class="book-part">ML COMPONENTS</li>
+<li><a class="" href="key-components-of-microbiome-machine-learning.html"><span class="header-section-number">1</span> Key Components of Microbiome Machine Learning</a></li>
+<li class="book-part">ML FRAMEWORKS</li>
+<li><a class="" href="ml-framework_R.html"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
+<li class="book-part">ML PROTOTYPES</li>
+<li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
+<li class="book-part">MODEL DEVELOPMENT</li>
+<li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
+<li class="book-part">MODEL TRAINING</li>
+<li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
+<li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
+<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
+<li class="book-part">PERFORMANCE METRICS</li>
+<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li class="book-part">MODEL DEPLOYMENT</li>
+<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li class="book-part">APPENDIX</li>
+<li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
+<li><a class="active" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
+<li><a class="" href="imap-github-repos.html"><span class="header-section-number">C</span> IMAP GitHub Repos</a></li>
+<li><a class="" href="session-information.html"><span class="header-section-number">D</span> Session Information</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/tmbuza/imap-machine-learning">View book source <i class="fas fa-air-freshener"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="using-ml-helper-function" class="section level1" number="13">
+<h1>
+<span class="header-section-number">B</span> Using ML helper function<a class="anchor" aria-label="anchor" href="#using-ml-helper-function"><i class="fas fa-link"></i></a>
+</h1>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="using-ml-helper-function.html#cb37-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ml_n_composite_object.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-2"><a href="using-ml-helper-function.html#cb37-2" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb37-3"><a href="using-ml-helper-function.html#cb37-3" tabindex="-1"></a>  composite</span>
+<span id="cb37-4"><a href="using-ml-helper-function.html#cb37-4" tabindex="-1"></a>  metabo_composite</span>
+<span id="cb37-5"><a href="using-ml-helper-function.html#cb37-5" tabindex="-1"></a>  ml_genus_dsestate</span>
+<span id="cb37-6"><a href="using-ml-helper-function.html#cb37-6" tabindex="-1"></a>  ps_df</span>
+<span id="cb37-7"><a href="using-ml-helper-function.html#cb37-7" tabindex="-1"></a>  ml_genus_enttype</span>
+<span id="cb37-8"><a href="using-ml-helper-function.html#cb37-8" tabindex="-1"></a>  ml_genus_nationality</span>
+<span id="cb37-9"><a href="using-ml-helper-function.html#cb37-9" tabindex="-1"></a>  ml_genus_bmi</span></code></pre></div>
+<blockquote>
+<p>How do you know what are the different hyperparameter options are and what are the dafault values for the different modeling approaches</p>
+</blockquote>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="using-ml-helper-function.html#cb38-1" tabindex="-1"></a><span class="fu">library</span>(mikropml)</span>
+<span id="cb38-2"><a href="using-ml-helper-function.html#cb38-2" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="using-ml-helper-function.html#cb38-3" tabindex="-1"></a><span class="fu">get_hyperparams_list</span>(ml_genus_nationality, <span class="st">"glmnet"</span>)</span>
+<span id="cb38-4"><a href="using-ml-helper-function.html#cb38-4" tabindex="-1"></a><span class="sc">$</span>lambda</span>
+<span id="cb38-5"><a href="using-ml-helper-function.html#cb38-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">1e-04</span> <span class="fl">1e-03</span> <span class="fl">1e-02</span> <span class="fl">1e-01</span> <span class="fl">1e+00</span> <span class="fl">1e+01</span></span>
+<span id="cb38-6"><a href="using-ml-helper-function.html#cb38-6" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="using-ml-helper-function.html#cb38-7" tabindex="-1"></a><span class="sc">$</span>alpha</span>
+<span id="cb38-8"><a href="using-ml-helper-function.html#cb38-8" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">0</span></span>
+<span id="cb38-9"><a href="using-ml-helper-function.html#cb38-9" tabindex="-1"></a><span class="fu">get_hyperparams_list</span>(ml_genus_nationality, <span class="st">"rf"</span>)</span>
+<span id="cb38-10"><a href="using-ml-helper-function.html#cb38-10" tabindex="-1"></a><span class="sc">$</span>mtry</span>
+<span id="cb38-11"><a href="using-ml-helper-function.html#cb38-11" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">6</span> <span class="dv">12</span> <span class="dv">24</span></span>
+<span id="cb38-12"><a href="using-ml-helper-function.html#cb38-12" tabindex="-1"></a><span class="fu">get_hyperparams_list</span>(ml_genus_nationality, <span class="st">"svmRadial"</span>)</span>
+<span id="cb38-13"><a href="using-ml-helper-function.html#cb38-13" tabindex="-1"></a><span class="sc">$</span>C</span>
+<span id="cb38-14"><a href="using-ml-helper-function.html#cb38-14" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">1e-03</span> <span class="fl">1e-02</span> <span class="fl">1e-01</span> <span class="fl">1e+00</span> <span class="fl">1e+01</span> <span class="fl">1e+02</span></span>
+<span id="cb38-15"><a href="using-ml-helper-function.html#cb38-15" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="using-ml-helper-function.html#cb38-16" tabindex="-1"></a><span class="sc">$</span>sigma</span>
+<span id="cb38-17"><a href="using-ml-helper-function.html#cb38-17" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">1e-06</span> <span class="fl">1e-05</span> <span class="fl">1e-04</span> <span class="fl">1e-03</span> <span class="fl">1e-02</span> <span class="fl">1e-01</span></span>
+<span id="cb38-18"><a href="using-ml-helper-function.html#cb38-18" tabindex="-1"></a><span class="fu">get_hyperparams_list</span>(ml_genus_nationality, <span class="st">"rpart2"</span>) <span class="co"># Decision tree</span></span>
+<span id="cb38-19"><a href="using-ml-helper-function.html#cb38-19" tabindex="-1"></a><span class="sc">$</span>maxdepth</span>
+<span id="cb38-20"><a href="using-ml-helper-function.html#cb38-20" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">1</span>  <span class="dv">2</span>  <span class="dv">4</span>  <span class="dv">8</span> <span class="dv">16</span> <span class="dv">30</span></span>
+<span id="cb38-21"><a href="using-ml-helper-function.html#cb38-21" tabindex="-1"></a><span class="fu">get_hyperparams_list</span>(ml_genus_nationality, <span class="st">"xgbTree"</span>) <span class="co"># XGBoost</span></span>
+<span id="cb38-22"><a href="using-ml-helper-function.html#cb38-22" tabindex="-1"></a><span class="sc">$</span>nrounds</span>
+<span id="cb38-23"><a href="using-ml-helper-function.html#cb38-23" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">100</span></span>
+<span id="cb38-24"><a href="using-ml-helper-function.html#cb38-24" tabindex="-1"></a></span>
+<span id="cb38-25"><a href="using-ml-helper-function.html#cb38-25" tabindex="-1"></a><span class="sc">$</span>gamma</span>
+<span id="cb38-26"><a href="using-ml-helper-function.html#cb38-26" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">0</span></span>
+<span id="cb38-27"><a href="using-ml-helper-function.html#cb38-27" tabindex="-1"></a></span>
+<span id="cb38-28"><a href="using-ml-helper-function.html#cb38-28" tabindex="-1"></a><span class="sc">$</span>eta</span>
+<span id="cb38-29"><a href="using-ml-helper-function.html#cb38-29" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.001</span> <span class="fl">0.010</span> <span class="fl">0.100</span> <span class="fl">1.000</span></span>
+<span id="cb38-30"><a href="using-ml-helper-function.html#cb38-30" tabindex="-1"></a></span>
+<span id="cb38-31"><a href="using-ml-helper-function.html#cb38-31" tabindex="-1"></a><span class="sc">$</span>max_depth</span>
+<span id="cb38-32"><a href="using-ml-helper-function.html#cb38-32" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="dv">1</span>  <span class="dv">2</span>  <span class="dv">4</span>  <span class="dv">8</span> <span class="dv">16</span> <span class="dv">30</span></span>
+<span id="cb38-33"><a href="using-ml-helper-function.html#cb38-33" tabindex="-1"></a></span>
+<span id="cb38-34"><a href="using-ml-helper-function.html#cb38-34" tabindex="-1"></a><span class="sc">$</span>colsample_bytree</span>
+<span id="cb38-35"><a href="using-ml-helper-function.html#cb38-35" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.8</span></span>
+<span id="cb38-36"><a href="using-ml-helper-function.html#cb38-36" tabindex="-1"></a></span>
+<span id="cb38-37"><a href="using-ml-helper-function.html#cb38-37" tabindex="-1"></a><span class="sc">$</span>min_child_weight</span>
+<span id="cb38-38"><a href="using-ml-helper-function.html#cb38-38" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span>
+<span id="cb38-39"><a href="using-ml-helper-function.html#cb38-39" tabindex="-1"></a></span>
+<span id="cb38-40"><a href="using-ml-helper-function.html#cb38-40" tabindex="-1"></a><span class="sc">$</span>subsample</span>
+<span id="cb38-41"><a href="using-ml-helper-function.html#cb38-41" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.4</span> <span class="fl">0.5</span> <span class="fl">0.6</span> <span class="fl">0.7</span></span></code></pre></div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></div>
+<div class="next"><a href="imap-github-repos.html"><span class="header-section-number">C</span> IMAP GitHub Repos</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#using-ml-helper-function"><span class="header-section-number">B</span> Using ML helper function</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/99-appendix.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/99-appendix.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-24</b>.</p>
+<br>
+</div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+</body>
+</html>

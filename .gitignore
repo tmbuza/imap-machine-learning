@@ -4,6 +4,7 @@
 .Ruserdata
 .Rapp.history
 
+REFER/*
 .snakemake
 
 .DS_Store
@@ -12,3 +13,6 @@ data/*
 images/*
 renv/
 /microbiomeML-template
+
+*_files/*
+render*.rds

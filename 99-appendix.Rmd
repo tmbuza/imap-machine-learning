@@ -1,5 +1,70 @@
 # (APPENDIX) APPENDIX {-}
 
+# Modeling Ideas
+
+In this case study, we explore the performance of a predictive model developed to assess the likelihood of cancer in patients based on various medical records. The model incorporated patient demographics, medical history, vital signs, and diagnostic test results. When tested on a held-out dataset, it demonstrated exceptional accuracy during evaluation.
+
+However, upon deployment to predict cancer likelihood for new patients, the model exhibited significant discrepancies in performance. This discrepancy led to an investigation to uncover potential causes for the observed inconsistency.
+
+## Identifying the Issue
+
+Upon closer examination, it became evident that the model's poor performance on new patients was attributed to information leakage. Specifically, one feature in the model inadvertently exposed sensitive information, which influenced the predictions. This form of information leakage compromised the model's ability to generalize to unseen data effectively.
+
+## Implications
+
+Information leakage poses serious implications for the predictive model's reliability and fairness. By inadvertently incorporating sensitive information, such as patient-specific details or external factors related to the prediction task, the model's performance on new data can be compromised. This can lead to inaccurate predictions and potentially harmful outcomes if relied upon in clinical decision-making.
+
+## Recommendations
+
+Conducting thorough feature selection and validation processes is imperative to address information leakage and ensure the model's robustness and generalizability. This involves identifying and removing features that may inadvertently expose sensitive information or introduce bias into the model. Additionally, implementing rigorous data preprocessing techniques and adhering to best practices in model development can help mitigate the risk of information leakage and enhance the reliability of predictive models.
+
+By prioritizing transparency, fairness, and ethical considerations throughout the model development process, we can mitigate the risks associated with information leakage and build accurate and trustworthy predictive models.
+
+
+## Some Effective [ML Guidelines](https://developers.google.com/machine-learning/crash-course/real-world-guidelines)
+- Keep the first model simple.
+- Focus on ensuring data pipeline correctness.
+- Use a simple, observable metric for training & evaluation.
+- Own and monitor your input features
+- Treat your model configuration as code: review it, check it in
+- Write down the results of all experiments, especially "failures"
+
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  echo  =TRUE,
+  message  =FALSE,
+  warning  =FALSE,
+  cache  =FALSE,
+  comment  =NA,
+  collapse =TRUE,
+  fig.path='./figures/',
+  fig.show='asis',
+  dev  ='png')
+
+```
+
+
+# Using ML helper function
+```{r}
+load("data/ml_n_composite_object.rda", verbose = TRUE)
+```
+
+> How do you know what are the different hyperparameter options are and what are the dafault values for the different modeling approaches
+
+```{r helper, message=FALSE, warning=FALSE}
+library(mikropml)
+
+get_hyperparams_list(ml_genus_nationality, "glmnet")
+get_hyperparams_list(ml_genus_nationality, "rf")
+get_hyperparams_list(ml_genus_nationality, "svmRadial")
+get_hyperparams_list(ml_genus_nationality, "rpart2") # Decision tree
+get_hyperparams_list(ml_genus_nationality, "xgbTree") # XGBoost
+
+```
+
+
 # IMAP GitHub Repos
 
 ```{block type="tmbinfo", echo=TRUE}
@@ -16,10 +81,6 @@
 | [PART 07](https://github.com/tmbuza/imap-data-processing/) | Processing Output from 16S-Based microbiome bioinformatics pipelines | [Link](https://tmbuza.github.io/imap-data-preparation/) |
 | [PART 08](https://github.com/tmbuza/imap-exploratory-analysis/) | Exploratory Analysis of 16S-Based Microbiome Processed Data | [Link](https://tmbuza.github.io/imap-data-exploration/) |
 ```
-
-# Machine Learning Rulegraph
-
-![](dags/rulegraph.svg)
 
 
 # Session Information

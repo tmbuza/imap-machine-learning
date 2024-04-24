@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>6 Data Splitting | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<meta name="author" content="Teresia Mrema-Buza">
+<meta name="description" content="The dataset is divided into separate subsets for training and testing. This partitioning allows for an unbiased evaluation of the model’s performance on unseen data, helping to assess its ability...">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="6 Data Splitting | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/data-splitting.html">
+<meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<meta property="og:description" content="The dataset is divided into separate subsets for training and testing. This partitioning allows for an unbiased evaluation of the model’s performance on unseen data, helping to assess its ability...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="6 Data Splitting | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:description" content="The dataset is divided into separate subsets for training and testing. This partitioning allows for an unbiased evaluation of the model’s performance on unseen data, helping to assess its ability...">
+<meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Sen-0.4.9/font.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet">
+<link href="libs/Bitter-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="libs/d3-3.3.8/d3.min.js"></script><script src="libs/dagre-0.4.0/dagre-d3.min.js"></script><link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/chromatography-0.1/chromatography.js"></script><script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">IMAP-Machine Learning: Predictive Modeling Using Microbiome Data</a></li>
+<li class="book-part">ML COMPONENTS</li>
+<li><a class="" href="key-components-of-microbiome-machine-learning.html"><span class="header-section-number">1</span> Key Components of Microbiome Machine Learning</a></li>
+<li class="book-part">ML FRAMEWORKS</li>
+<li><a class="" href="ml-framework_R.html"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
+<li class="book-part">ML PROTOTYPES</li>
+<li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
+<li class="book-part">MODEL DEVELOPMENT</li>
+<li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
+<li class="book-part">MODEL TRAINING</li>
+<li><a class="active" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
+<li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
+<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
+<li class="book-part">PERFORMANCE METRICS</li>
+<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li class="book-part">MODEL DEPLOYMENT</li>
+<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li class="book-part">APPENDIX</li>
+<li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
+<li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
+<li><a class="" href="imap-github-repos.html"><span class="header-section-number">C</span> IMAP GitHub Repos</a></li>
+<li><a class="" href="session-information.html"><span class="header-section-number">D</span> Session Information</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/tmbuza/imap-machine-learning">View book source <i class="fas fa-air-freshener"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="data-splitting" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Data Splitting<a class="anchor" aria-label="anchor" href="#data-splitting"><i class="fas fa-link"></i></a>
+</h1>
+<p>The dataset is divided into separate subsets for training and testing. This partitioning allows for an unbiased evaluation of the model’s performance on unseen data, helping to assess its ability to generalize to new observations.</p>
+<p><strong>Using caret::createDataPartition() function</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-splitting.html#cb6-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb6-2"><a href="data-splitting.html#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="data-splitting.html#cb6-3" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb6-4"><a href="data-splitting.html#cb6-4" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb6-5"><a href="data-splitting.html#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="data-splitting.html#cb6-6" tabindex="-1"></a><span class="co"># Example dataset (replace with your own data)</span></span>
+<span id="cb6-7"><a href="data-splitting.html#cb6-7" tabindex="-1"></a>data <span class="ot">&lt;-</span> training_data</span>
+<span id="cb6-8"><a href="data-splitting.html#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="data-splitting.html#cb6-9" tabindex="-1"></a><span class="co"># Split data into training and testing sets</span></span>
+<span id="cb6-10"><a href="data-splitting.html#cb6-10" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb6-11"><a href="data-splitting.html#cb6-11" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">createDataPartition</span>(data<span class="sc">$</span>target, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-12"><a href="data-splitting.html#cb6-12" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> data[train_index, ]</span>
+<span id="cb6-13"><a href="data-splitting.html#cb6-13" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>train_index, ]</span>
+<span id="cb6-14"><a href="data-splitting.html#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="data-splitting.html#cb6-15" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the test data using caret package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_data)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_data)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-16"><a href="data-splitting.html#cb6-16" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="data-splitting.html#cb6-17" tabindex="-1"></a>Dimension of the test data using caret package</span>
+<span id="cb6-18"><a href="data-splitting.html#cb6-18" tabindex="-1"></a> is <span class="dv">43</span> rows and <span class="dv">27</span> columns.</span>
+<span id="cb6-19"><a href="data-splitting.html#cb6-19" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the train data using caret package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_data)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_data)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-20"><a href="data-splitting.html#cb6-20" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="data-splitting.html#cb6-21" tabindex="-1"></a>Dimension of the train data using caret package</span>
+<span id="cb6-22"><a href="data-splitting.html#cb6-22" tabindex="-1"></a> is <span class="dv">179</span> rows and <span class="dv">27</span> columns.</span>
+<span id="cb6-23"><a href="data-splitting.html#cb6-23" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="data-splitting.html#cb6-24" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">The intersection between test and train dataset is"</span>, <span class="fu">nrow</span>(test_data <span class="sc">%&gt;%</span> <span class="fu">intersect</span>(train_data)))</span>
+<span id="cb6-25"><a href="data-splitting.html#cb6-25" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="data-splitting.html#cb6-26" tabindex="-1"></a>The intersection between test and train dataset is <span class="dv">0</span></span></code></pre></div>
+<p><strong>Using dplyr::sample_n() and dplyr::setdiff() functions</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data-splitting.html#cb7-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb7-2"><a href="data-splitting.html#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="data-splitting.html#cb7-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb7-4"><a href="data-splitting.html#cb7-4" tabindex="-1"></a>test_df <span class="ot">=</span> training_data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="fl">0.2</span><span class="sc">*</span><span class="fu">nrow</span>(training_data))</span>
+<span id="cb7-5"><a href="data-splitting.html#cb7-5" tabindex="-1"></a>train_df <span class="ot">=</span> training_data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">setdiff</span>(test_df)</span>
+<span id="cb7-6"><a href="data-splitting.html#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="data-splitting.html#cb7-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the test data using dplyr package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_df)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_df)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb7-8"><a href="data-splitting.html#cb7-8" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="data-splitting.html#cb7-9" tabindex="-1"></a>Dimension of the test data using dplyr package</span>
+<span id="cb7-10"><a href="data-splitting.html#cb7-10" tabindex="-1"></a> is <span class="dv">44</span> rows and <span class="dv">27</span> columns.</span>
+<span id="cb7-11"><a href="data-splitting.html#cb7-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the train data using dplyr package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_df)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_df)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb7-12"><a href="data-splitting.html#cb7-12" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="data-splitting.html#cb7-13" tabindex="-1"></a>Dimension of the train data using dplyr package</span>
+<span id="cb7-14"><a href="data-splitting.html#cb7-14" tabindex="-1"></a> is <span class="dv">178</span> rows and <span class="dv">27</span> columns.</span>
+<span id="cb7-15"><a href="data-splitting.html#cb7-15" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="data-splitting.html#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="data-splitting.html#cb7-17" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">The intersection between test and train dataset is"</span>, <span class="fu">nrow</span>(test_df <span class="sc">%&gt;%</span> <span class="fu">intersect</span>(train_df)))</span>
+<span id="cb7-18"><a href="data-splitting.html#cb7-18" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="data-splitting.html#cb7-19" tabindex="-1"></a>The intersection between test and train dataset is <span class="dv">0</span></span></code></pre></div>
+<p><strong>Visualize the relative abundance of selected microbes in the training and testing datasets</strong></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/">ggpubr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AAM"</span> <span class="op">=</span> <span class="st">"red"</span>,<span class="st">"AFR"</span> <span class="op">=</span> <span class="st">"green4"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">train_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`Bacteroides vulgatus`</span>, y <span class="op">=</span> <span class="va">`Prevotella melaninogenica`</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">target</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">16</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Train Dataset using \ncaret::createDataPartition() function"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"African American"</span>, <span class="st">"Africa"</span><span class="op">)</span>, name<span class="op">=</span><span class="st">"Level"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">test_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`Bacteroides vulgatus`</span>, y <span class="op">=</span> <span class="va">`Prevotella melaninogenica`</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">target</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">16</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Test Dataset using \ncaret::createDataPartition() function"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"African American"</span>, <span class="st">"Africa"</span><span class="op">)</span>, name<span class="op">=</span><span class="st">"Level"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">train_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`Bacteroides vulgatus`</span>, y <span class="op">=</span> <span class="va">`Prevotella melaninogenica`</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">target</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">16</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Train Dataset using dplyr::sample_n() \nand dplyr::setdiff() functions"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"African American"</span>, <span class="st">"Africa"</span><span class="op">)</span>, name<span class="op">=</span><span class="st">"Level"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="va">test_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`Bacteroides vulgatus`</span>, y <span class="op">=</span> <span class="va">`Prevotella melaninogenica`</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">target</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">16</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Test Dataset using dplyr::sample_n() \nand dplyr::setdiff() functions"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"African American"</span>, <span class="st">"Africa"</span><span class="op">)</span>, name<span class="op">=</span><span class="st">"Level"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Arrange plots using ggpubr</span></span>
+<span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html">ggarrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">p3</span>, <span class="va">p4</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span>, common.legend <span class="op">=</span> <span class="cn">TRUE</span>, legend <span class="op">=</span> <span class="st">"right"</span>, heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-9-1.png" width="768"></div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></div>
+<div class="next"><a href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#data-splitting"><span class="header-section-number">6</span> Data Splitting</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01b_ml_realdata_prototypes.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01b_ml_realdata_prototypes.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-24</b>.</p>
+<br>
+</div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+</body>
+</html>
