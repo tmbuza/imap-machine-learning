@@ -1,4 +1,4 @@
-# IMAP Machine Learning
+# IMAP PART 10: Machine Learning
 
 ---In Progress---
 
