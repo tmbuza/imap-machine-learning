@@ -1,4 +1,4 @@
-# IMAP Project Overview
+# IMAP Machine Learning
 
 ---In Progress---
 
