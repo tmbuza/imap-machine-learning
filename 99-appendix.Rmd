@@ -81,7 +81,9 @@ get_hyperparams_list(ml_genus_nationality, "xgbTree") # XGBoost
 | [PART 07](https://github.com/tmbuza/imap-data-processing/) | Processing output from 16S-based microbiome bioinformatics pipelines | [Link](https://tmbuza.github.io/imap-data-preparation/) |
 | [PART 08](https://github.com/tmbuza/imap-exploratory-analysis/) | Exploratory analysis of processed 16S-based microbiome data | [Link](https://tmbuza.github.io/imap-data-exploration/) |
 | [PART 09](https://github.com/tmbuza/imap-statistical-analysis/) | Statistical analysis of processed 16S-based microbiome data | [Link](https://tmbuza.github.io/imap-statistical-analysis/) |
-| [PART 10](https://github.com/tmbuza/imap-machine-learning/) | Machine learning analysis of processed 16S-based microbiome data | [Link](https://tmbuza.github.io/imap-machine-learning/) |```
+| [PART 10](https://github.com/tmbuza/imap-machine-learning/) | Machine learning analysis of processed 16S-based microbiome data | [Link](https://tmbuza.github.io/imap-machine-learning/) |
+
+```
 
 
 # Session Information
