@@ -105,7 +105,7 @@
 <span class="header-section-number">9.3</span> F1 Score<a class="anchor" aria-label="anchor" href="#f1-score"><i class="fas fa-link"></i></a>
 </h2>
 <p>The F1 Score is the harmonic mean of precision and recall. It provides a balanced assessment of a classifier’s performance, considering both false positives and false negatives.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Extract accuracy and other performance metrics from confusion matrix</span></span>
@@ -125,14 +125,14 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"steelblue"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Metric"</span>, y <span class="op">=</span> <span class="st">"Value"</span>, title <span class="op">=</span> <span class="st">"Model Performance Metrics"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-26-1.png" width="672"></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-27-1.png" width="672"></div>
 </div>
 <div id="roc-curve-and-auc-roc" class="section level2" number="9.4">
 <h2>
 <span class="header-section-number">9.4</span> ROC Curve and AUC-ROC<a class="anchor" aria-label="anchor" href="#roc-curve-and-auc-roc"><i class="fas fa-link"></i></a>
 </h2>
 <p>The ROC Curve plots the true positive rate (sensitivity) against the false positive rate (1 - specificity) at various threshold settings. It provides a visual representation of the classifier’s performance across different threshold levels. The Area Under the ROC Curve (AUC-ROC) quantifies the overall performance of the model in distinguishing between the positive and negative classes. A higher AUC-ROC value indicates better discrimination performance.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xrobin.github.io/pROC/">pROC</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
@@ -152,8 +152,8 @@
 <span>       x <span class="op">=</span> <span class="st">"False Positive Rate (1 - Specificity)"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"True Positive Rate (Sensitivity)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-27-1.png" width="672"></div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="figures/unnamed-chunk-28-1.png" width="672"></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="co"># Print AUC-ROC</span></span>
@@ -193,7 +193,7 @@
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-26</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">

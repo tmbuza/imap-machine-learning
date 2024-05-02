@@ -66,11 +66,10 @@
 <li><a class="active" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
 <li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
 <li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -90,54 +89,54 @@
 </h1>
 <p>The dataset is divided into separate subsets for training and testing. This partitioning allows for an unbiased evaluation of the model’s performance on unseen data, helping to assess its ability to generalize to new observations.</p>
 <p><strong>Using caret::createDataPartition() function</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-splitting.html#cb6-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb6-2"><a href="data-splitting.html#cb6-2" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="data-splitting.html#cb6-3" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb6-4"><a href="data-splitting.html#cb6-4" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb6-5"><a href="data-splitting.html#cb6-5" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="data-splitting.html#cb6-6" tabindex="-1"></a><span class="co"># Example dataset (replace with your own data)</span></span>
-<span id="cb6-7"><a href="data-splitting.html#cb6-7" tabindex="-1"></a>data <span class="ot">&lt;-</span> training_data</span>
-<span id="cb6-8"><a href="data-splitting.html#cb6-8" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="data-splitting.html#cb6-9" tabindex="-1"></a><span class="co"># Split data into training and testing sets</span></span>
-<span id="cb6-10"><a href="data-splitting.html#cb6-10" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># for reproducibility</span></span>
-<span id="cb6-11"><a href="data-splitting.html#cb6-11" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">createDataPartition</span>(data<span class="sc">$</span>target, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-12"><a href="data-splitting.html#cb6-12" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> data[train_index, ]</span>
-<span id="cb6-13"><a href="data-splitting.html#cb6-13" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>train_index, ]</span>
-<span id="cb6-14"><a href="data-splitting.html#cb6-14" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="data-splitting.html#cb6-15" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the test data using caret package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_data)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_data)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb6-16"><a href="data-splitting.html#cb6-16" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="data-splitting.html#cb6-17" tabindex="-1"></a>Dimension of the test data using caret package</span>
-<span id="cb6-18"><a href="data-splitting.html#cb6-18" tabindex="-1"></a> is <span class="dv">43</span> rows and <span class="dv">27</span> columns.</span>
-<span id="cb6-19"><a href="data-splitting.html#cb6-19" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the train data using caret package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_data)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_data)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb6-20"><a href="data-splitting.html#cb6-20" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="data-splitting.html#cb6-21" tabindex="-1"></a>Dimension of the train data using caret package</span>
-<span id="cb6-22"><a href="data-splitting.html#cb6-22" tabindex="-1"></a> is <span class="dv">179</span> rows and <span class="dv">27</span> columns.</span>
-<span id="cb6-23"><a href="data-splitting.html#cb6-23" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="data-splitting.html#cb6-24" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">The intersection between test and train dataset is"</span>, <span class="fu">nrow</span>(test_data <span class="sc">%&gt;%</span> <span class="fu">intersect</span>(train_data)))</span>
-<span id="cb6-25"><a href="data-splitting.html#cb6-25" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="data-splitting.html#cb6-26" tabindex="-1"></a>The intersection between test and train dataset is <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-splitting.html#cb11-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb11-2"><a href="data-splitting.html#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="data-splitting.html#cb11-3" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb11-4"><a href="data-splitting.html#cb11-4" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb11-5"><a href="data-splitting.html#cb11-5" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="data-splitting.html#cb11-6" tabindex="-1"></a><span class="co"># Example dataset (replace with your own data)</span></span>
+<span id="cb11-7"><a href="data-splitting.html#cb11-7" tabindex="-1"></a>data <span class="ot">&lt;-</span> training_data</span>
+<span id="cb11-8"><a href="data-splitting.html#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="data-splitting.html#cb11-9" tabindex="-1"></a><span class="co"># Split data into training and testing sets</span></span>
+<span id="cb11-10"><a href="data-splitting.html#cb11-10" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb11-11"><a href="data-splitting.html#cb11-11" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">createDataPartition</span>(data<span class="sc">$</span>target, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-12"><a href="data-splitting.html#cb11-12" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> data[train_index, ]</span>
+<span id="cb11-13"><a href="data-splitting.html#cb11-13" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>train_index, ]</span>
+<span id="cb11-14"><a href="data-splitting.html#cb11-14" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="data-splitting.html#cb11-15" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the test data using caret package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_data)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_data)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-16"><a href="data-splitting.html#cb11-16" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="data-splitting.html#cb11-17" tabindex="-1"></a>Dimension of the test data using caret package</span>
+<span id="cb11-18"><a href="data-splitting.html#cb11-18" tabindex="-1"></a> is <span class="dv">43</span> rows and <span class="dv">27</span> columns.</span>
+<span id="cb11-19"><a href="data-splitting.html#cb11-19" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the train data using caret package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_data)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_data)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-20"><a href="data-splitting.html#cb11-20" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="data-splitting.html#cb11-21" tabindex="-1"></a>Dimension of the train data using caret package</span>
+<span id="cb11-22"><a href="data-splitting.html#cb11-22" tabindex="-1"></a> is <span class="dv">179</span> rows and <span class="dv">27</span> columns.</span>
+<span id="cb11-23"><a href="data-splitting.html#cb11-23" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="data-splitting.html#cb11-24" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">The intersection between test and train dataset is"</span>, <span class="fu">nrow</span>(test_data <span class="sc">%&gt;%</span> <span class="fu">intersect</span>(train_data)))</span>
+<span id="cb11-25"><a href="data-splitting.html#cb11-25" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="data-splitting.html#cb11-26" tabindex="-1"></a>The intersection between test and train dataset is <span class="dv">0</span></span></code></pre></div>
 <p><strong>Using dplyr::sample_n() and dplyr::setdiff() functions</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data-splitting.html#cb7-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb7-2"><a href="data-splitting.html#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="data-splitting.html#cb7-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb7-4"><a href="data-splitting.html#cb7-4" tabindex="-1"></a>test_df <span class="ot">=</span> training_data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="fl">0.2</span><span class="sc">*</span><span class="fu">nrow</span>(training_data))</span>
-<span id="cb7-5"><a href="data-splitting.html#cb7-5" tabindex="-1"></a>train_df <span class="ot">=</span> training_data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">setdiff</span>(test_df)</span>
-<span id="cb7-6"><a href="data-splitting.html#cb7-6" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="data-splitting.html#cb7-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the test data using dplyr package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_df)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_df)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb7-8"><a href="data-splitting.html#cb7-8" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="data-splitting.html#cb7-9" tabindex="-1"></a>Dimension of the test data using dplyr package</span>
-<span id="cb7-10"><a href="data-splitting.html#cb7-10" tabindex="-1"></a> is <span class="dv">44</span> rows and <span class="dv">27</span> columns.</span>
-<span id="cb7-11"><a href="data-splitting.html#cb7-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the train data using dplyr package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_df)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_df)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb7-12"><a href="data-splitting.html#cb7-12" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="data-splitting.html#cb7-13" tabindex="-1"></a>Dimension of the train data using dplyr package</span>
-<span id="cb7-14"><a href="data-splitting.html#cb7-14" tabindex="-1"></a> is <span class="dv">178</span> rows and <span class="dv">27</span> columns.</span>
-<span id="cb7-15"><a href="data-splitting.html#cb7-15" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="data-splitting.html#cb7-16" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="data-splitting.html#cb7-17" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">The intersection between test and train dataset is"</span>, <span class="fu">nrow</span>(test_df <span class="sc">%&gt;%</span> <span class="fu">intersect</span>(train_df)))</span>
-<span id="cb7-18"><a href="data-splitting.html#cb7-18" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="data-splitting.html#cb7-19" tabindex="-1"></a>The intersection between test and train dataset is <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-splitting.html#cb12-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb12-2"><a href="data-splitting.html#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="data-splitting.html#cb12-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb12-4"><a href="data-splitting.html#cb12-4" tabindex="-1"></a>test_df <span class="ot">=</span> training_data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="fl">0.2</span><span class="sc">*</span><span class="fu">nrow</span>(training_data))</span>
+<span id="cb12-5"><a href="data-splitting.html#cb12-5" tabindex="-1"></a>train_df <span class="ot">=</span> training_data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">setdiff</span>(test_df)</span>
+<span id="cb12-6"><a href="data-splitting.html#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="data-splitting.html#cb12-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the test data using dplyr package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_df)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(test_df)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb12-8"><a href="data-splitting.html#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="data-splitting.html#cb12-9" tabindex="-1"></a>Dimension of the test data using dplyr package</span>
+<span id="cb12-10"><a href="data-splitting.html#cb12-10" tabindex="-1"></a> is <span class="dv">44</span> rows and <span class="dv">27</span> columns.</span>
+<span id="cb12-11"><a href="data-splitting.html#cb12-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Dimension of the train data using dplyr package</span><span class="sc">\n</span><span class="st"> is"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_df)[<span class="dv">1</span>], <span class="st">"rows and"</span>, base<span class="sc">::</span><span class="fu">dim</span>(train_df)[<span class="dv">2</span>], <span class="st">"columns.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb12-12"><a href="data-splitting.html#cb12-12" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="data-splitting.html#cb12-13" tabindex="-1"></a>Dimension of the train data using dplyr package</span>
+<span id="cb12-14"><a href="data-splitting.html#cb12-14" tabindex="-1"></a> is <span class="dv">178</span> rows and <span class="dv">27</span> columns.</span>
+<span id="cb12-15"><a href="data-splitting.html#cb12-15" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="data-splitting.html#cb12-16" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="data-splitting.html#cb12-17" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">The intersection between test and train dataset is"</span>, <span class="fu">nrow</span>(test_df <span class="sc">%&gt;%</span> <span class="fu">intersect</span>(train_df)))</span>
+<span id="cb12-18"><a href="data-splitting.html#cb12-18" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="data-splitting.html#cb12-19" tabindex="-1"></a>The intersection between test and train dataset is <span class="dv">0</span></span></code></pre></div>
 <p><strong>Visualize the relative abundance of selected microbes in the training and testing datasets</strong></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/">ggpubr</a></span><span class="op">)</span></span>
@@ -171,7 +170,7 @@
 <span></span>
 <span><span class="co"># Arrange plots using ggpubr</span></span>
 <span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html">ggarrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">p3</span>, <span class="va">p4</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span>, common.legend <span class="op">=</span> <span class="cn">TRUE</span>, legend <span class="op">=</span> <span class="st">"right"</span>, heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-9-1.png" width="768"></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-10-1.png" width="768"></div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></div>
@@ -196,7 +195,7 @@
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-26</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">

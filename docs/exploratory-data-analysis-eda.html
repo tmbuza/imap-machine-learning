@@ -66,11 +66,10 @@
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
 <li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
 <li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -89,20 +88,12 @@
 <span class="header-section-number">4</span> Exploratory Data Analysis (EDA)<a class="anchor" aria-label="anchor" href="#exploratory-data-analysis-eda"><i class="fas fa-link"></i></a>
 </h1>
 <p>In machine learning we start by exploring the data to understand the structure, patterns, and relationships within the data. This involves visualizing distributions, correlations, and other relevant statistics to gain insights into the dataset.</p>
-<div id="example-dataset-1-metagenomics-data" class="section level2" number="4.1">
+<div id="preprocessing-metagenomics-data" class="section level2" number="4.1">
 <h2>
-<span class="header-section-number">4.1</span> Example dataset 1: Metagenomics data<a class="anchor" aria-label="anchor" href="#example-dataset-1-metagenomics-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> Preprocessing Metagenomics data<a class="anchor" aria-label="anchor" href="#preprocessing-metagenomics-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>Source: <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJEB13870">PRJEB13870</a>. The project titled “Gut microbiota dysbiosis contributes to the development of hypertension” serves as an ideal resource for metagenomics dataset. This dataset offers valuable insights into the association between gut microbiota composition and hypertension development, a critical area of research within the fields of microbiology and cardiovascular health.</p>
-<p><strong>Study description</strong></p>
-<p>This study employed a multifaceted approach, integrating metagenomics and metabonomics analyses alongside fecal microbiota transplantation (FMT). By investigating the dysbiosis of the gut microbiome, the study elucidated its role as a contributing factor to the pathogenesis of hypertension, primarily through alterations in metabolic effects. Through these methodologies, the research aimed to provide a comprehensive understanding of the intricate relationship between gut microbiota composition and the development of hypertension.</p>
-</div>
-<div id="metagenomics-data-integration" class="section level2" number="4.2">
-<h2>
-<span class="header-section-number">4.2</span> Metagenomics data integration<a class="anchor" aria-label="anchor" href="#metagenomics-data-integration"><i class="fas fa-link"></i></a>
-</h2>
-<p>This section outlines the steps involved in processing the OTU table, taxonomy data, metabolites, and metadata.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load necessary libraries with suppressed startup messages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span>, <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
@@ -145,41 +136,72 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hyper <span class="op">=</span> <span class="va">Disease_State</span> <span class="op">==</span> <span class="st">"HTN"</span> <span class="op">|</span> <span class="va">Disease_State</span> <span class="op">==</span> <span class="st">"pHTN"</span>,</span>
 <span>         control <span class="op">=</span> <span class="va">Disease_State</span> <span class="op">==</span> <span class="st">"healthy"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>sample_id <span class="op">=</span> <span class="va">SampleID</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Data joining</span></span>
-<span></span>
-<span><span class="co"># Join metadata with OTU table to create composite dataset</span></span>
-<span><span class="va">composite</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">metadata</span>, <span class="va">otutable</span>, by<span class="op">=</span><span class="st">"sample_id"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Join metadata with metabolites data to create composite metabolites dataset</span></span>
-<span><span class="va">metabo_composite</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">metadata</span>, <span class="va">metabolites</span>, by<span class="op">=</span><span class="st">"sample_id"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>sample_id <span class="op">=</span> <span class="va">SampleID</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="microbiome-data-integration" class="section level2" number="4.3">
+<div id="metagenomics-data-joining" class="section level2" number="4.2">
 <h2>
-<span class="header-section-number">4.3</span> Microbiome data integration<a class="anchor" aria-label="anchor" href="#microbiome-data-integration"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2</span> Metagenomics data joining<a class="anchor" aria-label="anchor" href="#metagenomics-data-joining"><i class="fas fa-link"></i></a>
+</h2>
+<div id="join-metadata-with-metagenomics-otu-table" class="section level3" number="4.2.1">
+<h3>
+<span class="header-section-number">4.2.1</span> Join metadata with metagenomics OTU table<a class="anchor" aria-label="anchor" href="#join-metadata-with-metagenomics-otu-table"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="exploratory-data-analysis-eda.html#cb6-1" tabindex="-1"></a><span class="co"># Join metadata with OTU table to create composite dataset</span></span>
+<span id="cb6-2"><a href="exploratory-data-analysis-eda.html#cb6-2" tabindex="-1"></a>composite <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(metadata, otutable, <span class="at">by=</span><span class="st">"sample_id"</span>)</span>
+<span id="cb6-3"><a href="exploratory-data-analysis-eda.html#cb6-3" tabindex="-1"></a><span class="fu">head</span>(composite)</span>
+<span id="cb6-4"><a href="exploratory-data-analysis-eda.html#cb6-4" tabindex="-1"></a><span class="co"># A tibble: 6 × 7</span></span>
+<span id="cb6-5"><a href="exploratory-data-analysis-eda.html#cb6-5" tabindex="-1"></a>  sample_id  Disease_State Enterotype   hyper control taxonomy         rel_abund</span>
+<span id="cb6-6"><a href="exploratory-data-analysis-eda.html#cb6-6" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>         <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>lgl<span class="sc">&gt;</span> <span class="er">&lt;</span>lgl<span class="sc">&gt;</span>   <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb6-7"><a href="exploratory-data-analysis-eda.html#cb6-7" tabindex="-1"></a><span class="dv">1</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Prevotella         <span class="fl">5.53e-1</span></span>
+<span id="cb6-8"><a href="exploratory-data-analysis-eda.html#cb6-8" tabindex="-1"></a><span class="dv">2</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Faecalibacterium   <span class="fl">1.70e-2</span></span>
+<span id="cb6-9"><a href="exploratory-data-analysis-eda.html#cb6-9" tabindex="-1"></a><span class="dv">3</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Klebsiella         <span class="fl">2.99e-6</span></span>
+<span id="cb6-10"><a href="exploratory-data-analysis-eda.html#cb6-10" tabindex="-1"></a><span class="dv">4</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Roseburia          <span class="fl">7.47e-3</span></span>
+<span id="cb6-11"><a href="exploratory-data-analysis-eda.html#cb6-11" tabindex="-1"></a><span class="dv">5</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Bifidobacterium    <span class="fl">1.92e-3</span></span>
+<span id="cb6-12"><a href="exploratory-data-analysis-eda.html#cb6-12" tabindex="-1"></a><span class="dv">6</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Enterobacter       <span class="fl">8.52e-7</span></span></code></pre></div>
+</div>
+<div id="join-metadata-with-metabolites-data" class="section level3" number="4.2.2">
+<h3>
+<span class="header-section-number">4.2.2</span> Join metadata with metabolites data<a class="anchor" aria-label="anchor" href="#join-metadata-with-metabolites-data"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="exploratory-data-analysis-eda.html#cb7-1" tabindex="-1"></a><span class="co"># Join metadata with metabolites data to create composite metabolites dataset</span></span>
+<span id="cb7-2"><a href="exploratory-data-analysis-eda.html#cb7-2" tabindex="-1"></a>metabo_composite <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(metadata, metabolites, <span class="at">by=</span><span class="st">"sample_id"</span>)</span>
+<span id="cb7-3"><a href="exploratory-data-analysis-eda.html#cb7-3" tabindex="-1"></a><span class="fu">head</span>(metabo_composite)</span>
+<span id="cb7-4"><a href="exploratory-data-analysis-eda.html#cb7-4" tabindex="-1"></a><span class="co"># A tibble: 6 × 7</span></span>
+<span id="cb7-5"><a href="exploratory-data-analysis-eda.html#cb7-5" tabindex="-1"></a>  sample_id  Disease_State Enterotype   hyper control metabopwy        rel_abund</span>
+<span id="cb7-6"><a href="exploratory-data-analysis-eda.html#cb7-6" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>         <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>lgl<span class="sc">&gt;</span> <span class="er">&lt;</span>lgl<span class="sc">&gt;</span>   <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb7-7"><a href="exploratory-data-analysis-eda.html#cb7-7" tabindex="-1"></a><span class="dv">1</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   LPS_biosynthesis <span class="fl">0.00962</span>  </span>
+<span id="cb7-8"><a href="exploratory-data-analysis-eda.html#cb7-8" tabindex="-1"></a><span class="dv">2</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   LPS_transport    <span class="fl">0.0000221</span></span>
+<span id="cb7-9"><a href="exploratory-data-analysis-eda.html#cb7-9" tabindex="-1"></a><span class="dv">3</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   PTS              <span class="fl">0.203</span>    </span>
+<span id="cb7-10"><a href="exploratory-data-analysis-eda.html#cb7-10" tabindex="-1"></a><span class="dv">4</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Secretion_Syste… <span class="fl">0.0000221</span></span>
+<span id="cb7-11"><a href="exploratory-data-analysis-eda.html#cb7-11" tabindex="-1"></a><span class="dv">5</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Secretion_Syste… <span class="dv">0</span>        </span>
+<span id="cb7-12"><a href="exploratory-data-analysis-eda.html#cb7-12" tabindex="-1"></a><span class="dv">6</span> ERR1398068 HTN           Enterotype_1 <span class="cn">TRUE</span>  <span class="cn">FALSE</span>   Secretion_Syste… <span class="fl">0.000375</span> </span></code></pre></div>
+</div>
+</div>
+<div id="preprocessing-microbiome-data" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Preprocessing microbiome data<a class="anchor" aria-label="anchor" href="#preprocessing-microbiome-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>For an outline of the steps involved in processing and integrating microbiome (16S rRNA) OTU table, taxonomy data, and metadata, please refer to <a href="https://tmbuza.github.io/imap-data-preparation">imap-data-preparation</a>. Our primary dataset is sourced from the publicly available Dietswap dataset, retrieved from the microbiome package. This dataset has been preprocessed and integrated into a long-form dataframe format.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="exploratory-data-analysis-eda.html#cb3-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/phyloseq_raw_rel_psextra_df_objects.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-2"><a href="exploratory-data-analysis-eda.html#cb3-2" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
-<span id="cb3-3"><a href="exploratory-data-analysis-eda.html#cb3-3" tabindex="-1"></a>  ps_raw</span>
-<span id="cb3-4"><a href="exploratory-data-analysis-eda.html#cb3-4" tabindex="-1"></a>  ps_rel</span>
-<span id="cb3-5"><a href="exploratory-data-analysis-eda.html#cb3-5" tabindex="-1"></a>  psextra_raw</span>
-<span id="cb3-6"><a href="exploratory-data-analysis-eda.html#cb3-6" tabindex="-1"></a>  psextra_rel</span>
-<span id="cb3-7"><a href="exploratory-data-analysis-eda.html#cb3-7" tabindex="-1"></a>  ps_df</span>
-<span id="cb3-8"><a href="exploratory-data-analysis-eda.html#cb3-8" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="exploratory-data-analysis-eda.html#cb3-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"We will use object ps_df, here is the ps_df structure</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb3-10"><a href="exploratory-data-analysis-eda.html#cb3-10" tabindex="-1"></a>We will use object ps_df, here is the ps_df structure</span>
-<span id="cb3-11"><a href="exploratory-data-analysis-eda.html#cb3-11" tabindex="-1"></a><span class="fu">head</span>(ps_df[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>)])</span>
-<span id="cb3-12"><a href="exploratory-data-analysis-eda.html#cb3-12" tabindex="-1"></a><span class="co"># A tibble: 6 × 6</span></span>
-<span id="cb3-13"><a href="exploratory-data-analysis-eda.html#cb3-13" tabindex="-1"></a>  sample_id  nationality bmi        rel_abund level  taxon                      </span>
-<span id="cb3-14"><a href="exploratory-data-analysis-eda.html#cb3-14" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>fct<span class="sc">&gt;</span>       <span class="er">&lt;</span>fct<span class="sc">&gt;</span>          <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                      </span>
-<span id="cb3-15"><a href="exploratory-data-analysis-eda.html#cb3-15" tabindex="-1"></a><span class="dv">1</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> phylum <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
-<span id="cb3-16"><a href="exploratory-data-analysis-eda.html#cb3-16" tabindex="-1"></a><span class="dv">2</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> family <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
-<span id="cb3-17"><a href="exploratory-data-analysis-eda.html#cb3-17" tabindex="-1"></a><span class="dv">3</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> genus  <span class="sc">*</span>Prevotella melaninogenica<span class="sc">*</span></span>
-<span id="cb3-18"><a href="exploratory-data-analysis-eda.html#cb3-18" tabindex="-1"></a><span class="dv">4</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> otu    <span class="sc">*</span>Prevotella melaninogenica<span class="sc">*</span></span>
-<span id="cb3-19"><a href="exploratory-data-analysis-eda.html#cb3-19" tabindex="-1"></a><span class="dv">5</span> Sample<span class="dv">-212</span> AFR         obese          <span class="fl">0.702</span> phylum <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
-<span id="cb3-20"><a href="exploratory-data-analysis-eda.html#cb3-20" tabindex="-1"></a><span class="dv">6</span> Sample<span class="dv">-212</span> AFR         obese          <span class="fl">0.702</span> family <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="exploratory-data-analysis-eda.html#cb8-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/phyloseq_raw_rel_psextra_df_objects.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-2"><a href="exploratory-data-analysis-eda.html#cb8-2" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb8-3"><a href="exploratory-data-analysis-eda.html#cb8-3" tabindex="-1"></a>  ps_raw</span>
+<span id="cb8-4"><a href="exploratory-data-analysis-eda.html#cb8-4" tabindex="-1"></a>  ps_rel</span>
+<span id="cb8-5"><a href="exploratory-data-analysis-eda.html#cb8-5" tabindex="-1"></a>  psextra_raw</span>
+<span id="cb8-6"><a href="exploratory-data-analysis-eda.html#cb8-6" tabindex="-1"></a>  psextra_rel</span>
+<span id="cb8-7"><a href="exploratory-data-analysis-eda.html#cb8-7" tabindex="-1"></a>  ps_df</span>
+<span id="cb8-8"><a href="exploratory-data-analysis-eda.html#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="exploratory-data-analysis-eda.html#cb8-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"We will use object ps_df, here is the ps_df structure</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-10"><a href="exploratory-data-analysis-eda.html#cb8-10" tabindex="-1"></a>We will use object ps_df, here is the ps_df structure</span>
+<span id="cb8-11"><a href="exploratory-data-analysis-eda.html#cb8-11" tabindex="-1"></a><span class="fu">head</span>(ps_df[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>)])</span>
+<span id="cb8-12"><a href="exploratory-data-analysis-eda.html#cb8-12" tabindex="-1"></a><span class="co"># A tibble: 6 × 6</span></span>
+<span id="cb8-13"><a href="exploratory-data-analysis-eda.html#cb8-13" tabindex="-1"></a>  sample_id  nationality bmi        rel_abund level  taxon                      </span>
+<span id="cb8-14"><a href="exploratory-data-analysis-eda.html#cb8-14" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>fct<span class="sc">&gt;</span>       <span class="er">&lt;</span>fct<span class="sc">&gt;</span>          <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                      </span>
+<span id="cb8-15"><a href="exploratory-data-analysis-eda.html#cb8-15" tabindex="-1"></a><span class="dv">1</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> phylum <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
+<span id="cb8-16"><a href="exploratory-data-analysis-eda.html#cb8-16" tabindex="-1"></a><span class="dv">2</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> family <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
+<span id="cb8-17"><a href="exploratory-data-analysis-eda.html#cb8-17" tabindex="-1"></a><span class="dv">3</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> genus  <span class="sc">*</span>Prevotella melaninogenica<span class="sc">*</span></span>
+<span id="cb8-18"><a href="exploratory-data-analysis-eda.html#cb8-18" tabindex="-1"></a><span class="dv">4</span> Sample<span class="dv">-208</span> AFR         overweight     <span class="fl">0.617</span> otu    <span class="sc">*</span>Prevotella melaninogenica<span class="sc">*</span></span>
+<span id="cb8-19"><a href="exploratory-data-analysis-eda.html#cb8-19" tabindex="-1"></a><span class="dv">5</span> Sample<span class="dv">-212</span> AFR         obese          <span class="fl">0.702</span> phylum <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span>
+<span id="cb8-20"><a href="exploratory-data-analysis-eda.html#cb8-20" tabindex="-1"></a><span class="dv">6</span> Sample<span class="dv">-212</span> AFR         obese          <span class="fl">0.702</span> family <span class="sc">*</span>Bacteroidetes<span class="sc">*</span>            </span></code></pre></div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -189,9 +211,14 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#exploratory-data-analysis-eda"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
-<li><a class="nav-link" href="#example-dataset-1-metagenomics-data"><span class="header-section-number">4.1</span> Example dataset 1: Metagenomics data</a></li>
-<li><a class="nav-link" href="#metagenomics-data-integration"><span class="header-section-number">4.2</span> Metagenomics data integration</a></li>
-<li><a class="nav-link" href="#microbiome-data-integration"><span class="header-section-number">4.3</span> Microbiome data integration</a></li>
+<li><a class="nav-link" href="#preprocessing-metagenomics-data"><span class="header-section-number">4.1</span> Preprocessing Metagenomics data</a></li>
+<li>
+<a class="nav-link" href="#metagenomics-data-joining"><span class="header-section-number">4.2</span> Metagenomics data joining</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#join-metadata-with-metagenomics-otu-table"><span class="header-section-number">4.2.1</span> Join metadata with metagenomics OTU table</a></li>
+<li><a class="nav-link" href="#join-metadata-with-metabolites-data"><span class="header-section-number">4.2.2</span> Join metadata with metabolites data</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#preprocessing-microbiome-data"><span class="header-section-number">4.3</span> Preprocessing microbiome data</a></li>
 </ul>
 
       <div class="book-extra">
@@ -210,7 +237,7 @@
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-26</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">

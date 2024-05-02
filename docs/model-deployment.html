@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>10 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<meta name="author" content="Teresia Mrema-Buza">
+<meta name="description" content="Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring...">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="10 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/model-deployment.html">
+<meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<meta property="og:description" content="Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="10 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:description" content="Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring...">
+<meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Sen-0.4.9/font.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet">
+<link href="libs/Bitter-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="libs/d3-3.3.8/d3.min.js"></script><script src="libs/dagre-0.4.0/dagre-d3.min.js"></script><link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/chromatography-0.1/chromatography.js"></script><script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">IMAP-Part 10: Predictive Modeling Using Microbiome Data</a></li>
+<li class="book-part">ML COMPONENTS</li>
+<li><a class="" href="key-components-of-microbiome-machine-learning.html"><span class="header-section-number">1</span> Key Components of Microbiome Machine Learning</a></li>
+<li class="book-part">ML FRAMEWORKS</li>
+<li><a class="" href="ml-framework_R.html"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
+<li class="book-part">ML PROTOTYPES</li>
+<li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
+<li class="book-part">MODEL DEVELOPMENT</li>
+<li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
+<li class="book-part">MODEL TRAINING</li>
+<li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
+<li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
+<li class="book-part">PERFORMANCE METRICS</li>
+<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
+<li class="book-part">MODEL DEPLOYMENT</li>
+<li><a class="active" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
+<li class="book-part">APPENDIX</li>
+<li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
+<li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
+<li><a class="" href="imap-github-repos.html"><span class="header-section-number">C</span> IMAP GitHub Repos</a></li>
+<li><a class="" href="session-information.html"><span class="header-section-number">D</span> Session Information</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/tmbuza/imap-machine-learning">View book source <i class="fas fa-air-freshener"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="model-deployment" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Model Deployment<a class="anchor" aria-label="anchor" href="#model-deployment"><i class="fas fa-link"></i></a>
+</h1>
+<p>Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring mechanisms is crucial to track model performance over time and detect any deviations or anomalies. This ensures continued reliability and accuracy in microbiome data analysis.</p>
+<blockquote>
+<p>Shiny applications serve as interfaces for machine learning models, providing users with a convenient platform to upload their data and test the model’s performance efficiently.</p>
+</blockquote>
+<div id="data-processing" class="section level2" number="10.1">
+<h2>
+<span class="header-section-number">10.1</span> Data Processing<a class="anchor" aria-label="anchor" href="#data-processing"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>Conduct various tests to ensure the functionality of the system.</li>
+<li>Collect the results from these tests, which may involve multiple types of assessments.</li>
+<li>Determine whether the test should be accepted or rejected based on the collected data.</li>
+<li>Save the developed model for future use.</li>
+</ol>
+</div>
+<div id="application-process" class="section level2" number="10.2">
+<h2>
+<span class="header-section-number">10.2</span> Application Process<a class="anchor" aria-label="anchor" href="#application-process"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>Develop a regularized logistic regression model tailored to the task.</li>
+<li>Create a Shiny application incorporating the developed model.</li>
+<li>Enable users to upload their test data directly to the Shiny app.</li>
+<li>Visualize and download predictions generated by the model through the Shiny interface.</li>
+</ol>
+</div>
+<div id="creating-shiny-app" class="section level2" number="10.3">
+<h2>
+<span class="header-section-number">10.3</span> Creating Shiny App<a class="anchor" aria-label="anchor" href="#creating-shiny-app"><i class="fas fa-link"></i></a>
+</h2>
+<div id="load-trained-model" class="section level3" number="10.3.1">
+<h3>
+<span class="header-section-number">10.3.1</span> Load trained model<a class="anchor" aria-label="anchor" href="#load-trained-model"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="model-deployment.html#cb45-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"models/models.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb45-2"><a href="model-deployment.html#cb45-2" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb45-3"><a href="model-deployment.html#cb45-3" tabindex="-1"></a>  mod_glmnet_adcv</span>
+<span id="cb45-4"><a href="model-deployment.html#cb45-4" tabindex="-1"></a>  mod_regLogistic_cv</span>
+<span id="cb45-5"><a href="model-deployment.html#cb45-5" tabindex="-1"></a>  mod_rf_adcv</span>
+<span id="cb45-6"><a href="model-deployment.html#cb45-6" tabindex="-1"></a>  mod_rf_reptcv</span>
+<span id="cb45-7"><a href="model-deployment.html#cb45-7" tabindex="-1"></a>  mod_knn_adcv</span>
+<span id="cb45-8"><a href="model-deployment.html#cb45-8" tabindex="-1"></a>  mod_knn_reptcv</span></code></pre></div>
+</div>
+<div id="create-user-interfale-object" class="section level3" number="10.3.2">
+<h3>
+<span class="header-section-number">10.3.2</span> Create user interfale object<a class="anchor" aria-label="anchor" href="#create-user-interfale-object"><i class="fas fa-link"></i></a>
+</h3>
+<blockquote>
+<p>This user interface object controls the layout and appearance of the app.</p>
+</blockquote>
+</div>
+</div>
+<div id="example-app-with-qualitative-data-using-burro-package" class="section level2" number="10.4">
+<h2>
+<span class="header-section-number">10.4</span> Example APP with Qualitative data using Burro package<a class="anchor" aria-label="anchor" href="#example-app-with-qualitative-data-using-burro-package"><i class="fas fa-link"></i></a>
+</h2>
+<div class="infoicon">
+<p>
+library(burro)
+</p>
+<p>
+library(NHANES)
+</p>
+<p>
+data(NHANES)
+</p>
+<p>
+NHANES %&gt;% mutate(gr = 1) %&gt;% ggplot(aes_string(x =
+“AgeDecade”, fill = “AgeDecade”)) + geom_bar(aes(y = ..count..), color =
+“black”) + viridis::scale_fill_viridis(discrete = TRUE, option =
+“magma”) + geom_text(aes(group = gr, label = scales::percent(..prop..),
+y = ..count..), stat = “count”, vjust = -0.5) + theme(axis.text.x =
+element_text(angle = 90), legend.position = “none”)
+</p>
+<p>
+data_dict &lt;-
+readr::read_csv(system.file(“nhanes/data_dictionary.csv”,
+package=“burro”))
+</p>
+<p>
+outcome &lt;- c(“Depressed”)
+</p>
+<p>
+explore_data(dataset=NHANES, data_dictionary=data_dict,
+outcome_var=outcome)
+</p>
+</div>
+
+</div>
+</div>
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></div>
+<div class="next"><a href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#model-deployment"><span class="header-section-number">10</span> Model Deployment</a></li>
+<li><a class="nav-link" href="#data-processing"><span class="header-section-number">10.1</span> Data Processing</a></li>
+<li><a class="nav-link" href="#application-process"><span class="header-section-number">10.2</span> Application Process</a></li>
+<li>
+<a class="nav-link" href="#creating-shiny-app"><span class="header-section-number">10.3</span> Creating Shiny App</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#load-trained-model"><span class="header-section-number">10.3.1</span> Load trained model</a></li>
+<li><a class="nav-link" href="#create-user-interfale-object"><span class="header-section-number">10.3.2</span> Create user interfale object</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#example-app-with-qualitative-data-using-burro-package"><span class="header-section-number">10.4</span> Example APP with Qualitative data using Burro package</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01b_ml_realdata_prototypes.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01b_ml_realdata_prototypes.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
+<br>
+</div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+</body>
+</html>

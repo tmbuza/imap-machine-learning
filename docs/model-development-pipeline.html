@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>3 Model Development Pipeline | IMAP: Integrated Microbiome Analysis Pipelines</title>
+
+    <meta name="author" content="Teresia Mrema-Buza" />
+  
+   <meta name="description" content="This part will be added before release." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="3 Model Development Pipeline | IMAP: Integrated Microbiome Analysis Pipelines" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/" />
+  <meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png" />
+  <meta property="og:description" content="This part will be added before release." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Model Development Pipeline | IMAP: Integrated Microbiome Analysis Pipelines" />
+  
+  <meta name="twitter:description" content="This part will be added before release." />
+  <meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <link href="libs/Sen-0.4.9/font.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet"/>
+    <link href="libs/Bitter-0.4.9/font.css" rel="stylesheet" />
+    <script src="libs/bs3compat-0.7.0/transition.js"></script>
+    <script src="libs/bs3compat-0.7.0/tabs.js"></script>
+    <script src="libs/bs3compat-0.7.0/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+    <script src="libs/d3-3.3.8/d3.min.js"></script>
+    <script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+    <link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+    <script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+    <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+    <script src="libs/chromatography-0.1/chromatography.js"></script>
+    <script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+      <link rel="stylesheet" href="style.css" />
+  
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="model-development-pipeline" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Model Development Pipeline</h1>
+<div id="data-cleaning-and-tidying" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Data Cleaning and Tidying</h2>
+<ol style="list-style-type: decimal">
+<li>Feature or OTU table</li>
+<li>Taxonomy table</li>
+<li>Metadata</li>
+<li>Metabolic pathways</li>
+<li>Other experimental data…</li>
+</ol>
+</div>
+<div id="exploratory-data-analysis" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Exploratory Data Analysis</h2>
+<ol start="6" style="list-style-type: decimal">
+<li>Diversity analysis</li>
+<li>Taxonomic profiling</li>
+<li>Differential abundance analysis</li>
+<li>Functional profiling</li>
+</ol>
+</div>
+<div id="feature-engineering" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Feature Engineering</h2>
+<ol start="10" style="list-style-type: decimal">
+<li>Dimensionality reduction techniques (e.g., PCA, t-SNE)</li>
+<li>Feature selection methods (e.g., Boruta, LASSO)</li>
+</ol>
+</div>
+<div id="model-development" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Model Development</h2>
+<ol start="12" style="list-style-type: decimal">
+<li>Selection of appropriate machine learning algorithms (e.g., Random Forest, Support Vector Machines)</li>
+<li>Hyperparameter tuning using cross-validation</li>
+<li>Model evaluation metrics (e.g., accuracy, precision, recall, F1-score)</li>
+</ol>
+</div>
+<div id="model-interpretation" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Model Interpretation</h2>
+<ol start="15" style="list-style-type: decimal">
+<li>Feature importance analysis</li>
+<li>Visualization of model predictions (e.g., ROC curves, confusion matrices)</li>
+</ol>
+</div>
+<div id="integration-with-biological-knowledge" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Integration with Biological Knowledge</h2>
+<ol start="17" style="list-style-type: decimal">
+<li>Interpretation of model results in the context of biological mechanisms</li>
+<li>Identification of potential biomarkers or therapeutic targets</li>
+</ol>
+</div>
+<div id="deployment-and-validation" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Deployment and Validation</h2>
+<ol start="19" style="list-style-type: decimal">
+<li>Application of trained models to new datasets</li>
+<li>Validation of model performance in independent cohorts</li>
+</ol>
+</div>
+<div id="model-framework-graphically" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Model Framework Graphically</h2>
+<p>Here, we present a visualization of the primary stages entailed in constructing and assessing a machine learning model for microbiome analysis.</p>
+<div id="data-preprocessing" class="section level3" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> Data Preprocessing</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="model-development-pipeline.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb1-2"><a href="model-development-pipeline.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(DiagrammeRsvg)</span>
+<span id="cb1-3"><a href="model-development-pipeline.html#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="model-development-pipeline.html#cb1-4" tabindex="-1"></a><span class="fu">mermaid</span>(<span class="st">&quot;graph TD</span></span>
+<span id="cb1-5"><a href="model-development-pipeline.html#cb1-5" tabindex="-1"></a><span class="st">subgraph Data Preprocessing</span></span>
+<span id="cb1-6"><a href="model-development-pipeline.html#cb1-6" tabindex="-1"></a><span class="st">A[Data Cleaning and Transformation] --&gt; B[Exploratory Analysis]</span></span>
+<span id="cb1-7"><a href="model-development-pipeline.html#cb1-7" tabindex="-1"></a><span class="st">B --&gt; C[Feature Selection]</span></span>
+<span id="cb1-8"><a href="model-development-pipeline.html#cb1-8" tabindex="-1"></a><span class="st">C --&gt; D[Feature Balancing]</span></span>
+<span id="cb1-9"><a href="model-development-pipeline.html#cb1-9" tabindex="-1"></a><span class="st">D --&gt; E[Multi-Model Testing]</span></span>
+<span id="cb1-10"><a href="model-development-pipeline.html#cb1-10" tabindex="-1"></a><span class="st">end</span></span>
+<span id="cb1-11"><a href="model-development-pipeline.html#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="model-development-pipeline.html#cb1-12" tabindex="-1"></a><span class="st">&quot;</span>, <span class="at">height =</span> <span class="dv">800</span>, <span class="at">width =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div id="htmlwidget-07c5a1baefccd942e099" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-07c5a1baefccd942e099">{"x":{"diagram":"graph TD\nsubgraph Data Preprocessing\nA[Data Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Feature Selection]\nC --> D[Feature Balancing]\nD --> E[Multi-Model Testing]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="model-development-1" class="section level3" number="3.8.2">
+<h3><span class="header-section-number">3.8.2</span> Model Development</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="model-development-pipeline.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb2-2"><a href="model-development-pipeline.html#cb2-2" tabindex="-1"></a><span class="fu">library</span>(DiagrammeRsvg)</span>
+<span id="cb2-3"><a href="model-development-pipeline.html#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="model-development-pipeline.html#cb2-4" tabindex="-1"></a><span class="fu">mermaid</span>(<span class="st">&quot;graph TD</span></span>
+<span id="cb2-5"><a href="model-development-pipeline.html#cb2-5" tabindex="-1"></a><span class="st">subgraph Model Development</span></span>
+<span id="cb2-6"><a href="model-development-pipeline.html#cb2-6" tabindex="-1"></a><span class="st">E[Model Development] --&gt; F[Model Selection]</span></span>
+<span id="cb2-7"><a href="model-development-pipeline.html#cb2-7" tabindex="-1"></a><span class="st">F --&gt; G[Parameters Tuning]</span></span>
+<span id="cb2-8"><a href="model-development-pipeline.html#cb2-8" tabindex="-1"></a><span class="st">G --&gt; H[Parameter Cross-Validation]</span></span>
+<span id="cb2-9"><a href="model-development-pipeline.html#cb2-9" tabindex="-1"></a><span class="st">H --&gt; I[Model Training]</span></span>
+<span id="cb2-10"><a href="model-development-pipeline.html#cb2-10" tabindex="-1"></a><span class="st">I --&gt; J[Model Testing]</span></span>
+<span id="cb2-11"><a href="model-development-pipeline.html#cb2-11" tabindex="-1"></a><span class="st">end</span></span>
+<span id="cb2-12"><a href="model-development-pipeline.html#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="model-development-pipeline.html#cb2-13" tabindex="-1"></a><span class="st">&quot;</span>, <span class="at">height =</span> <span class="dv">800</span>, <span class="at">width =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div id="htmlwidget-fc5a8e035f4745ad707c" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fc5a8e035f4745ad707c">{"x":{"diagram":"graph TD\nsubgraph Model Development\nE[Model Development] --> F[Model Selection]\nF --> G[Parameters Tuning]\nG --> H[Parameter Cross-Validation]\nH --> I[Model Training]\nI --> J[Model Testing]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="model-evaluation-and-interpretation" class="section level3" number="3.8.3">
+<h3><span class="header-section-number">3.8.3</span> Model Evaluation and Interpretation</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="model-development-pipeline.html#cb3-1" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb3-2"><a href="model-development-pipeline.html#cb3-2" tabindex="-1"></a><span class="fu">library</span>(DiagrammeRsvg)</span>
+<span id="cb3-3"><a href="model-development-pipeline.html#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="model-development-pipeline.html#cb3-4" tabindex="-1"></a><span class="fu">mermaid</span>(<span class="st">&quot;graph TD</span></span>
+<span id="cb3-5"><a href="model-development-pipeline.html#cb3-5" tabindex="-1"></a><span class="st">subgraph Model Evaluation and Interpretation</span></span>
+<span id="cb3-6"><a href="model-development-pipeline.html#cb3-6" tabindex="-1"></a><span class="st">J --&gt; K[Performance Metrics]</span></span>
+<span id="cb3-7"><a href="model-development-pipeline.html#cb3-7" tabindex="-1"></a><span class="st">K --&gt; L[Model Comparison]</span></span>
+<span id="cb3-8"><a href="model-development-pipeline.html#cb3-8" tabindex="-1"></a><span class="st">L --&gt; M[Interpretation and Insights]</span></span>
+<span id="cb3-9"><a href="model-development-pipeline.html#cb3-9" tabindex="-1"></a><span class="st">M --&gt; N[Deployment]</span></span>
+<span id="cb3-10"><a href="model-development-pipeline.html#cb3-10" tabindex="-1"></a><span class="st">N --&gt; O[Validation]</span></span>
+<span id="cb3-11"><a href="model-development-pipeline.html#cb3-11" tabindex="-1"></a><span class="st">end</span></span>
+<span id="cb3-12"><a href="model-development-pipeline.html#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="model-development-pipeline.html#cb3-13" tabindex="-1"></a><span class="st">&quot;</span>, <span class="at">height =</span> <span class="dv">800</span>, <span class="at">width =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div id="htmlwidget-7f9fad492cd6559aa1e2" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7f9fad492cd6559aa1e2">{"x":{"diagram":"graph TD\nsubgraph Model Evaluation and Interpretation\nJ --> K[Performance Metrics]\nK --> L[Model Comparison]\nL --> M[Interpretation and Insights]\nM --> N[Deployment]\nN --> O[Validation]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="performance-metrics" class="section level3" number="3.8.4">
+<h3><span class="header-section-number">3.8.4</span> Performance metrics</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="model-development-pipeline.html#cb4-1" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb4-2"><a href="model-development-pipeline.html#cb4-2" tabindex="-1"></a><span class="fu">library</span>(DiagrammeRsvg)</span>
+<span id="cb4-3"><a href="model-development-pipeline.html#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="model-development-pipeline.html#cb4-4" tabindex="-1"></a><span class="fu">mermaid</span>(<span class="st">&quot;graph LR</span></span>
+<span id="cb4-5"><a href="model-development-pipeline.html#cb4-5" tabindex="-1"></a><span class="st">subgraph Performance Metrics</span></span>
+<span id="cb4-6"><a href="model-development-pipeline.html#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="model-development-pipeline.html#cb4-7" tabindex="-1"></a><span class="st">K{Model Evaluation} --&gt; P[ROC: Receiver Operating Characteristic Curve]</span></span>
+<span id="cb4-8"><a href="model-development-pipeline.html#cb4-8" tabindex="-1"></a><span class="st">K --&gt; Q[Precision Recall Curve]</span></span>
+<span id="cb4-9"><a href="model-development-pipeline.html#cb4-9" tabindex="-1"></a><span class="st">K --&gt; R[F1 Score]</span></span>
+<span id="cb4-10"><a href="model-development-pipeline.html#cb4-10" tabindex="-1"></a><span class="st">K --&gt; S[Confusion Matrix]</span></span>
+<span id="cb4-11"><a href="model-development-pipeline.html#cb4-11" tabindex="-1"></a><span class="st">K --&gt; T[Accuracy]</span></span>
+<span id="cb4-12"><a href="model-development-pipeline.html#cb4-12" tabindex="-1"></a><span class="st">K --&gt; U[Recall]</span></span>
+<span id="cb4-13"><a href="model-development-pipeline.html#cb4-13" tabindex="-1"></a><span class="st">K --&gt; V[Precision]</span></span>
+<span id="cb4-14"><a href="model-development-pipeline.html#cb4-14" tabindex="-1"></a><span class="st">end</span></span>
+<span id="cb4-15"><a href="model-development-pipeline.html#cb4-15" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="model-development-pipeline.html#cb4-16" tabindex="-1"></a><span class="st">&quot;</span>, <span class="at">height =</span> <span class="dv">800</span>, <span class="at">width =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div id="htmlwidget-f636aba0a1b60396dc20" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f636aba0a1b60396dc20">{"x":{"diagram":"graph LR\nsubgraph Performance Metrics\n\nK{Model Evaluation} --> P[ROC: Receiver Operating Characteristic Curve]\nK --> Q[Precision Recall Curve]\nK --> R[F1 Score]\nK --> S[Confusion Matrix]\nK --> T[Accuracy]\nK --> U[Recall]\nK --> V[Precision]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+
+</div>
+</div>
+</div>
+
+
+
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p><br>
+        <p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p><br>
+      </div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+</body>
+
+</html>

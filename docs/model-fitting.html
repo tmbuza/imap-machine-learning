@@ -66,11 +66,10 @@
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="active" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
 <li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
 <li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -94,7 +93,7 @@
 <span class="header-section-number">7.1</span> Regularized Logistic Regression<a class="anchor" aria-label="anchor" href="#regularized-logistic-regression"><i class="fas fa-link"></i></a>
 </h2>
 <p>Regularized Logistic Regression is a variant of logistic regression tailored for binary classification tasks commonly encountered in microbiome studies. It introduces penalty terms such as Lasso (L1) and Ridge (L2) to control model complexity and prevent overfitting.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">mod_regLogistic_cv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
@@ -106,7 +105,7 @@
 <span>                                                         loss <span class="op">=</span>  <span class="st">"L2_primal"</span>,</span>
 <span>                                                         epsilon <span class="op">=</span> <span class="fl">0.01</span> <span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Regularized Logistic Regression model performance during training (using metrics like accuracy)</strong></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="co">## Visualize the model performance</span></span>
 <span></span>
@@ -120,21 +119,21 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. Cost for Regularized Logistic Regression Model (Adaptive CV)"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Cost"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-11-1.png" width="672"></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-12-1.png" width="672"></div>
 </div>
 <div id="generalized-linear-models-glmnet" class="section level2" number="7.2">
 <h2>
 <span class="header-section-number">7.2</span> Generalized Linear Models (glmnet)<a class="anchor" aria-label="anchor" href="#generalized-linear-models-glmnet"><i class="fas fa-link"></i></a>
 </h2>
 <p>glmnet is a package in R that fits Generalized Linear Models with Lasso or Elastic-Net regularization. It’s particularly useful for microbiome data analysis due to its ability to handle high-dimensional datasets with sparse features.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="va">mod_glmnet_adcv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
 <span>             method <span class="op">=</span> <span class="st">"glmnet"</span>,</span>
 <span>             tuneLength <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>             trControl <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"adaptive_cv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Generalized Linear model performance during training (using metrics like accuracy)</strong></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="co">## Visualize the model performance</span></span>
 <span></span>
@@ -148,14 +147,14 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. Lambda for glmnet Model (Adaptive CV)"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Lambda"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-13-1.png" width="672"></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-14-1.png" width="672"></div>
 </div>
 <div id="random-forest" class="section level2" number="7.3">
 <h2>
 <span class="header-section-number">7.3</span> Random Forest<a class="anchor" aria-label="anchor" href="#random-forest"><i class="fas fa-link"></i></a>
 </h2>
 <p>Random Forest is an ensemble learning technique that combines multiple decision trees to improve predictive performance. It’s well-suited for handling the high-dimensional and nonlinear nature of microbiome data while mitigating overfitting.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="va">mod_rf_reptcv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
 <span>             method <span class="op">=</span> <span class="st">"rf"</span>,</span>
@@ -169,7 +168,7 @@
 <span>             trControl <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"adaptive_cv"</span>,</span>
 <span>                      verboseIter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Random Forest model performance during training (using metrics like accuracy)</strong></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="co">## Visualize the model performance</span></span>
 <span></span>
@@ -183,8 +182,8 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. mtry for Random Forest Model (Repeated CV)"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"mtry"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-15-1.png" width="672"></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="figures/unnamed-chunk-16-1.png" width="672"></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Plot Accuracy vs. mtry for Random Forest Model (Adaptive CV)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mod_rf_adcv</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mtry</span>, y <span class="op">=</span> <span class="va">Accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -193,14 +192,14 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. mtry for Random Forest Model (Adaptive CV)"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"mtry"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-15-2.png" width="672"></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-16-2.png" width="672"></div>
 </div>
 <div id="k-nearest-neighbors-knn" class="section level2" number="7.4">
 <h2>
 <span class="header-section-number">7.4</span> k-Nearest Neighbors (kNN)<a class="anchor" aria-label="anchor" href="#k-nearest-neighbors-knn"><i class="fas fa-link"></i></a>
 </h2>
 <p>kNN is a simple yet effective algorithm for classification and regression tasks in microbiome studies. It works by assigning a class label to an unclassified sample based on the majority class of its k nearest neighbors in the feature space.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="va">mod_knn_reptcv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
 <span>                        method <span class="op">=</span> <span class="st">"knn"</span>,</span>
@@ -216,7 +215,7 @@
 <span>                                                       repeats <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                                                       verboseIter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>k-Nearest Neighbors model performance during training (using metrics like accuracy)</strong></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="co">## Visualize the model performance</span></span>
 <span></span>
@@ -229,8 +228,8 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. k for KNN Model (Repeated CV)"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"k"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-17-1.png" width="672"></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="figures/unnamed-chunk-18-1.png" width="672"></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Plot Accuracy vs. k for KNN Model (Adaptive CV)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mod_knn_adcv</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">k</span>, y <span class="op">=</span> <span class="va">Accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -239,8 +238,8 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. k for KNN Model (Adaptive CV)"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"k"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-17-2.png" width="672"></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="figures/unnamed-chunk-18-2.png" width="672"></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.exists</a></span><span class="op">(</span><span class="st">"models"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="st">"models"</span><span class="op">)</span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">mod_glmnet_adcv</span>, <span class="va">mod_regLogistic_cv</span>, <span class="va">mod_rf_adcv</span>, <span class="va">mod_rf_reptcv</span>, <span class="va">mod_knn_adcv</span>, <span class="va">mod_knn_reptcv</span>, file <span class="op">=</span> <span class="st">"models/models.rda"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -307,7 +306,7 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
 <span class="header-section-number">7.12</span> K-Fold Cross-Validation<a class="anchor" aria-label="anchor" href="#k-fold-cross-validation"><i class="fas fa-link"></i></a>
 </h2>
 <p>K-Fold Cross-Validation divides the data into K equal-sized folds. The model is trained K times, each time using K-1 folds as the training set and the remaining fold as the validation set.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example of K-Fold Cross-Validation</span></span>
 <span><span class="va">kfcv_ctrl</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -316,7 +315,7 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
 <span class="header-section-number">7.13</span> Leave-One-Out Cross-Validation (LOOCV)<a class="anchor" aria-label="anchor" href="#leave-one-out-cross-validation-loocv"><i class="fas fa-link"></i></a>
 </h2>
 <p>Leave-One-Out Cross-Validation involves using a single observation as the validation set and the remaining observations as the training set. This process is repeated for each observation in the dataset.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example of Leave-One-Out Cross-Validation</span></span>
 <span><span class="va">loocv_ctrl</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"LOOCV"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -325,7 +324,7 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
 <span class="header-section-number">7.14</span> Stratified Cross-Validation<a class="anchor" aria-label="anchor" href="#stratified-cross-validation"><i class="fas fa-link"></i></a>
 </h2>
 <p>Stratified Cross-Validation ensures that each fold maintains the same class distribution as the original dataset. It is particularly useful for imbalanced datasets.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example of Stratified Cross-Validation</span></span>
 <span><span class="va">strcv_ctrl</span> <span class="op">&lt;-</span> <span class="fu">trainControl</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, </span>
 <span>                     number <span class="op">=</span> <span class="fl">10</span>, </span>
@@ -337,7 +336,7 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
 <span class="header-section-number">7.15</span> Nested Cross-Validation<a class="anchor" aria-label="anchor" href="#nested-cross-validation"><i class="fas fa-link"></i></a>
 </h2>
 <p>Nested Cross-Validation is used to tune hyperparameters and evaluate model performance simultaneously. It involves an outer loop for model evaluation using K-Fold Cross-Validation and an inner loop for hyperparameter tuning.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example of Nested Cross-Validation</span></span>
 <span><span class="va">nestcv_ctrl_outer</span> <span class="op">&lt;-</span> <span class="fu">trainControl</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">netscv_ctrl_inner</span> <span class="op">&lt;-</span> <span class="fu">trainControl</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
@@ -383,7 +382,7 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-26</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">

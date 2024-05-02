@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>2 Machine Learning Framework in R: From Data Acquisition to Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines</title>
 <meta name="author" content="Teresia Mrema-Buza">
-<meta name="description" content="A comprehensive framework outlining the key steps involved in leveraging machine learning techniques for analyzing microbiome data in R.  2.1 Data Acquisition NCBI project: PRJEB13870 Title: Gut...">
+<meta name="description" content="Discover a comprehensive framework for leveraging machine learning in R to analyze microbiome data. We showcase this framework using publicly available data for microbiome and metagenomics...">
 <meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="2 Machine Learning Framework in R: From Data Acquisition to Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/ml-framework_R.html">
 <meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
-<meta property="og:description" content="A comprehensive framework outlining the key steps involved in leveraging machine learning techniques for analyzing microbiome data in R.  2.1 Data Acquisition NCBI project: PRJEB13870 Title: Gut...">
+<meta property="og:description" content="Discover a comprehensive framework for leveraging machine learning in R to analyze microbiome data. We showcase this framework using publicly available data for microbiome and metagenomics...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2 Machine Learning Framework in R: From Data Acquisition to Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines">
-<meta name="twitter:description" content="A comprehensive framework outlining the key steps involved in leveraging machine learning techniques for analyzing microbiome data in R.  2.1 Data Acquisition NCBI project: PRJEB13870 Title: Gut...">
+<meta name="twitter:description" content="Discover a comprehensive framework for leveraging machine learning in R to analyze microbiome data. We showcase this framework using publicly available data for microbiome and metagenomics...">
 <meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -66,11 +66,10 @@
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
 <li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
 <li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -88,31 +87,24 @@
 <h1>
 <span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment<a class="anchor" aria-label="anchor" href="#ml-framework_R"><i class="fas fa-link"></i></a>
 </h1>
-<p>A comprehensive framework outlining the key steps involved in leveraging machine learning techniques for analyzing microbiome data in R.</p>
-<div id="data-acquisition" class="section level2" number="2.1">
+<p>Discover a comprehensive framework for leveraging machine learning in R to analyze microbiome data. We showcase this framework using publicly available data for microbiome and metagenomics analysis, accessible through R packages or the NCBI. By capitalizing on these resources, we demonstrate the application of advanced analytical techniques. This initiative not only underscores the value of open-access data but also highlights the broader implications for precision medicine and personalized healthcare.</p>
+<div id="data-acquisition-from-ncbi" class="section level2" number="2.1">
 <h2>
-<span class="header-section-number">2.1</span> Data Acquisition<a class="anchor" aria-label="anchor" href="#data-acquisition"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.1</span> Data Acquisition from NCBI<a class="anchor" aria-label="anchor" href="#data-acquisition-from-ncbi"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
-<li>NCBI project: <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJEB13870">PRJEB13870</a>
-</li>
-<li>Title: Gut microbiota dysbiosis contributes to the development of hypertension (Zhao et al., 2017)</li>
+<li>Data from the NCBI project PRJEB13870, titled “Gut microbiota dysbiosis contributes to the development of hypertension” by Zhao et al., 2017.</li>
+<li>Data from the dietswap dataset from the microbiome package, offering insights into the impact of dietary interventions on gut microbiota composition</li>
 </ul>
 </div>
-<div id="study-description" class="section level2" number="2.2">
+<div id="model-development-pipeline" class="section level2" number="2.2">
 <h2>
-<span class="header-section-number">2.2</span> Study Description<a class="anchor" aria-label="anchor" href="#study-description"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.2</span> Model Development Pipeline<a class="anchor" aria-label="anchor" href="#model-development-pipeline"><i class="fas fa-link"></i></a>
 </h2>
-<ul>
-<li>Metagenomic and Metabonomics</li>
-<li>Fecal microbiota transplantation</li>
-<li>Identified dysbiosis of gut microbiome as a contributor to hypertension pathogenesis through metabolic effects alteration</li>
-</ul>
-</div>
-<div id="data-cleaning-and-tidying" class="section level2" number="2.3">
-<h2>
-<span class="header-section-number">2.3</span> Data Cleaning and Tidying<a class="anchor" aria-label="anchor" href="#data-cleaning-and-tidying"><i class="fas fa-link"></i></a>
-</h2>
+<div id="data-cleaning-and-tidying" class="section level3" number="2.2.1">
+<h3>
+<span class="header-section-number">2.2.1</span> Data Cleaning and Tidying<a class="anchor" aria-label="anchor" href="#data-cleaning-and-tidying"><i class="fas fa-link"></i></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li>Feature or OTU table</li>
 <li>Taxonomy table</li>
@@ -121,10 +113,10 @@
 <li>Other experimental data…</li>
 </ol>
 </div>
-<div id="exploratory-data-analysis" class="section level2" number="2.4">
-<h2>
-<span class="header-section-number">2.4</span> Exploratory Data Analysis<a class="anchor" aria-label="anchor" href="#exploratory-data-analysis"><i class="fas fa-link"></i></a>
-</h2>
+<div id="exploratory-data-analysis" class="section level3" number="2.2.2">
+<h3>
+<span class="header-section-number">2.2.2</span> Exploratory Data Analysis<a class="anchor" aria-label="anchor" href="#exploratory-data-analysis"><i class="fas fa-link"></i></a>
+</h3>
 <ol start="6" style="list-style-type: decimal">
 <li>Diversity analysis</li>
 <li>Taxonomic profiling</li>
@@ -132,51 +124,151 @@
 <li>Functional profiling</li>
 </ol>
 </div>
-<div id="feature-engineering" class="section level2" number="2.5">
-<h2>
-<span class="header-section-number">2.5</span> Feature Engineering<a class="anchor" aria-label="anchor" href="#feature-engineering"><i class="fas fa-link"></i></a>
-</h2>
+<div id="feature-engineering" class="section level3" number="2.2.3">
+<h3>
+<span class="header-section-number">2.2.3</span> Feature Engineering<a class="anchor" aria-label="anchor" href="#feature-engineering"><i class="fas fa-link"></i></a>
+</h3>
 <ol start="10" style="list-style-type: decimal">
 <li>Dimensionality reduction techniques (e.g., PCA, t-SNE)</li>
 <li>Feature selection methods (e.g., Boruta, LASSO)</li>
 </ol>
 </div>
-<div id="model-development" class="section level2" number="2.6">
-<h2>
-<span class="header-section-number">2.6</span> Model Development<a class="anchor" aria-label="anchor" href="#model-development"><i class="fas fa-link"></i></a>
-</h2>
+<div id="model-development" class="section level3" number="2.2.4">
+<h3>
+<span class="header-section-number">2.2.4</span> Model Development<a class="anchor" aria-label="anchor" href="#model-development"><i class="fas fa-link"></i></a>
+</h3>
 <ol start="12" style="list-style-type: decimal">
 <li>Selection of appropriate machine learning algorithms (e.g., Random Forest, Support Vector Machines)</li>
 <li>Hyperparameter tuning using cross-validation</li>
 <li>Model evaluation metrics (e.g., accuracy, precision, recall, F1-score)</li>
 </ol>
 </div>
-<div id="model-interpretation" class="section level2" number="2.7">
-<h2>
-<span class="header-section-number">2.7</span> Model Interpretation<a class="anchor" aria-label="anchor" href="#model-interpretation"><i class="fas fa-link"></i></a>
-</h2>
+<div id="model-interpretation" class="section level3" number="2.2.5">
+<h3>
+<span class="header-section-number">2.2.5</span> Model Interpretation<a class="anchor" aria-label="anchor" href="#model-interpretation"><i class="fas fa-link"></i></a>
+</h3>
 <ol start="15" style="list-style-type: decimal">
 <li>Feature importance analysis</li>
 <li>Visualization of model predictions (e.g., ROC curves, confusion matrices)</li>
 </ol>
 </div>
-<div id="integration-with-biological-knowledge" class="section level2" number="2.8">
-<h2>
-<span class="header-section-number">2.8</span> Integration with Biological Knowledge<a class="anchor" aria-label="anchor" href="#integration-with-biological-knowledge"><i class="fas fa-link"></i></a>
-</h2>
+<div id="integration-with-biological-knowledge" class="section level3" number="2.2.6">
+<h3>
+<span class="header-section-number">2.2.6</span> Integration with Biological Knowledge<a class="anchor" aria-label="anchor" href="#integration-with-biological-knowledge"><i class="fas fa-link"></i></a>
+</h3>
 <ol start="17" style="list-style-type: decimal">
 <li>Interpretation of model results in the context of biological mechanisms</li>
 <li>Identification of potential biomarkers or therapeutic targets</li>
 </ol>
 </div>
-<div id="deployment-and-validation" class="section level2" number="2.9">
-<h2>
-<span class="header-section-number">2.9</span> Deployment and Validation<a class="anchor" aria-label="anchor" href="#deployment-and-validation"><i class="fas fa-link"></i></a>
-</h2>
+<div id="deployment-and-validation" class="section level3" number="2.2.7">
+<h3>
+<span class="header-section-number">2.2.7</span> Deployment and Validation<a class="anchor" aria-label="anchor" href="#deployment-and-validation"><i class="fas fa-link"></i></a>
+</h3>
 <ol start="19" style="list-style-type: decimal">
 <li>Application of trained models to new datasets</li>
 <li>Validation of model performance in independent cohorts</li>
 </ol>
+</div>
+</div>
+<div id="model-framework-graphically" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> Model Framework Graphically<a class="anchor" aria-label="anchor" href="#model-framework-graphically"><i class="fas fa-link"></i></a>
+</h2>
+<p>Here, we present a visualization of the primary stages entailed in constructing and assessing a machine learning model for microbiome analysis.</p>
+<div id="data-preprocessing" class="section level3" number="2.3.1">
+<h3>
+<span class="header-section-number">2.3.1</span> Data Preprocessing<a class="anchor" aria-label="anchor" href="#data-preprocessing"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rich-iannone.github.io/DiagrammeR/">DiagrammeR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rich-iannone/DiagrammeRsvg">DiagrammeRsvg</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rich-iannone.github.io/DiagrammeR/reference/mermaid.html">mermaid</a></span><span class="op">(</span><span class="st">"graph TD</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">subgraph A</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">A[Data Cleaning and Transformation] --&gt; B[Exploratory Analysis]</span></span>
+<span><span class="st">B --&gt; C[Feature Selection]</span></span>
+<span><span class="st">C --&gt; D[Feature Balancing]</span></span>
+<span><span class="st">D --&gt; E[Multi-Model Testing]</span></span>
+<span><span class="st">end</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">"</span>, height <span class="op">=</span> <span class="fl">800</span>, width <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-bea7288d022e83c24d83" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bea7288d022e83c24d83">{"x":{"diagram":"graph TD\n\nsubgraph A\n\nA[Data Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Feature Selection]\nC --> D[Feature Balancing]\nD --> E[Multi-Model Testing]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="model-development-1" class="section level3" number="2.3.2">
+<h3>
+<span class="header-section-number">2.3.2</span> Model Development<a class="anchor" aria-label="anchor" href="#model-development-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rich-iannone.github.io/DiagrammeR/">DiagrammeR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rich-iannone/DiagrammeRsvg">DiagrammeRsvg</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rich-iannone.github.io/DiagrammeR/reference/mermaid.html">mermaid</a></span><span class="op">(</span><span class="st">"graph TD</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">subgraph B</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">E[Machine Learning Model Development] --&gt; F[Model Selection]</span></span>
+<span><span class="st">F --&gt; G[Parameters Tuning]</span></span>
+<span><span class="st">G --&gt; H[Parameter Cross-Validation]</span></span>
+<span><span class="st">H --&gt; I[Model Training]</span></span>
+<span><span class="st">I --&gt; J[Model Testing]</span></span>
+<span><span class="st">end</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">"</span>, height <span class="op">=</span> <span class="fl">800</span>, width <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-ee931ffd0e5f7e2c1606" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ee931ffd0e5f7e2c1606">{"x":{"diagram":"graph TD\n\nsubgraph B\n\nE[Machine Learning Model Development] --> F[Model Selection]\nF --> G[Parameters Tuning]\nG --> H[Parameter Cross-Validation]\nH --> I[Model Training]\nI --> J[Model Testing]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="model-evaluation-and-interpretation" class="section level3" number="2.3.3">
+<h3>
+<span class="header-section-number">2.3.3</span> Model Evaluation and Interpretation<a class="anchor" aria-label="anchor" href="#model-evaluation-and-interpretation"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rich-iannone.github.io/DiagrammeR/">DiagrammeR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rich-iannone/DiagrammeRsvg">DiagrammeRsvg</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rich-iannone.github.io/DiagrammeR/reference/mermaid.html">mermaid</a></span><span class="op">(</span><span class="st">"graph TD</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">subgraph C</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">J[Model Evaluation and Interpretation] --&gt; K[Performance Metrics]</span></span>
+<span><span class="st">K --&gt; L[Model Comparison]</span></span>
+<span><span class="st">L --&gt; M[Interpretation and Insights]</span></span>
+<span><span class="st">M --&gt; N[Deployment]</span></span>
+<span><span class="st">N --&gt; O[Validation]</span></span>
+<span><span class="st">end</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">"</span>, height <span class="op">=</span> <span class="fl">800</span>, width <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-2c73c736b5831b3a8767" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2c73c736b5831b3a8767">{"x":{"diagram":"graph TD\n\nsubgraph C\n\nJ[Model Evaluation and Interpretation] --> K[Performance Metrics]\nK --> L[Model Comparison]\nL --> M[Interpretation and Insights]\nM --> N[Deployment]\nN --> O[Validation]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="performance-metrics" class="section level3" number="2.3.4">
+<h3>
+<span class="header-section-number">2.3.4</span> Performance metrics<a class="anchor" aria-label="anchor" href="#performance-metrics"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rich-iannone.github.io/DiagrammeR/">DiagrammeR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rich-iannone/DiagrammeRsvg">DiagrammeRsvg</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rich-iannone.github.io/DiagrammeR/reference/mermaid.html">mermaid</a></span><span class="op">(</span><span class="st">"graph LR</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">subgraph D</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">K{Model Evaluation} --&gt; P[ROC: Receiver Operating Characteristic Curve]</span></span>
+<span><span class="st">K --&gt; Q[Precision Recall Curve]</span></span>
+<span><span class="st">K --&gt; R[F1 Score]</span></span>
+<span><span class="st">K --&gt; S[Confusion Matrix]</span></span>
+<span><span class="st">K --&gt; T[Accuracy]</span></span>
+<span><span class="st">K --&gt; U[Recall]</span></span>
+<span><span class="st">K --&gt; V[Precision]</span></span>
+<span><span class="st">end</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">"</span>, height <span class="op">=</span> <span class="fl">800</span>, width <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-1263dff47330afd50692" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1263dff47330afd50692">{"x":{"diagram":"graph LR\n\nsubgraph D\n\nK{Model Evaluation} --> P[ROC: Receiver Operating Characteristic Curve]\nK --> Q[Precision Recall Curve]\nK --> R[F1 Score]\nK --> S[Confusion Matrix]\nK --> T[Accuracy]\nK --> U[Recall]\nK --> V[Precision]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+</div>
 </div>
 </div>
 
@@ -189,15 +281,26 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#ml-framework_R"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
-<li><a class="nav-link" href="#data-acquisition"><span class="header-section-number">2.1</span> Data Acquisition</a></li>
-<li><a class="nav-link" href="#study-description"><span class="header-section-number">2.2</span> Study Description</a></li>
-<li><a class="nav-link" href="#data-cleaning-and-tidying"><span class="header-section-number">2.3</span> Data Cleaning and Tidying</a></li>
-<li><a class="nav-link" href="#exploratory-data-analysis"><span class="header-section-number">2.4</span> Exploratory Data Analysis</a></li>
-<li><a class="nav-link" href="#feature-engineering"><span class="header-section-number">2.5</span> Feature Engineering</a></li>
-<li><a class="nav-link" href="#model-development"><span class="header-section-number">2.6</span> Model Development</a></li>
-<li><a class="nav-link" href="#model-interpretation"><span class="header-section-number">2.7</span> Model Interpretation</a></li>
-<li><a class="nav-link" href="#integration-with-biological-knowledge"><span class="header-section-number">2.8</span> Integration with Biological Knowledge</a></li>
-<li><a class="nav-link" href="#deployment-and-validation"><span class="header-section-number">2.9</span> Deployment and Validation</a></li>
+<li><a class="nav-link" href="#data-acquisition-from-ncbi"><span class="header-section-number">2.1</span> Data Acquisition from NCBI</a></li>
+<li>
+<a class="nav-link" href="#model-development-pipeline"><span class="header-section-number">2.2</span> Model Development Pipeline</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-cleaning-and-tidying"><span class="header-section-number">2.2.1</span> Data Cleaning and Tidying</a></li>
+<li><a class="nav-link" href="#exploratory-data-analysis"><span class="header-section-number">2.2.2</span> Exploratory Data Analysis</a></li>
+<li><a class="nav-link" href="#feature-engineering"><span class="header-section-number">2.2.3</span> Feature Engineering</a></li>
+<li><a class="nav-link" href="#model-development"><span class="header-section-number">2.2.4</span> Model Development</a></li>
+<li><a class="nav-link" href="#model-interpretation"><span class="header-section-number">2.2.5</span> Model Interpretation</a></li>
+<li><a class="nav-link" href="#integration-with-biological-knowledge"><span class="header-section-number">2.2.6</span> Integration with Biological Knowledge</a></li>
+<li><a class="nav-link" href="#deployment-and-validation"><span class="header-section-number">2.2.7</span> Deployment and Validation</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#model-framework-graphically"><span class="header-section-number">2.3</span> Model Framework Graphically</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-preprocessing"><span class="header-section-number">2.3.1</span> Data Preprocessing</a></li>
+<li><a class="nav-link" href="#model-development-1"><span class="header-section-number">2.3.2</span> Model Development</a></li>
+<li><a class="nav-link" href="#model-evaluation-and-interpretation"><span class="header-section-number">2.3.3</span> Model Evaluation and Interpretation</a></li>
+<li><a class="nav-link" href="#performance-metrics"><span class="header-section-number">2.3.4</span> Performance metrics</a></li>
+</ul>
+</li>
 </ul>
 
       <div class="book-extra">
@@ -216,7 +319,7 @@
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-26</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">

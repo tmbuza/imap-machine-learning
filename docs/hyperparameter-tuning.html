@@ -66,11 +66,10 @@
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
 <li><a class="active" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
 <li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -89,8 +88,11 @@
 <span class="header-section-number">8</span> Hyperparameter Tuning<a class="anchor" aria-label="anchor" href="#hyperparameter-tuning"><i class="fas fa-link"></i></a>
 </h1>
 <p>In this stage, our objective is to refine the parameters utilized during model fitting to maximize performance. We concentrate on optimizing the model’s effectiveness by fine-tuning various hyperparameters. These parameters, such as regularization strength or tree depth, are manually adjusted to enhance the model’s accuracy. Through experimentation with different values, our goal is to pinpoint the optimal combination that maximizes performance on validation data. This pivotal step ensures that the model not only excels on training data but also generalizes effectively to new, unseen data.</p>
-<p><strong>Parameter tuning for a RLR Model</strong></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div id="demo-tuning-for-a-rlr-model" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Demo tuning for a RLR Model<a class="anchor" aria-label="anchor" href="#demo-tuning-for-a-rlr-model"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">110912</span><span class="op">)</span></span>
 <span></span>
@@ -131,58 +133,20 @@
 <span>    y <span class="op">=</span> <span class="st">"Accuracy"</span>  <span class="co"># Label the y-axis</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Apply a black and white theme</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-24-1.png" width="672"></div>
-<div id="confusion-matrix" class="section level2" number="8.1">
-<h2>
-<span class="header-section-number">8.1</span> Confusion Matrix<a class="anchor" aria-label="anchor" href="#confusion-matrix"><i class="fas fa-link"></i></a>
-</h2>
-<p>A Confusion Matrix summarizes the performance of a classification model by tabulating the true positive, true negative, false positive, and false negative predictions.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="hyperparameter-tuning.html#cb25-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb25-2"><a href="hyperparameter-tuning.html#cb25-2" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb25-3"><a href="hyperparameter-tuning.html#cb25-3" tabindex="-1"></a><span class="co"># Predict using the trained model</span></span>
-<span id="cb25-4"><a href="hyperparameter-tuning.html#cb25-4" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_regLogistic_cv, <span class="at">newdata =</span> test_data)</span>
-<span id="cb25-5"><a href="hyperparameter-tuning.html#cb25-5" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="hyperparameter-tuning.html#cb25-6" tabindex="-1"></a><span class="co"># Compute confusion matrix</span></span>
-<span id="cb25-7"><a href="hyperparameter-tuning.html#cb25-7" tabindex="-1"></a>confusion_matrix <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(predictions, test_data<span class="sc">$</span>target)</span>
-<span id="cb25-8"><a href="hyperparameter-tuning.html#cb25-8" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="hyperparameter-tuning.html#cb25-9" tabindex="-1"></a><span class="fu">print</span>(confusion_matrix)</span>
-<span id="cb25-10"><a href="hyperparameter-tuning.html#cb25-10" tabindex="-1"></a>Confusion Matrix and Statistics</span>
-<span id="cb25-11"><a href="hyperparameter-tuning.html#cb25-11" tabindex="-1"></a></span>
-<span id="cb25-12"><a href="hyperparameter-tuning.html#cb25-12" tabindex="-1"></a>          Reference</span>
-<span id="cb25-13"><a href="hyperparameter-tuning.html#cb25-13" tabindex="-1"></a>Prediction AAM AFR</span>
-<span id="cb25-14"><a href="hyperparameter-tuning.html#cb25-14" tabindex="-1"></a>       AAM  <span class="dv">19</span>   <span class="dv">3</span></span>
-<span id="cb25-15"><a href="hyperparameter-tuning.html#cb25-15" tabindex="-1"></a>       AFR   <span class="dv">5</span>  <span class="dv">16</span></span>
-<span id="cb25-16"><a href="hyperparameter-tuning.html#cb25-16" tabindex="-1"></a>                                         </span>
-<span id="cb25-17"><a href="hyperparameter-tuning.html#cb25-17" tabindex="-1"></a>               Accuracy <span class="sc">:</span> <span class="fl">0.814</span>          </span>
-<span id="cb25-18"><a href="hyperparameter-tuning.html#cb25-18" tabindex="-1"></a>                 <span class="dv">95</span>% CI <span class="sc">:</span> (<span class="fl">0.666</span>, <span class="fl">0.9161</span>)</span>
-<span id="cb25-19"><a href="hyperparameter-tuning.html#cb25-19" tabindex="-1"></a>    No Information Rate <span class="sc">:</span> <span class="fl">0.5581</span>         </span>
-<span id="cb25-20"><a href="hyperparameter-tuning.html#cb25-20" tabindex="-1"></a>    P<span class="sc">-</span>Value [Acc <span class="sc">&gt;</span> NIR] <span class="sc">:</span> <span class="fl">0.000393</span>       </span>
-<span id="cb25-21"><a href="hyperparameter-tuning.html#cb25-21" tabindex="-1"></a>                                         </span>
-<span id="cb25-22"><a href="hyperparameter-tuning.html#cb25-22" tabindex="-1"></a>                  Kappa <span class="sc">:</span> <span class="fl">0.6269</span>         </span>
-<span id="cb25-23"><a href="hyperparameter-tuning.html#cb25-23" tabindex="-1"></a>                                         </span>
-<span id="cb25-24"><a href="hyperparameter-tuning.html#cb25-24" tabindex="-1"></a> Mcnemar<span class="st">'s Test P-Value : 0.723674       </span></span>
-<span id="cb25-25"><a href="hyperparameter-tuning.html#cb25-25" tabindex="-1"></a><span class="st">                                         </span></span>
-<span id="cb25-26"><a href="hyperparameter-tuning.html#cb25-26" tabindex="-1"></a><span class="st">            Sensitivity : 0.7917         </span></span>
-<span id="cb25-27"><a href="hyperparameter-tuning.html#cb25-27" tabindex="-1"></a><span class="st">            Specificity : 0.8421         </span></span>
-<span id="cb25-28"><a href="hyperparameter-tuning.html#cb25-28" tabindex="-1"></a><span class="st">         Pos Pred Value : 0.8636         </span></span>
-<span id="cb25-29"><a href="hyperparameter-tuning.html#cb25-29" tabindex="-1"></a><span class="st">         Neg Pred Value : 0.7619         </span></span>
-<span id="cb25-30"><a href="hyperparameter-tuning.html#cb25-30" tabindex="-1"></a><span class="st">             Prevalence : 0.5581         </span></span>
-<span id="cb25-31"><a href="hyperparameter-tuning.html#cb25-31" tabindex="-1"></a><span class="st">         Detection Rate : 0.4419         </span></span>
-<span id="cb25-32"><a href="hyperparameter-tuning.html#cb25-32" tabindex="-1"></a><span class="st">   Detection Prevalence : 0.5116         </span></span>
-<span id="cb25-33"><a href="hyperparameter-tuning.html#cb25-33" tabindex="-1"></a><span class="st">      Balanced Accuracy : 0.8169         </span></span>
-<span id="cb25-34"><a href="hyperparameter-tuning.html#cb25-34" tabindex="-1"></a><span class="st">                                         </span></span>
-<span id="cb25-35"><a href="hyperparameter-tuning.html#cb25-35" tabindex="-1"></a><span class="st">       '</span>Positive<span class="st">' Class : AAM            </span></span>
-<span id="cb25-36"><a href="hyperparameter-tuning.html#cb25-36" tabindex="-1"></a><span class="st">                                         </span></span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-25-1.png" width="672"></div>
 </div>
 </div>
+
+
+
   <div class="chapter-nav">
 <div class="prev"><a href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></div>
-<div class="next"><a href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></div>
+<div class="next"><a href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#hyperparameter-tuning"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li><a class="nav-link" href="#confusion-matrix"><span class="header-section-number">8.1</span> Confusion Matrix</a></li>
+<li><a class="nav-link" href="#demo-tuning-for-a-rlr-model"><span class="header-section-number">8.1</span> Demo tuning for a RLR Model</a></li>
 </ul>
 
       <div class="book-extra">
@@ -201,7 +165,7 @@
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-26</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">

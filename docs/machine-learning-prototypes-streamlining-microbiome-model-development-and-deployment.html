@@ -66,11 +66,10 @@
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
 <li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
 <li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -89,9 +88,9 @@
 <span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment<a class="anchor" aria-label="anchor" href="#machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment"><i class="fas fa-link"></i></a>
 </h1>
 <p>Machine Learning Prototypes (MLPs) serve as foundational frameworks for accelerating and enhancing machine learning endeavors within the context of microbiome research. These robust solutions offer streamlined approaches for developing, deploying, and monitoring machine learning models tailored specifically for microbiome data analysis.</p>
-<div id="key-features-of-mlps" class="section level2" number="3.1">
+<div id="key-features-of-ml-prototype" class="section level2" number="3.1">
 <h2>
-<span class="header-section-number">3.1</span> Key Features of MLPs<a class="anchor" aria-label="anchor" href="#key-features-of-mlps"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.1</span> Key Features of ML Prototype<a class="anchor" aria-label="anchor" href="#key-features-of-ml-prototype"><i class="fas fa-link"></i></a>
 </h2>
 <p>Here are the essential attributes and characteristics of MLPs:</p>
 <ul>
@@ -102,34 +101,6 @@
 <li><p><strong>Reproducibility:</strong> MLPs are designed to be reproducible, offering the flexibility to retrain models or develop customized applications tailored to specific needs.</p></li>
 <li><p><strong>Advantageous Head Start:</strong> MLPs offer a significant advantage by providing a head start in the machine learning development process.</p></li>
 </ul>
-</div>
-<div id="model-framework-visualization" class="section level2" number="3.2">
-<h2>
-<span class="header-section-number">3.2</span> Model Framework Visualization<a class="anchor" aria-label="anchor" href="#model-framework-visualization"><i class="fas fa-link"></i></a>
-</h2>
-<p>Here, we present a visualization of the primary stages entailed in constructing and assessing a machine learning model for microbiome analysis, along with analogous models.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rich-iannone.github.io/DiagrammeR/">DiagrammeR</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rich-iannone/DiagrammeRsvg">DiagrammeRsvg</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rich-iannone.github.io/DiagrammeR/reference/mermaid.html">mermaid</a></span><span class="op">(</span><span class="st">"graph TD</span></span>
-<span><span class="st">subgraph A</span></span>
-<span><span class="st">A[Data Preprocessing: Cleaning and Transformation] --&gt; B[Exploratory Analysis]</span></span>
-<span><span class="st">B --&gt; C[Features selection]</span></span>
-<span><span class="st">C --&gt; D[Feature Balancing]</span></span>
-<span><span class="st">D --&gt; |Multi-Model Testing| E[Model Selection]</span></span>
-<span><span class="st">E --&gt; F[Parameters Tuning]</span></span>
-<span><span class="st">F --&gt; G[Parameter cross Validation]</span></span>
-<span><span class="st">end </span></span>
-<span><span class="st"></span></span>
-<span><span class="st">subgraph B</span></span>
-<span><span class="st">G --&gt; QC{Model Evaluation}</span></span>
-<span><span class="st">QC --&gt; H1[ROC: Receiver Operating &lt;br&gt; Characteristic Curve]</span></span>
-<span><span class="st">QC --&gt; H2[Precision Recall Curve]</span></span>
-<span><span class="st">end</span></span>
-<span><span class="st">"</span>, height <span class="op">=</span> <span class="fl">800</span>, width <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
-<div id="htmlwidget-1df81b68c2130f5f4c45" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1df81b68c2130f5f4c45">{"x":{"diagram":"graph TD\nsubgraph A\nA[Data Preprocessing: Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Features selection]\nC --> D[Feature Balancing]\nD --> |Multi-Model Testing| E[Model Selection]\nE --> F[Parameters Tuning]\nF --> G[Parameter cross Validation]\nend \n\nsubgraph B\nG --> QC{Model Evaluation}\nQC --> H1[ROC: Receiver Operating <br> Characteristic Curve]\nQC --> H2[Precision Recall Curve]\nend\n"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
@@ -142,8 +113,7 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
-<li><a class="nav-link" href="#key-features-of-mlps"><span class="header-section-number">3.1</span> Key Features of MLPs</a></li>
-<li><a class="nav-link" href="#model-framework-visualization"><span class="header-section-number">3.2</span> Model Framework Visualization</a></li>
+<li><a class="nav-link" href="#key-features-of-ml-prototype"><span class="header-section-number">3.1</span> Key Features of ML Prototype</a></li>
 </ul>
 
       <div class="book-extra">
@@ -162,7 +132,7 @@
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-26</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">

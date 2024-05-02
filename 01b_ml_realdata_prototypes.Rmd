@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ```
 
 
-## Key Features of MLPs
+## Key Features of ML Prototype
 
 Here are the essential attributes and characteristics of MLPs:
 
@@ -37,49 +37,15 @@ Here are the essential attributes and characteristics of MLPs:
 - **Advantageous Head Start:** MLPs offer a significant advantage by providing a head start in the machine learning development process.
 
 
-## Model Framework Visualization
-
-Here, we present a visualization of the primary stages entailed in constructing and assessing a machine learning model for microbiome analysis, along with analogous models.
-
-```{r}
-library(DiagrammeR)
-library(DiagrammeRsvg)
-
-mermaid("graph TD
-subgraph A
-A[Data Preprocessing: Cleaning and Transformation] --> B[Exploratory Analysis]
-B --> C[Features selection]
-C --> D[Feature Balancing]
-D --> |Multi-Model Testing| E[Model Selection]
-E --> F[Parameters Tuning]
-F --> G[Parameter cross Validation]
-end 
-
-subgraph B
-G --> QC{Model Evaluation}
-QC --> H1[ROC: Receiver Operating <br> Characteristic Curve]
-QC --> H2[Precision Recall Curve]
-end
-", height = 800, width = 1000)
-
-
-```
 
 # (PART) MODEL DEVELOPMENT {-}
 
 # Exploratory Data Analysis (EDA)
 In machine learning we start by exploring the data to understand the structure, patterns, and relationships within the data. This involves visualizing distributions, correlations, and other relevant statistics to gain insights into the dataset.
 
-## Example dataset 1: Metagenomics data
+## Preprocessing Metagenomics data
 Source: [PRJEB13870](https://www.ncbi.nlm.nih.gov/bioproject/PRJEB13870). The project titled "Gut microbiota dysbiosis contributes to the development of hypertension" serves as an ideal resource for metagenomics dataset. This dataset offers valuable insights into the association between gut microbiota composition and hypertension development, a critical area of research within the fields of microbiology and cardiovascular health.
 
-**Study description**
-
-This study employed a multifaceted approach, integrating metagenomics and metabonomics analyses alongside fecal microbiota transplantation (FMT). By investigating the dysbiosis of the gut microbiome, the study elucidated its role as a contributing factor to the pathogenesis of hypertension, primarily through alterations in metabolic effects. Through these methodologies, the research aimed to provide a comprehensive understanding of the intricate relationship between gut microbiota composition and the development of hypertension.
-
-
-## Metagenomics data integration
-This section outlines the steps involved in processing the OTU table, taxonomy data, metabolites, and metadata. 
 
 ```{r message=FALSE, warning=FALSE}
 # Load necessary libraries with suppressed startup messages
@@ -126,18 +92,30 @@ metadata <- read_csv("data/HypertensionProject.csv", show_col_types = FALSE) %>%
          control = Disease_State == "healthy") %>%
   rename(sample_id = SampleID)
 
-## Data joining
-
-# Join metadata with OTU table to create composite dataset
-composite <- inner_join(metadata, otutable, by="sample_id")
-
-# Join metadata with metabolites data to create composite metabolites dataset
-metabo_composite <- inner_join(metadata, metabolites, by="sample_id")
-
 ```
 
 
-## Microbiome data integration
+## Metagenomics data joining
+
+### Join metadata with metagenomics OTU table
+
+```{r}
+# Join metadata with OTU table to create composite dataset
+composite <- inner_join(metadata, otutable, by="sample_id")
+head(composite)
+
+```
+
+### Join metadata with metabolites data
+
+```{r}
+# Join metadata with metabolites data to create composite metabolites dataset
+metabo_composite <- inner_join(metadata, metabolites, by="sample_id")
+head(metabo_composite)
+```
+
+
+## Preprocessing microbiome data
 For an outline of the steps involved in processing and integrating microbiome (16S rRNA) OTU table, taxonomy data, and metadata, please refer to [imap-data-preparation](https://tmbuza.github.io/imap-data-preparation). Our primary dataset is sourced from the publicly available Dietswap dataset, retrieved from the microbiome package. This dataset has been preprocessed and integrated into a long-form dataframe format.
 
 
@@ -418,7 +396,6 @@ ggarrange(p1, p2, p3, p4, nrow = 2, ncol = 2, common.legend = TRUE, legend = "ri
 ```
 
 
-
 # Model Fitting
 
 Microbiome data presents unique challenges and opportunities for modeling due to its high dimensionality and complexity. In this section, we explore various algorithms suitable for modeling microbiome datasets:
@@ -678,7 +655,7 @@ netscv_ctrl_inner <- trainControl(method = "cv", number = 3)
 # Hyperparameter Tuning
 In this stage, our objective is to refine the parameters utilized during model fitting to maximize performance. We concentrate on optimizing the model's effectiveness by fine-tuning various hyperparameters. These parameters, such as regularization strength or tree depth, are manually adjusted to enhance the model's accuracy. Through experimentation with different values, our goal is to pinpoint the optimal combination that maximizes performance on validation data. This pivotal step ensures that the model not only excels on training data but also generalizes effectively to new, unseen data.
 
-**Parameter tuning for a RLR Model**
+## Demo tuning for a RLR Model
 
 ```{r}
 # Set seed for reproducibility
@@ -725,8 +702,9 @@ ggplot(mod_regLogistic_cv$results, aes(x = cost, y = Accuracy)) +
 ```
 
 
+# (PART) PERFORMANCE METRICS {-}
 
-## Confusion Matrix
+# Computing Confusion Matrix
 A Confusion Matrix summarizes the performance of a classification model by tabulating the true positive, true negative, false positive, and false negative predictions.
 
 ```{r}
@@ -743,13 +721,31 @@ print(confusion_matrix)
 ```
 
 
-# Model Performance Metrics
-
 ## Accuracy
 Accuracy measures the proportion of correctly classified instances out of the total number of instances. While intuitive, accuracy may not be suitable for imbalanced datasets, where the majority class dominates the classification.
 
+```{r}
+library(caret)
+accuracy <- confusion_matrix$overall["Accuracy"]
+accuracy
+```
+
 ## Precision and Recall
 Precision measures the proportion of correctly predicted positive instances out of all instances predicted as positive. Recall, also known as sensitivity, measures the proportion of correctly predicted positive instances out of all actual positive instances.
+
+
+```{r}
+library(caret)
+precision <- confusion_matrix$byClass["Precision"]
+precision
+
+```
+
+```{r}
+recall <- confusion_matrix$byClass["Recall"]
+recall
+```
+
 
 ## F1 Score
 The F1 Score is the harmonic mean of precision and recall. It provides a balanced assessment of a classifier's performance, considering both false positives and false negatives.
@@ -757,25 +753,70 @@ The F1 Score is the harmonic mean of precision and recall. It provides a balance
 
 ```{r}
 library(caret)
-
-# Extract accuracy and other performance metrics from confusion matrix
-accuracy <- confusion_matrix$overall["Accuracy"]
-precision <- confusion_matrix$byClass["Precision"]
-recall <- confusion_matrix$byClass["Recall"]
 f1 <- confusion_matrix$byClass["F1"]
+f1
+```
 
+## Performance metrics dataframe
+```{r}
 # Create a data frame for model performance metrics
 performance_metrics <- data.frame(
   Metric = c("Accuracy", "Precision", "Recall", "F1 Score"),
   Value = c(accuracy, precision, recall, f1)
 )
 
-# Visualize model performance metrics
+performance_metrics
+
+```
+
+
+## Visualize model performance metrics
+```{r}
 ggplot(performance_metrics, aes(x = Metric, y = Value)) +
   geom_bar(stat = "identity", fill = "steelblue", color = "black") +
   labs(x = "Metric", y = "Value", title = "Model Performance Metrics") +
   theme_minimal()
 
+
+```
+
+
+
+
+
+```{r echo=FALSE}
+## Function for computing Specificity and Sensitivity
+library(purrr)
+
+get_sens_spec <- function(threshold, score, actual, direction){
+  
+  predicted <- if(direction == "greaterthan") {
+    score > threshold 
+    } else {
+      score < threshold
+    }
+  
+  tp <- sum(predicted & actual)
+  tn <- sum(!predicted & !actual)
+  fp <- sum(predicted & !actual)
+  fn <- sum(!predicted & actual)  
+  
+  specificity <- tn / (tn + fp)
+  sensitivity <- tp / (tp + fn)
+  
+  tibble("specificity" = specificity, "sensitivity" = sensitivity)
+}
+
+get_roc_data <- function(x, direction){
+  
+  # x <- test
+  # direction <- "greaterthan"
+  
+  thresholds <- unique(x$score) %>% sort()
+  
+  map_dfr(.x=thresholds, ~get_sens_spec(.x, x$score, x$srn, direction)) %>%
+    rbind(c(specificity = 0, sensitivity = 1))
+}
 
 ```
 
@@ -814,51 +855,9 @@ cat("AUC-ROC:", auc_roc)
 
 
 
-# (PART) PERFORMANCE METRICS {-}
-
-# Specificity and Sensitivity function
-
-```{r}
-
-library(purrr)
-
-get_sens_spec <- function(threshold, score, actual, direction){
-  
-  predicted <- if(direction == "greaterthan") {
-    score > threshold 
-    } else {
-      score < threshold
-    }
-  
-  tp <- sum(predicted & actual)
-  tn <- sum(!predicted & !actual)
-  fp <- sum(predicted & !actual)
-  fn <- sum(!predicted & actual)  
-  
-  specificity <- tn / (tn + fp)
-  sensitivity <- tp / (tp + fn)
-  
-  tibble("specificity" = specificity, "sensitivity" = sensitivity)
-}
-
-get_roc_data <- function(x, direction){
-  
-  # x <- test
-  # direction <- "greaterthan"
-  
-  thresholds <- unique(x$score) %>% sort()
-  
-  map_dfr(.x=thresholds, ~get_sens_spec(.x, x$score, x$srn, direction)) %>%
-    rbind(c(specificity = 0, sensitivity = 1))
-}
-
-```
-
 
 
 ## Significant genera with `wilcox.test`
-## Wilcoxon Rank Sum and Signed Rank Tests
-
 The Wilcoxon rank sum test, also known as the Mann-Whitney U test, is a nonparametric test used to assess whether two independent samples have different distributions. It is particularly useful when the assumptions of the t-test are not met, such as when the data is not normally distributed or when the sample sizes are small
 
 ```{r}
@@ -975,14 +974,11 @@ ggsave("figures/significant_genera.tiff", width=6, height=4)
 
 # (PART) MODEL DEPLOYMENT {-}
 
-# Shiny Applications
+# Model Deployment
+Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring mechanisms is crucial to track model performance over time and detect any deviations or anomalies. This ensures continued reliability and accuracy in microbiome data analysis.
 
-## Model Deployment
-Deploying the trained regularized logistic regression model is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring mechanisms is crucial to track model performance over time and detect any deviations or anomalies. This ensures continued reliability and accuracy in microbiome data analysis.
 
-Deployment involves integrating the model into production environments where it can be utilized to predict binary outcomes based on new microbiome data. We will deploy the trained regularized logistic regression model using a Shiny web application. Shiny is a popular R package for building interactive web applications directly from R code. It allows users to visualize data, perform analyses, and make predictions in a user-friendly interface.
-
-Shiny applications serve as interfaces for machine learning models, providing users with a convenient platform to upload their data and test the model's performance efficiently.
+ >Shiny applications serve as interfaces for machine learning models, providing users with a convenient platform to upload their data and test the model's performance efficiently.
 
 
 ## Data Processing
@@ -1001,7 +997,7 @@ Shiny applications serve as interfaces for machine learning models, providing us
 
 ## Creating Shiny App
 
-### Load regularized model
+### Load trained model
 ```{r}
 load("models/models.rda", verbose = TRUE)
 ```

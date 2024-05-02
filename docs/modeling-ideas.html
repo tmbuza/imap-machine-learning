@@ -66,11 +66,10 @@
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
 <li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li><a class="" href="model-performance-metrics.html"><span class="header-section-number">9</span> Model Performance Metrics</a></li>
 <li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="specificity-and-sensitivity-function.html"><span class="header-section-number">10</span> Specificity and Sensitivity function</a></li>
+<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="active" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -84,32 +83,32 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="modeling-ideas" class="section level1" number="12">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="modeling-ideas" class="section level1" number="11">
 <h1>
 <span class="header-section-number">A</span> Modeling Ideas<a class="anchor" aria-label="anchor" href="#modeling-ideas"><i class="fas fa-link"></i></a>
 </h1>
 <p>In this case study, we explore the performance of a predictive model developed to assess the likelihood of cancer in patients based on various medical records. The model incorporated patient demographics, medical history, vital signs, and diagnostic test results. When tested on a held-out dataset, it demonstrated exceptional accuracy during evaluation.</p>
 <p>However, upon deployment to predict cancer likelihood for new patients, the model exhibited significant discrepancies in performance. This discrepancy led to an investigation to uncover potential causes for the observed inconsistency.</p>
-<div id="identifying-the-issue" class="section level2" number="12.1">
+<div id="identifying-the-issue" class="section level2" number="11.1">
 <h2>
 <span class="header-section-number">A.1</span> Identifying the Issue<a class="anchor" aria-label="anchor" href="#identifying-the-issue"><i class="fas fa-link"></i></a>
 </h2>
 <p>Upon closer examination, it became evident that the model’s poor performance on new patients was attributed to information leakage. Specifically, one feature in the model inadvertently exposed sensitive information, which influenced the predictions. This form of information leakage compromised the model’s ability to generalize to unseen data effectively.</p>
 </div>
-<div id="implications" class="section level2" number="12.2">
+<div id="implications" class="section level2" number="11.2">
 <h2>
 <span class="header-section-number">A.2</span> Implications<a class="anchor" aria-label="anchor" href="#implications"><i class="fas fa-link"></i></a>
 </h2>
 <p>Information leakage poses serious implications for the predictive model’s reliability and fairness. By inadvertently incorporating sensitive information, such as patient-specific details or external factors related to the prediction task, the model’s performance on new data can be compromised. This can lead to inaccurate predictions and potentially harmful outcomes if relied upon in clinical decision-making.</p>
 </div>
-<div id="recommendations" class="section level2" number="12.3">
+<div id="recommendations" class="section level2" number="11.3">
 <h2>
 <span class="header-section-number">A.3</span> Recommendations<a class="anchor" aria-label="anchor" href="#recommendations"><i class="fas fa-link"></i></a>
 </h2>
 <p>Conducting thorough feature selection and validation processes is imperative to address information leakage and ensure the model’s robustness and generalizability. This involves identifying and removing features that may inadvertently expose sensitive information or introduce bias into the model. Additionally, implementing rigorous data preprocessing techniques and adhering to best practices in model development can help mitigate the risk of information leakage and enhance the reliability of predictive models.</p>
 <p>By prioritizing transparency, fairness, and ethical considerations throughout the model development process, we can mitigate the risks associated with information leakage and build accurate and trustworthy predictive models.</p>
 </div>
-<div id="some-effective-ml-guidelines" class="section level2" number="12.4">
+<div id="some-effective-ml-guidelines" class="section level2" number="11.4">
 <h2>
 <span class="header-section-number">A.4</span> Some Effective <a href="https://developers.google.com/machine-learning/crash-course/real-world-guidelines">ML Guidelines</a><a class="anchor" aria-label="anchor" href="#some-effective-ml-guidelines"><i class="fas fa-link"></i></a>
 </h2>
@@ -124,7 +123,7 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="shiny-applications.html"><span class="header-section-number">11</span> Shiny Applications</a></div>
+<div class="prev"><a href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></div>
 <div class="next"><a href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
@@ -152,7 +151,7 @@
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-04-26</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">
