@@ -10,6 +10,7 @@ REFER/*
 .DS_Store
 
 data/*
+models/*
 images/*
 renv/
 /microbiomeML-template
