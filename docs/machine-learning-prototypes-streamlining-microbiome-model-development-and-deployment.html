@@ -61,15 +61,17 @@
 <li><a class="active" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
 <li class="book-part">MODEL DEVELOPMENT</li>
 <li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li class="book-part">FEATURE ENGINEERING</li>
 <li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
 <li class="book-part">MODEL TRAINING</li>
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
-<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
+<li><a class="" href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></li>
+<li><a class="" href="model-validation.html"><span class="header-section-number">9</span> Model Validation</a></li>
+<li class="book-part">PARAMETER TUNING</li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">11</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -118,8 +120,8 @@
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01b_ml_realdata_prototypes.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01b_ml_realdata_prototypes.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01_model_devel_prerequisite.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01_model_devel_prerequisite.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -132,7 +134,7 @@
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-05</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">
@@ -141,6 +143,34 @@
 
     </div>
   </div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>8 Model Evaluation | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<meta name="author" content="Teresia Mrema-Buza">
+<meta name="description" content="Model evaluation involves assessing the performance of a machine learning model using various metrics and techniques.  8.1 Performance Metrics  8.1.1 Confusion Matrix A table used to describe the...">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="8 Model Evaluation | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/model-evaluation.html">
+<meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<meta property="og:description" content="Model evaluation involves assessing the performance of a machine learning model using various metrics and techniques.  8.1 Performance Metrics  8.1.1 Confusion Matrix A table used to describe the...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8 Model Evaluation | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:description" content="Model evaluation involves assessing the performance of a machine learning model using various metrics and techniques.  8.1 Performance Metrics  8.1.1 Confusion Matrix A table used to describe the...">
+<meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Sen-0.4.9/font.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet">
+<link href="libs/Bitter-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="libs/d3-3.3.8/d3.min.js"></script><script src="libs/dagre-0.4.0/dagre-d3.min.js"></script><link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/chromatography-0.1/chromatography.js"></script><script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">IMAP-Part 10: Predictive Modeling Using Microbiome Data</a></li>
+<li class="book-part">ML COMPONENTS</li>
+<li><a class="" href="key-components-of-microbiome-machine-learning.html"><span class="header-section-number">1</span> Key Components of Microbiome Machine Learning</a></li>
+<li class="book-part">ML FRAMEWORKS</li>
+<li><a class="" href="ml-framework_R.html"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
+<li class="book-part">ML PROTOTYPES</li>
+<li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
+<li class="book-part">MODEL DEVELOPMENT</li>
+<li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li class="book-part">FEATURE ENGINEERING</li>
+<li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
+<li class="book-part">MODEL TRAINING</li>
+<li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
+<li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
+<li><a class="active" href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></li>
+<li><a class="" href="model-validation.html"><span class="header-section-number">9</span> Model Validation</a></li>
+<li class="book-part">PARAMETER TUNING</li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></li>
+<li class="book-part">MODEL DEPLOYMENT</li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">11</span> Model Deployment</a></li>
+<li class="book-part">APPENDIX</li>
+<li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
+<li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
+<li><a class="" href="imap-github-repos.html"><span class="header-section-number">C</span> IMAP GitHub Repos</a></li>
+<li><a class="" href="session-information.html"><span class="header-section-number">D</span> Session Information</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/tmbuza/imap-machine-learning">View book source <i class="fas fa-air-freshener"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="model-evaluation" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8</span> Model Evaluation<a class="anchor" aria-label="anchor" href="#model-evaluation"><i class="fas fa-link"></i></a>
+</h1>
+<p>Model evaluation involves assessing the performance of a machine learning model using various metrics and techniques.</p>
+<div id="performance-metrics-1" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Performance Metrics<a class="anchor" aria-label="anchor" href="#performance-metrics-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="confusion-matrix" class="section level3" number="8.1.1">
+<h3>
+<span class="header-section-number">8.1.1</span> Confusion Matrix<a class="anchor" aria-label="anchor" href="#confusion-matrix"><i class="fas fa-link"></i></a>
+</h3>
+<p>A table used to describe the performance of a classification model, showing the counts of true positive, true negative, false positive, and false negative predictions.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="model-evaluation.html#cb53-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/data_imputed.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb53-2"><a href="model-evaluation.html#cb53-2" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb53-3"><a href="model-evaluation.html#cb53-3" tabindex="-1"></a>  data_imputed</span>
+<span id="cb53-4"><a href="model-evaluation.html#cb53-4" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/train_test_data.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb53-5"><a href="model-evaluation.html#cb53-5" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb53-6"><a href="model-evaluation.html#cb53-6" tabindex="-1"></a>  train_data</span>
+<span id="cb53-7"><a href="model-evaluation.html#cb53-7" tabindex="-1"></a>  test_data</span>
+<span id="cb53-8"><a href="model-evaluation.html#cb53-8" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"models/models.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb53-9"><a href="model-evaluation.html#cb53-9" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb53-10"><a href="model-evaluation.html#cb53-10" tabindex="-1"></a>  mod_glmnet_adcv</span>
+<span id="cb53-11"><a href="model-evaluation.html#cb53-11" tabindex="-1"></a>  mod_regLogistic_cv</span>
+<span id="cb53-12"><a href="model-evaluation.html#cb53-12" tabindex="-1"></a>  mod_rf_adcv</span>
+<span id="cb53-13"><a href="model-evaluation.html#cb53-13" tabindex="-1"></a>  mod_rf_reptcv</span>
+<span id="cb53-14"><a href="model-evaluation.html#cb53-14" tabindex="-1"></a>  mod_knn_adcv</span>
+<span id="cb53-15"><a href="model-evaluation.html#cb53-15" tabindex="-1"></a>  mod_knn_reptcv</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="model-evaluation.html#cb54-1" tabindex="-1"></a></span>
+<span id="cb54-2"><a href="model-evaluation.html#cb54-2" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb54-3"><a href="model-evaluation.html#cb54-3" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb54-4"><a href="model-evaluation.html#cb54-4" tabindex="-1"></a><span class="co"># Predict using the trained model</span></span>
+<span id="cb54-5"><a href="model-evaluation.html#cb54-5" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_regLogistic_cv, <span class="at">newdata =</span> test_data)</span>
+<span id="cb54-6"><a href="model-evaluation.html#cb54-6" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="model-evaluation.html#cb54-7" tabindex="-1"></a><span class="co"># Compute confusion matrix</span></span>
+<span id="cb54-8"><a href="model-evaluation.html#cb54-8" tabindex="-1"></a>confusion_matrix <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(predictions, test_data<span class="sc">$</span>target)</span>
+<span id="cb54-9"><a href="model-evaluation.html#cb54-9" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="model-evaluation.html#cb54-10" tabindex="-1"></a><span class="fu">print</span>(confusion_matrix)</span>
+<span id="cb54-11"><a href="model-evaluation.html#cb54-11" tabindex="-1"></a>Confusion Matrix and Statistics</span>
+<span id="cb54-12"><a href="model-evaluation.html#cb54-12" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="model-evaluation.html#cb54-13" tabindex="-1"></a>          Reference</span>
+<span id="cb54-14"><a href="model-evaluation.html#cb54-14" tabindex="-1"></a>Prediction  <span class="dv">0</span>  <span class="dv">1</span></span>
+<span id="cb54-15"><a href="model-evaluation.html#cb54-15" tabindex="-1"></a>         <span class="dv">0</span> <span class="dv">19</span>  <span class="dv">3</span></span>
+<span id="cb54-16"><a href="model-evaluation.html#cb54-16" tabindex="-1"></a>         <span class="dv">1</span>  <span class="dv">5</span> <span class="dv">16</span></span>
+<span id="cb54-17"><a href="model-evaluation.html#cb54-17" tabindex="-1"></a>                                         </span>
+<span id="cb54-18"><a href="model-evaluation.html#cb54-18" tabindex="-1"></a>               Accuracy <span class="sc">:</span> <span class="fl">0.814</span>          </span>
+<span id="cb54-19"><a href="model-evaluation.html#cb54-19" tabindex="-1"></a>                 <span class="dv">95</span>% CI <span class="sc">:</span> (<span class="fl">0.666</span>, <span class="fl">0.9161</span>)</span>
+<span id="cb54-20"><a href="model-evaluation.html#cb54-20" tabindex="-1"></a>    No Information Rate <span class="sc">:</span> <span class="fl">0.5581</span>         </span>
+<span id="cb54-21"><a href="model-evaluation.html#cb54-21" tabindex="-1"></a>    P<span class="sc">-</span>Value [Acc <span class="sc">&gt;</span> NIR] <span class="sc">:</span> <span class="fl">0.000393</span>       </span>
+<span id="cb54-22"><a href="model-evaluation.html#cb54-22" tabindex="-1"></a>                                         </span>
+<span id="cb54-23"><a href="model-evaluation.html#cb54-23" tabindex="-1"></a>                  Kappa <span class="sc">:</span> <span class="fl">0.6269</span>         </span>
+<span id="cb54-24"><a href="model-evaluation.html#cb54-24" tabindex="-1"></a>                                         </span>
+<span id="cb54-25"><a href="model-evaluation.html#cb54-25" tabindex="-1"></a> Mcnemar<span class="st">'s Test P-Value : 0.723674       </span></span>
+<span id="cb54-26"><a href="model-evaluation.html#cb54-26" tabindex="-1"></a><span class="st">                                         </span></span>
+<span id="cb54-27"><a href="model-evaluation.html#cb54-27" tabindex="-1"></a><span class="st">            Sensitivity : 0.7917         </span></span>
+<span id="cb54-28"><a href="model-evaluation.html#cb54-28" tabindex="-1"></a><span class="st">            Specificity : 0.8421         </span></span>
+<span id="cb54-29"><a href="model-evaluation.html#cb54-29" tabindex="-1"></a><span class="st">         Pos Pred Value : 0.8636         </span></span>
+<span id="cb54-30"><a href="model-evaluation.html#cb54-30" tabindex="-1"></a><span class="st">         Neg Pred Value : 0.7619         </span></span>
+<span id="cb54-31"><a href="model-evaluation.html#cb54-31" tabindex="-1"></a><span class="st">             Prevalence : 0.5581         </span></span>
+<span id="cb54-32"><a href="model-evaluation.html#cb54-32" tabindex="-1"></a><span class="st">         Detection Rate : 0.4419         </span></span>
+<span id="cb54-33"><a href="model-evaluation.html#cb54-33" tabindex="-1"></a><span class="st">   Detection Prevalence : 0.5116         </span></span>
+<span id="cb54-34"><a href="model-evaluation.html#cb54-34" tabindex="-1"></a><span class="st">      Balanced Accuracy : 0.8169         </span></span>
+<span id="cb54-35"><a href="model-evaluation.html#cb54-35" tabindex="-1"></a><span class="st">                                         </span></span>
+<span id="cb54-36"><a href="model-evaluation.html#cb54-36" tabindex="-1"></a><span class="st">       '</span>Positive<span class="st">' Class : 0              </span></span>
+<span id="cb54-37"><a href="model-evaluation.html#cb54-37" tabindex="-1"></a><span class="st">                                         </span></span></code></pre></div>
+</div>
+<div id="accuracy" class="section level3" number="8.1.2">
+<h3>
+<span class="header-section-number">8.1.2</span> Accuracy<a class="anchor" aria-label="anchor" href="#accuracy"><i class="fas fa-link"></i></a>
+</h3>
+<p>The proportion of correctly classified instances out of the total instances.</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="va">accuracy</span> <span class="op">&lt;-</span> <span class="va">confusion_matrix</span><span class="op">$</span><span class="va">overall</span><span class="op">[</span><span class="st">"Accuracy"</span><span class="op">]</span></span>
+<span><span class="va">accuracy</span></span>
+<span> <span class="va">Accuracy</span> </span>
+<span><span class="fl">0.8139535</span> </span></code></pre></div>
+</div>
+<div id="precision" class="section level3" number="8.1.3">
+<h3>
+<span class="header-section-number">8.1.3</span> Precision<a class="anchor" aria-label="anchor" href="#precision"><i class="fas fa-link"></i></a>
+</h3>
+<p>The proportion of true positive predictions out of all positive predictions. It measures the model’s ability to identify relevant instances.</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="va">precision</span> <span class="op">&lt;-</span> <span class="va">confusion_matrix</span><span class="op">$</span><span class="va">byClass</span><span class="op">[</span><span class="st">"Precision"</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">precision</span><span class="op">)</span></span>
+<span><span class="va">Precision</span> </span>
+<span><span class="fl">0.8636364</span> </span></code></pre></div>
+</div>
+<div id="recall-sensitivity" class="section level3" number="8.1.4">
+<h3>
+<span class="header-section-number">8.1.4</span> Recall (Sensitivity)<a class="anchor" aria-label="anchor" href="#recall-sensitivity"><i class="fas fa-link"></i></a>
+</h3>
+<p>The proportion of true positive predictions out of all actual positive instances. It measures the model’s ability to capture all positive instances.</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="va">recall</span> <span class="op">&lt;-</span> <span class="va">confusion_matrix</span><span class="op">$</span><span class="va">byClass</span><span class="op">[</span><span class="st">"Recall"</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">recall</span><span class="op">)</span></span>
+<span>   <span class="va">Recall</span> </span>
+<span><span class="fl">0.7916667</span> </span></code></pre></div>
+</div>
+<div id="f1-score" class="section level3" number="8.1.5">
+<h3>
+<span class="header-section-number">8.1.5</span> F1 Score<a class="anchor" aria-label="anchor" href="#f1-score"><i class="fas fa-link"></i></a>
+</h3>
+<p>The harmonic mean of precision and recall, providing a balance between the two metrics. It is useful when the class distribution is imbalanced.</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="va">confusion_matrix</span><span class="op">$</span><span class="va">byClass</span><span class="op">[</span><span class="st">"F1"</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span></span>
+<span>      <span class="va">F1</span> </span>
+<span><span class="fl">0.826087</span> </span></code></pre></div>
+<p>Performance metrics dataframe</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="model-evaluation.html#cb59-1" tabindex="-1"></a><span class="co"># Create a data frame for model performance metrics</span></span>
+<span id="cb59-2"><a href="model-evaluation.html#cb59-2" tabindex="-1"></a>performance_metrics <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb59-3"><a href="model-evaluation.html#cb59-3" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">"Accuracy"</span>, <span class="st">"Precision"</span>, <span class="st">"Recall"</span>, <span class="st">"F1 Score"</span>),</span>
+<span id="cb59-4"><a href="model-evaluation.html#cb59-4" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(accuracy, precision, recall, f1)</span>
+<span id="cb59-5"><a href="model-evaluation.html#cb59-5" tabindex="-1"></a>)</span>
+<span id="cb59-6"><a href="model-evaluation.html#cb59-6" tabindex="-1"></a></span>
+<span id="cb59-7"><a href="model-evaluation.html#cb59-7" tabindex="-1"></a>performance_metrics</span>
+<span id="cb59-8"><a href="model-evaluation.html#cb59-8" tabindex="-1"></a>             Metric     Value</span>
+<span id="cb59-9"><a href="model-evaluation.html#cb59-9" tabindex="-1"></a>Accuracy   Accuracy <span class="fl">0.8139535</span></span>
+<span id="cb59-10"><a href="model-evaluation.html#cb59-10" tabindex="-1"></a>Precision Precision <span class="fl">0.8636364</span></span>
+<span id="cb59-11"><a href="model-evaluation.html#cb59-11" tabindex="-1"></a>Recall       Recall <span class="fl">0.7916667</span></span>
+<span id="cb59-12"><a href="model-evaluation.html#cb59-12" tabindex="-1"></a>F1         F1 Score <span class="fl">0.8260870</span></span></code></pre></div>
+<p>Visualize model performance metrics</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">performance_metrics</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Metric</span>, y <span class="op">=</span> <span class="va">Value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"steelblue"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Metric"</span>, y <span class="op">=</span> <span class="st">"Value"</span>, title <span class="op">=</span> <span class="st">"Model Performance Metrics"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-9-1.png" width="672"></div>
+<div class="infoicon">
+<p>
+<strong>Function for computing Specificity and
+Sensitivity</strong>
+</p>
+<p>
+library(purrr)
+</p>
+<p>
+get_sens_spec &lt;- function(threshold, score, actual,
+direction){
+</p>
+<p>
+predicted &lt;- if(direction == “greaterthan”) { score &gt; threshold
+} else { score &lt; threshold }
+</p>
+<p>
+tp &lt;- sum(predicted &amp; actual) tn &lt;- sum(!predicted &amp;
+!actual) fp &lt;- sum(predicted &amp; !actual) fn &lt;- sum(!predicted
+&amp; actual)
+</p>
+<p>
+specificity &lt;- tn / (tn + fp) sensitivity &lt;- tp / (tp + fn)
+</p>
+<p>
+tibble(“specificity” = specificity, “sensitivity” = sensitivity)
+}
+</p>
+<p>
+get_roc_data &lt;- function(x, direction){
+</p>
+<p>
+# x &lt;- test # direction &lt;- “greaterthan”
+</p>
+<p>
+thresholds &lt;- unique(x$score) %&gt;% sort()
+</p>
+<p>
+map_dfr(.x=thresholds, ~get_sens_spec(.x, x<span class="math inline"><span class="math inline">\(score, x\)</span></span>srn, direction)) %&gt;%
+rbind(c(specificity = 0, sensitivity = 1)) }
+</p>
+</div>
+</div>
+</div>
+<div id="roc-curve-and-auc-roc" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> ROC Curve and AUC-ROC<a class="anchor" aria-label="anchor" href="#roc-curve-and-auc-roc"><i class="fas fa-link"></i></a>
+</h2>
+<p>The ROC Curve plots the true positive rate (sensitivity) against the false positive rate (1 - specificity) at various threshold settings. It provides a visual representation of the classifier’s performance across different threshold levels. The Area Under the ROC Curve (AUC-ROC) quantifies the overall performance of the model in distinguishing between the positive and negative classes. A higher AUC-ROC value indicates better discrimination performance.</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xrobin.github.io/pROC/">pROC</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compute predicted probabilities</span></span>
+<span><span class="va">predicted_probabilities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod_regLogistic_cv</span>, newdata <span class="op">=</span> <span class="va">test_data</span>, type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Extract probabilities for the positive class</span></span>
+<span><span class="va">positive_probabilities</span> <span class="op">&lt;-</span> <span class="va">predicted_probabilities</span><span class="op">$</span><span class="st">"0"</span></span>
+<span></span>
+<span><span class="co"># Compute ROC curve and AUC-ROC</span></span>
+<span><span class="va">roc_curve</span> <span class="op">&lt;-</span> <span class="fu">pROC</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/roc.html">roc</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">$</span><span class="va">target</span>, <span class="va">positive_probabilities</span><span class="op">)</span></span>
+<span><span class="va">auc_roc</span> <span class="op">&lt;-</span> <span class="fu">pROC</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/auc.html">auc</a></span><span class="op">(</span><span class="va">roc_curve</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot ROC curve with descriptive axis titles</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/ggroc.html">ggroc</a></span><span class="op">(</span><span class="va">roc_curve</span>, color <span class="op">=</span> <span class="st">"steelblue"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Receiver Operating Characteristic (ROC) Curve"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"False Positive Rate (1 - Specificity)"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"True Positive Rate (Sensitivity)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-11-1.png" width="672"></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="co"># Print AUC-ROC</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"AUC-ROC:"</span>, <span class="va">auc_roc</span><span class="op">)</span></span>
+<span><span class="va">AUC</span><span class="op">-</span><span class="va">ROC</span><span class="op">:</span> <span class="fl">0.8486842</span></span></code></pre></div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></div>
+<div class="next"><a href="model-validation.html"><span class="header-section-number">9</span> Model Validation</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#model-evaluation"><span class="header-section-number">8</span> Model Evaluation</a></li>
+<li>
+<a class="nav-link" href="#performance-metrics-1"><span class="header-section-number">8.1</span> Performance Metrics</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#confusion-matrix"><span class="header-section-number">8.1.1</span> Confusion Matrix</a></li>
+<li><a class="nav-link" href="#accuracy"><span class="header-section-number">8.1.2</span> Accuracy</a></li>
+<li><a class="nav-link" href="#precision"><span class="header-section-number">8.1.3</span> Precision</a></li>
+<li><a class="nav-link" href="#recall-sensitivity"><span class="header-section-number">8.1.4</span> Recall (Sensitivity)</a></li>
+<li><a class="nav-link" href="#f1-score"><span class="header-section-number">8.1.5</span> F1 Score</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#roc-curve-and-auc-roc"><span class="header-section-number">8.2</span> ROC Curve and AUC-ROC</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/04_model_evaluation.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/04_model_evaluation.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-05</b>.</p>
+<br>
+</div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

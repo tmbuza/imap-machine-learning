@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>9 Model Validation | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<meta name="author" content="Teresia Mrema-Buza">
+<meta name="description" content="9.1 Cross-Validation Techniques Cross-validation is a method used to evaluate the performance and generalization ability of predictive models. It involves partitioning the available data into...">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="9 Model Validation | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/model-validation.html">
+<meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<meta property="og:description" content="9.1 Cross-Validation Techniques Cross-validation is a method used to evaluate the performance and generalization ability of predictive models. It involves partitioning the available data into...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="9 Model Validation | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:description" content="9.1 Cross-Validation Techniques Cross-validation is a method used to evaluate the performance and generalization ability of predictive models. It involves partitioning the available data into...">
+<meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Sen-0.4.9/font.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet">
+<link href="libs/Bitter-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="libs/d3-3.3.8/d3.min.js"></script><script src="libs/dagre-0.4.0/dagre-d3.min.js"></script><link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/chromatography-0.1/chromatography.js"></script><script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">IMAP-Part 10: Predictive Modeling Using Microbiome Data</a></li>
+<li class="book-part">ML COMPONENTS</li>
+<li><a class="" href="key-components-of-microbiome-machine-learning.html"><span class="header-section-number">1</span> Key Components of Microbiome Machine Learning</a></li>
+<li class="book-part">ML FRAMEWORKS</li>
+<li><a class="" href="ml-framework_R.html"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
+<li class="book-part">ML PROTOTYPES</li>
+<li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
+<li class="book-part">MODEL DEVELOPMENT</li>
+<li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li class="book-part">FEATURE ENGINEERING</li>
+<li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
+<li class="book-part">MODEL TRAINING</li>
+<li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
+<li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
+<li><a class="" href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></li>
+<li><a class="active" href="model-validation.html"><span class="header-section-number">9</span> Model Validation</a></li>
+<li class="book-part">PARAMETER TUNING</li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></li>
+<li class="book-part">MODEL DEPLOYMENT</li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">11</span> Model Deployment</a></li>
+<li class="book-part">APPENDIX</li>
+<li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
+<li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
+<li><a class="" href="imap-github-repos.html"><span class="header-section-number">C</span> IMAP GitHub Repos</a></li>
+<li><a class="" href="session-information.html"><span class="header-section-number">D</span> Session Information</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/tmbuza/imap-machine-learning">View book source <i class="fas fa-air-freshener"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="model-validation" class="section level1" number="9">
+<h1>
+<span class="header-section-number">9</span> Model Validation<a class="anchor" aria-label="anchor" href="#model-validation"><i class="fas fa-link"></i></a>
+</h1>
+<div id="cross-validation-techniques" class="section level2" number="9.1">
+<h2>
+<span class="header-section-number">9.1</span> Cross-Validation Techniques<a class="anchor" aria-label="anchor" href="#cross-validation-techniques"><i class="fas fa-link"></i></a>
+</h2>
+<p>Cross-validation is a method used to evaluate the performance and generalization ability of predictive models. It involves partitioning the available data into multiple subsets, known as folds. The model is trained on a portion of the data (training set) and then evaluated on the remaining data (validation set). This process is repeated multiple times, with each fold serving as the validation set exactly once. Cross-validation provides a more robust estimate of the model’s performance compared to a single train-test split and helps identify overfitting.</p>
+<p>In this section, we will explore various cross-validation techniques. Understanding these methods is essential as they play a significant role in subsequent hyperparameter tuning. Cross-validation ensures robust model evaluation and assists in selecting optimal hyperparameters for improved model performance.</p>
+<div id="k-fold-cross-validation" class="section level3" number="9.1.1">
+<h3>
+<span class="header-section-number">9.1.1</span> K-Fold Cross-Validation<a class="anchor" aria-label="anchor" href="#k-fold-cross-validation"><i class="fas fa-link"></i></a>
+</h3>
+<p>K-Fold Cross-Validation divides the data into K equal-sized folds. The model is trained K times, each time using K-1 folds as the training set and the remaining fold as the validation set.</p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example of K-Fold Cross-Validation</span></span>
+<span><span class="va">kfcv_ctrl</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="leave-one-out-cross-validation-loocv" class="section level3" number="9.1.2">
+<h3>
+<span class="header-section-number">9.1.2</span> Leave-One-Out Cross-Validation (LOOCV)<a class="anchor" aria-label="anchor" href="#leave-one-out-cross-validation-loocv"><i class="fas fa-link"></i></a>
+</h3>
+<p>Leave-One-Out Cross-Validation involves using a single observation as the validation set and the remaining observations as the training set. This process is repeated for each observation in the dataset.</p>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example of Leave-One-Out Cross-Validation</span></span>
+<span><span class="va">loocv_ctrl</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"LOOCV"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="stratified-cross-validation" class="section level3" number="9.1.3">
+<h3>
+<span class="header-section-number">9.1.3</span> Stratified Cross-Validation<a class="anchor" aria-label="anchor" href="#stratified-cross-validation"><i class="fas fa-link"></i></a>
+</h3>
+<p>Stratified Cross-Validation ensures that each fold maintains the same class distribution as the original dataset. It is particularly useful for imbalanced datasets.</p>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example of Stratified Cross-Validation</span></span>
+<span><span class="va">strcv_ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, </span>
+<span>                     number <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>                     classProbs <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                     summaryFunction <span class="op">=</span> <span class="va">twoClassSummary</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="nested-cross-validation" class="section level3" number="9.1.4">
+<h3>
+<span class="header-section-number">9.1.4</span> Nested Cross-Validation<a class="anchor" aria-label="anchor" href="#nested-cross-validation"><i class="fas fa-link"></i></a>
+</h3>
+<p>Nested Cross-Validation is used to tune hyperparameters and evaluate model performance simultaneously. It involves an outer loop for model evaluation using K-Fold Cross-Validation and an inner loop for hyperparameter tuning.</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example of Nested Cross-Validation</span></span>
+<span><span class="va">nestcv_ctrl_outer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">netscv_ctrl_inner</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div id="holdout-validation" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Holdout Validation<a class="anchor" aria-label="anchor" href="#holdout-validation"><i class="fas fa-link"></i></a>
+</h2>
+<p>Holdout validation involves splitting the dataset into two subsets: a training set used to train the model and a separate validation set used to evaluate its performance. This technique is straightforward and computationally efficient but may suffer from high variance if the validation set is small.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="model-validation.html#cb67-1" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb67-2"><a href="model-validation.html#cb67-2" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="model-validation.html#cb67-3" tabindex="-1"></a><span class="co"># Sample dataset (replace this with your own dataset)</span></span>
+<span id="cb67-4"><a href="model-validation.html#cb67-4" tabindex="-1"></a><span class="co"># data &lt;- train_data</span></span>
+<span id="cb67-5"><a href="model-validation.html#cb67-5" tabindex="-1"></a>data <span class="ot">&lt;-</span> data_imputed</span>
+<span id="cb67-6"><a href="model-validation.html#cb67-6" tabindex="-1"></a></span>
+<span id="cb67-7"><a href="model-validation.html#cb67-7" tabindex="-1"></a><span class="co"># Holdout Validation</span></span>
+<span id="cb67-8"><a href="model-validation.html#cb67-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb67-9"><a href="model-validation.html#cb67-9" tabindex="-1"></a></span>
+<span id="cb67-10"><a href="model-validation.html#cb67-10" tabindex="-1"></a>train_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="fl">0.8</span> <span class="sc">*</span> <span class="fu">nrow</span>(data))  <span class="co"># 80% of data for training</span></span>
+<span id="cb67-11"><a href="model-validation.html#cb67-11" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> data[train_indices, ]</span>
+<span id="cb67-12"><a href="model-validation.html#cb67-12" tabindex="-1"></a>validation_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>train_indices, ]</span>
+<span id="cb67-13"><a href="model-validation.html#cb67-13" tabindex="-1"></a></span>
+<span id="cb67-14"><a href="model-validation.html#cb67-14" tabindex="-1"></a><span class="co"># Define your model</span></span>
+<span id="cb67-15"><a href="model-validation.html#cb67-15" tabindex="-1"></a><span class="co"># model &lt;- train(target ~ ., data = train_data, method = "glm", family = binomial)</span></span>
+<span id="cb67-16"><a href="model-validation.html#cb67-16" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> train_data, <span class="at">method =</span> <span class="st">"glm"</span>, <span class="at">family =</span> binomial)</span>
+<span id="cb67-17"><a href="model-validation.html#cb67-17" tabindex="-1"></a></span>
+<span id="cb67-18"><a href="model-validation.html#cb67-18" tabindex="-1"></a><span class="co"># Make predictions on validation data</span></span>
+<span id="cb67-19"><a href="model-validation.html#cb67-19" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> validation_data)</span>
+<span id="cb67-20"><a href="model-validation.html#cb67-20" tabindex="-1"></a></span>
+<span id="cb67-21"><a href="model-validation.html#cb67-21" tabindex="-1"></a><span class="co"># Evaluate model performance</span></span>
+<span id="cb67-22"><a href="model-validation.html#cb67-22" tabindex="-1"></a><span class="co"># evaluation_metrics &lt;- confusionMatrix(predictions, validation_data$target)</span></span>
+<span id="cb67-23"><a href="model-validation.html#cb67-23" tabindex="-1"></a>evaluation_metrics <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(predictions, validation_data<span class="sc">$</span>target)</span>
+<span id="cb67-24"><a href="model-validation.html#cb67-24" tabindex="-1"></a><span class="fu">print</span>(evaluation_metrics)</span>
+<span id="cb67-25"><a href="model-validation.html#cb67-25" tabindex="-1"></a>Confusion Matrix and Statistics</span>
+<span id="cb67-26"><a href="model-validation.html#cb67-26" tabindex="-1"></a></span>
+<span id="cb67-27"><a href="model-validation.html#cb67-27" tabindex="-1"></a>          Reference</span>
+<span id="cb67-28"><a href="model-validation.html#cb67-28" tabindex="-1"></a>Prediction  <span class="dv">0</span>  <span class="dv">1</span></span>
+<span id="cb67-29"><a href="model-validation.html#cb67-29" tabindex="-1"></a>         <span class="dv">0</span> <span class="dv">16</span>  <span class="dv">6</span></span>
+<span id="cb67-30"><a href="model-validation.html#cb67-30" tabindex="-1"></a>         <span class="dv">1</span> <span class="dv">11</span> <span class="dv">12</span></span>
+<span id="cb67-31"><a href="model-validation.html#cb67-31" tabindex="-1"></a>                                          </span>
+<span id="cb67-32"><a href="model-validation.html#cb67-32" tabindex="-1"></a>               Accuracy <span class="sc">:</span> <span class="fl">0.6222</span>          </span>
+<span id="cb67-33"><a href="model-validation.html#cb67-33" tabindex="-1"></a>                 <span class="dv">95</span>% CI <span class="sc">:</span> (<span class="fl">0.4654</span>, <span class="fl">0.7623</span>)</span>
+<span id="cb67-34"><a href="model-validation.html#cb67-34" tabindex="-1"></a>    No Information Rate <span class="sc">:</span> <span class="fl">0.6</span>             </span>
+<span id="cb67-35"><a href="model-validation.html#cb67-35" tabindex="-1"></a>    P<span class="sc">-</span>Value [Acc <span class="sc">&gt;</span> NIR] <span class="sc">:</span> <span class="fl">0.4436</span>          </span>
+<span id="cb67-36"><a href="model-validation.html#cb67-36" tabindex="-1"></a>                                          </span>
+<span id="cb67-37"><a href="model-validation.html#cb67-37" tabindex="-1"></a>                  Kappa <span class="sc">:</span> <span class="fl">0.2478</span>          </span>
+<span id="cb67-38"><a href="model-validation.html#cb67-38" tabindex="-1"></a>                                          </span>
+<span id="cb67-39"><a href="model-validation.html#cb67-39" tabindex="-1"></a> Mcnemar<span class="st">'s Test P-Value : 0.3320          </span></span>
+<span id="cb67-40"><a href="model-validation.html#cb67-40" tabindex="-1"></a><span class="st">                                          </span></span>
+<span id="cb67-41"><a href="model-validation.html#cb67-41" tabindex="-1"></a><span class="st">            Sensitivity : 0.5926          </span></span>
+<span id="cb67-42"><a href="model-validation.html#cb67-42" tabindex="-1"></a><span class="st">            Specificity : 0.6667          </span></span>
+<span id="cb67-43"><a href="model-validation.html#cb67-43" tabindex="-1"></a><span class="st">         Pos Pred Value : 0.7273          </span></span>
+<span id="cb67-44"><a href="model-validation.html#cb67-44" tabindex="-1"></a><span class="st">         Neg Pred Value : 0.5217          </span></span>
+<span id="cb67-45"><a href="model-validation.html#cb67-45" tabindex="-1"></a><span class="st">             Prevalence : 0.6000          </span></span>
+<span id="cb67-46"><a href="model-validation.html#cb67-46" tabindex="-1"></a><span class="st">         Detection Rate : 0.3556          </span></span>
+<span id="cb67-47"><a href="model-validation.html#cb67-47" tabindex="-1"></a><span class="st">   Detection Prevalence : 0.4889          </span></span>
+<span id="cb67-48"><a href="model-validation.html#cb67-48" tabindex="-1"></a><span class="st">      Balanced Accuracy : 0.6296          </span></span>
+<span id="cb67-49"><a href="model-validation.html#cb67-49" tabindex="-1"></a><span class="st">                                          </span></span>
+<span id="cb67-50"><a href="model-validation.html#cb67-50" tabindex="-1"></a><span class="st">       '</span>Positive<span class="st">' Class : 0               </span></span>
+<span id="cb67-51"><a href="model-validation.html#cb67-51" tabindex="-1"></a><span class="st">                                          </span></span></code></pre></div>
+</div>
+<div id="bootstrapping" class="section level2" number="9.3">
+<h2>
+<span class="header-section-number">9.3</span> Bootstrapping<a class="anchor" aria-label="anchor" href="#bootstrapping"><i class="fas fa-link"></i></a>
+</h2>
+<p>Bootstrapping is a resampling technique where multiple datasets are generated by randomly sampling with replacement from the original dataset. Each dataset is used to train a separate model, and their aggregate predictions are used to assess the model’s performance. Bootstrapping provides robust estimates of model performance and can handle small datasets effectively.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="model-validation.html#cb68-1" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb68-2"><a href="model-validation.html#cb68-2" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="model-validation.html#cb68-3" tabindex="-1"></a><span class="co"># Sample dataset (replace this with your own dataset)</span></span>
+<span id="cb68-4"><a href="model-validation.html#cb68-4" tabindex="-1"></a>data <span class="ot">&lt;-</span> data_imputed</span>
+<span id="cb68-5"><a href="model-validation.html#cb68-5" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="model-validation.html#cb68-6" tabindex="-1"></a><span class="co"># Define your model</span></span>
+<span id="cb68-7"><a href="model-validation.html#cb68-7" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> data, <span class="at">method =</span> <span class="st">"glm"</span>, <span class="at">family =</span> binomial)</span>
+<span id="cb68-8"><a href="model-validation.html#cb68-8" tabindex="-1"></a></span>
+<span id="cb68-9"><a href="model-validation.html#cb68-9" tabindex="-1"></a><span class="co"># Perform bootstrapping</span></span>
+<span id="cb68-10"><a href="model-validation.html#cb68-10" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb68-11"><a href="model-validation.html#cb68-11" tabindex="-1"></a>boot <span class="ot">&lt;-</span> <span class="fu">createResample</span>(<span class="at">y =</span> data<span class="sc">$</span>target, <span class="at">times =</span> <span class="dv">5</span>)</span>
+<span id="cb68-12"><a href="model-validation.html#cb68-12" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">lapply</span>(boot, <span class="cf">function</span>(index) {</span>
+<span id="cb68-13"><a href="model-validation.html#cb68-13" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> data[index, ]</span>
+<span id="cb68-14"><a href="model-validation.html#cb68-14" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> train_data, <span class="at">method =</span> <span class="st">"glm"</span>, <span class="at">family =</span> binomial)</span>
+<span id="cb68-15"><a href="model-validation.html#cb68-15" tabindex="-1"></a>  <span class="fu">predict</span>(model, <span class="at">newdata =</span> data[<span class="sc">-</span>index, ])</span>
+<span id="cb68-16"><a href="model-validation.html#cb68-16" tabindex="-1"></a>})</span>
+<span id="cb68-17"><a href="model-validation.html#cb68-17" tabindex="-1"></a></span>
+<span id="cb68-18"><a href="model-validation.html#cb68-18" tabindex="-1"></a><span class="co"># Aggregate bootstrapped results</span></span>
+<span id="cb68-19"><a href="model-validation.html#cb68-19" tabindex="-1"></a>boot_predictions <span class="ot">&lt;-</span> <span class="fu">do.call</span>(c, boot_results)</span>
+<span id="cb68-20"><a href="model-validation.html#cb68-20" tabindex="-1"></a></span>
+<span id="cb68-21"><a href="model-validation.html#cb68-21" tabindex="-1"></a><span class="co"># Ensure boot_predictions and data$target have the same length</span></span>
+<span id="cb68-22"><a href="model-validation.html#cb68-22" tabindex="-1"></a>min_length <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">length</span>(boot_predictions), <span class="fu">length</span>(data<span class="sc">$</span>target))</span>
+<span id="cb68-23"><a href="model-validation.html#cb68-23" tabindex="-1"></a>boot_predictions <span class="ot">&lt;-</span> boot_predictions[<span class="dv">1</span><span class="sc">:</span>min_length]</span>
+<span id="cb68-24"><a href="model-validation.html#cb68-24" tabindex="-1"></a>data<span class="sc">$</span>target <span class="ot">&lt;-</span> data<span class="sc">$</span>target[<span class="dv">1</span><span class="sc">:</span>min_length]</span>
+<span id="cb68-25"><a href="model-validation.html#cb68-25" tabindex="-1"></a></span>
+<span id="cb68-26"><a href="model-validation.html#cb68-26" tabindex="-1"></a><span class="co"># Evaluate bootstrapped model performance</span></span>
+<span id="cb68-27"><a href="model-validation.html#cb68-27" tabindex="-1"></a>evaluation_metrics <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(boot_predictions, data<span class="sc">$</span>target)</span>
+<span id="cb68-28"><a href="model-validation.html#cb68-28" tabindex="-1"></a><span class="fu">print</span>(evaluation_metrics)</span>
+<span id="cb68-29"><a href="model-validation.html#cb68-29" tabindex="-1"></a>Confusion Matrix and Statistics</span>
+<span id="cb68-30"><a href="model-validation.html#cb68-30" tabindex="-1"></a></span>
+<span id="cb68-31"><a href="model-validation.html#cb68-31" tabindex="-1"></a>          Reference</span>
+<span id="cb68-32"><a href="model-validation.html#cb68-32" tabindex="-1"></a>Prediction  <span class="dv">0</span>  <span class="dv">1</span></span>
+<span id="cb68-33"><a href="model-validation.html#cb68-33" tabindex="-1"></a>         <span class="dv">0</span> <span class="dv">49</span> <span class="dv">52</span></span>
+<span id="cb68-34"><a href="model-validation.html#cb68-34" tabindex="-1"></a>         <span class="dv">1</span> <span class="dv">74</span> <span class="dv">47</span></span>
+<span id="cb68-35"><a href="model-validation.html#cb68-35" tabindex="-1"></a>                                          </span>
+<span id="cb68-36"><a href="model-validation.html#cb68-36" tabindex="-1"></a>               Accuracy <span class="sc">:</span> <span class="fl">0.4324</span>          </span>
+<span id="cb68-37"><a href="model-validation.html#cb68-37" tabindex="-1"></a>                 <span class="dv">95</span>% CI <span class="sc">:</span> (<span class="fl">0.3663</span>, <span class="fl">0.5004</span>)</span>
+<span id="cb68-38"><a href="model-validation.html#cb68-38" tabindex="-1"></a>    No Information Rate <span class="sc">:</span> <span class="fl">0.5541</span>          </span>
+<span id="cb68-39"><a href="model-validation.html#cb68-39" tabindex="-1"></a>    P<span class="sc">-</span>Value [Acc <span class="sc">&gt;</span> NIR] <span class="sc">:</span> <span class="fl">0.99989</span>         </span>
+<span id="cb68-40"><a href="model-validation.html#cb68-40" tabindex="-1"></a>                                          </span>
+<span id="cb68-41"><a href="model-validation.html#cb68-41" tabindex="-1"></a>                  Kappa <span class="sc">:</span> <span class="sc">-</span><span class="fl">0.1242</span>         </span>
+<span id="cb68-42"><a href="model-validation.html#cb68-42" tabindex="-1"></a>                                          </span>
+<span id="cb68-43"><a href="model-validation.html#cb68-43" tabindex="-1"></a> Mcnemar<span class="st">'s Test P-Value : 0.06137         </span></span>
+<span id="cb68-44"><a href="model-validation.html#cb68-44" tabindex="-1"></a><span class="st">                                          </span></span>
+<span id="cb68-45"><a href="model-validation.html#cb68-45" tabindex="-1"></a><span class="st">            Sensitivity : 0.3984          </span></span>
+<span id="cb68-46"><a href="model-validation.html#cb68-46" tabindex="-1"></a><span class="st">            Specificity : 0.4747          </span></span>
+<span id="cb68-47"><a href="model-validation.html#cb68-47" tabindex="-1"></a><span class="st">         Pos Pred Value : 0.4851          </span></span>
+<span id="cb68-48"><a href="model-validation.html#cb68-48" tabindex="-1"></a><span class="st">         Neg Pred Value : 0.3884          </span></span>
+<span id="cb68-49"><a href="model-validation.html#cb68-49" tabindex="-1"></a><span class="st">             Prevalence : 0.5541          </span></span>
+<span id="cb68-50"><a href="model-validation.html#cb68-50" tabindex="-1"></a><span class="st">         Detection Rate : 0.2207          </span></span>
+<span id="cb68-51"><a href="model-validation.html#cb68-51" tabindex="-1"></a><span class="st">   Detection Prevalence : 0.4550          </span></span>
+<span id="cb68-52"><a href="model-validation.html#cb68-52" tabindex="-1"></a><span class="st">      Balanced Accuracy : 0.4366          </span></span>
+<span id="cb68-53"><a href="model-validation.html#cb68-53" tabindex="-1"></a><span class="st">                                          </span></span>
+<span id="cb68-54"><a href="model-validation.html#cb68-54" tabindex="-1"></a><span class="st">       '</span>Positive<span class="st">' Class : 0               </span></span>
+<span id="cb68-55"><a href="model-validation.html#cb68-55" tabindex="-1"></a><span class="st">                                          </span></span></code></pre></div>
+
+</div>
+</div>
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></div>
+<div class="next"><a href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#model-validation"><span class="header-section-number">9</span> Model Validation</a></li>
+<li>
+<a class="nav-link" href="#cross-validation-techniques"><span class="header-section-number">9.1</span> Cross-Validation Techniques</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#k-fold-cross-validation"><span class="header-section-number">9.1.1</span> K-Fold Cross-Validation</a></li>
+<li><a class="nav-link" href="#leave-one-out-cross-validation-loocv"><span class="header-section-number">9.1.2</span> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li><a class="nav-link" href="#stratified-cross-validation"><span class="header-section-number">9.1.3</span> Stratified Cross-Validation</a></li>
+<li><a class="nav-link" href="#nested-cross-validation"><span class="header-section-number">9.1.4</span> Nested Cross-Validation</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#holdout-validation"><span class="header-section-number">9.2</span> Holdout Validation</a></li>
+<li><a class="nav-link" href="#bootstrapping"><span class="header-section-number">9.3</span> Bootstrapping</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/04_model_evaluation.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/04_model_evaluation.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-05</b>.</p>
+<br>
+</div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

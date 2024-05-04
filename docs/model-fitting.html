@@ -61,15 +61,17 @@
 <li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
 <li class="book-part">MODEL DEVELOPMENT</li>
 <li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li class="book-part">FEATURE ENGINEERING</li>
 <li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
 <li class="book-part">MODEL TRAINING</li>
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="active" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
-<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
+<li><a class="" href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></li>
+<li><a class="" href="model-validation.html"><span class="header-section-number">9</span> Model Validation</a></li>
+<li class="book-part">PARAMETER TUNING</li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">11</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -87,161 +89,251 @@
 <h1>
 <span class="header-section-number">7</span> Model Fitting<a class="anchor" aria-label="anchor" href="#model-fitting"><i class="fas fa-link"></i></a>
 </h1>
-<p>Microbiome data presents unique challenges and opportunities for modeling due to its high dimensionality and complexity. In this section, we explore various algorithms suitable for modeling microbiome datasets:</p>
-<div id="regularized-logistic-regression" class="section level2" number="7.1">
+<p>Microbiome data presents unique challenges and opportunities for modeling due to its high dimensionality and complexity. In this section, we explore various algorithms suitable for modeling microbiome datasets.</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.exists</a></span><span class="op">(</span><span class="st">"models"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="st">"models"</span><span class="op">)</span><span class="op">}</span></span></code></pre></div>
+<div id="regularized-logistic-regression-model" class="section level2" number="7.1">
 <h2>
-<span class="header-section-number">7.1</span> Regularized Logistic Regression<a class="anchor" aria-label="anchor" href="#regularized-logistic-regression"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1</span> Regularized Logistic Regression Model<a class="anchor" aria-label="anchor" href="#regularized-logistic-regression-model"><i class="fas fa-link"></i></a>
 </h2>
-<p>Regularized Logistic Regression is a variant of logistic regression tailored for binary classification tasks commonly encountered in microbiome studies. It introduces penalty terms such as Lasso (L1) and Ridge (L2) to control model complexity and prevent overfitting.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">mod_regLogistic_cv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
-<span>                            method <span class="op">=</span> <span class="st">"regLogistic"</span>,</span>
-<span>                            tuneLength <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>                            trControl <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"adaptive_cv"</span>,</span>
-<span>                                                             verboseIter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>                            tuneGrid <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>cost <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
-<span>                                                         loss <span class="op">=</span>  <span class="st">"L2_primal"</span>,</span>
-<span>                                                         epsilon <span class="op">=</span> <span class="fl">0.01</span> <span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Regularized Logistic Regression model performance during training (using metrics like accuracy)</strong></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="co">## Visualize the model performance</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># Plot Accuracy vs. cost for Regularized Logistic Regression Model (Adaptive CV)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mod_regLogistic_cv</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cost</span>, y <span class="op">=</span> <span class="va">Accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. Cost for Regularized Logistic Regression Model (Adaptive CV)"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"Cost"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-12-1.png" width="672"></div>
+<p>Regularized Logistic Regression (RLR) is a variant of logistic regression tailored for binary classification tasks commonly encountered in microbiome studies. It introduces penalty terms such as Lasso (L1) and Ridge (L2) to control model complexity and prevent overfitting.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="model-fitting.html#cb46-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb46-2"><a href="model-fitting.html#cb46-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb46-3"><a href="model-fitting.html#cb46-3" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="model-fitting.html#cb46-4" tabindex="-1"></a>mod_regLogistic_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> train_data,</span>
+<span id="cb46-5"><a href="model-fitting.html#cb46-5" tabindex="-1"></a>                            <span class="at">method =</span> <span class="st">"regLogistic"</span>,</span>
+<span id="cb46-6"><a href="model-fitting.html#cb46-6" tabindex="-1"></a>                            <span class="at">tuneLength =</span> <span class="dv">12</span>,</span>
+<span id="cb46-7"><a href="model-fitting.html#cb46-7" tabindex="-1"></a>                            <span class="at">trControl =</span> caret<span class="sc">::</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"adaptive_cv"</span>,</span>
+<span id="cb46-8"><a href="model-fitting.html#cb46-8" tabindex="-1"></a>                                                             <span class="at">verboseIter =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb46-9"><a href="model-fitting.html#cb46-9" tabindex="-1"></a>                            <span class="at">tuneGrid =</span> base<span class="sc">::</span><span class="fu">expand.grid</span>(<span class="at">cost =</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">20</span>),</span>
+<span id="cb46-10"><a href="model-fitting.html#cb46-10" tabindex="-1"></a>                                                         <span class="at">loss =</span>  <span class="st">"L2_primal"</span>,</span>
+<span id="cb46-11"><a href="model-fitting.html#cb46-11" tabindex="-1"></a>                                                         <span class="at">epsilon =</span> <span class="fl">0.01</span> ))</span>
+<span id="cb46-12"><a href="model-fitting.html#cb46-12" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="model-fitting.html#cb46-13" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(<span class="fu">capture.output</span>(mod_regLogistic_cv), <span class="at">n =</span> <span class="dv">15</span>), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb46-14"><a href="model-fitting.html#cb46-14" tabindex="-1"></a> [<span class="dv">1</span>] Regularized Logistic Regression                                    </span>
+<span id="cb46-15"><a href="model-fitting.html#cb46-15" tabindex="-1"></a> [<span class="dv">2</span>]                                                                    </span>
+<span id="cb46-16"><a href="model-fitting.html#cb46-16" tabindex="-1"></a> [<span class="dv">3</span>] <span class="dv">179</span> samples                                                        </span>
+<span id="cb46-17"><a href="model-fitting.html#cb46-17" tabindex="-1"></a> [<span class="dv">4</span>] <span class="dv">143</span> predictors                                                     </span>
+<span id="cb46-18"><a href="model-fitting.html#cb46-18" tabindex="-1"></a> [<span class="dv">5</span>]   <span class="dv">2</span> classes<span class="sc">:</span> <span class="st">'0'</span>, <span class="st">'1'</span>                                              </span>
+<span id="cb46-19"><a href="model-fitting.html#cb46-19" tabindex="-1"></a> [<span class="dv">6</span>]                                                                    </span>
+<span id="cb46-20"><a href="model-fitting.html#cb46-20" tabindex="-1"></a> [<span class="dv">7</span>] No pre<span class="sc">-</span>processing                                                  </span>
+<span id="cb46-21"><a href="model-fitting.html#cb46-21" tabindex="-1"></a> [<span class="dv">8</span>] Resampling<span class="sc">:</span> Adaptively Cross<span class="sc">-</span><span class="fu">Validated</span> (<span class="dv">10</span> fold, repeated <span class="dv">1</span> times) </span>
+<span id="cb46-22"><a href="model-fitting.html#cb46-22" tabindex="-1"></a> [<span class="dv">9</span>] Summary of sample sizes<span class="sc">:</span> <span class="dv">161</span>, <span class="dv">162</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, ...         </span>
+<span id="cb46-23"><a href="model-fitting.html#cb46-23" tabindex="-1"></a>[<span class="dv">10</span>] Resampling results across tuning parameters<span class="sc">:</span>                       </span>
+<span id="cb46-24"><a href="model-fitting.html#cb46-24" tabindex="-1"></a>[<span class="dv">11</span>]                                                                    </span>
+<span id="cb46-25"><a href="model-fitting.html#cb46-25" tabindex="-1"></a>[<span class="dv">12</span>]   cost        Accuracy   Kappa      Resamples                      </span>
+<span id="cb46-26"><a href="model-fitting.html#cb46-26" tabindex="-1"></a>[<span class="dv">13</span>]   <span class="fl">0.00100000</span>  <span class="fl">0.5725490</span>  <span class="fl">0.0744186</span>   <span class="dv">5</span>                             </span>
+<span id="cb46-27"><a href="model-fitting.html#cb46-27" tabindex="-1"></a>[<span class="dv">14</span>]   <span class="fl">0.05357895</span>  <span class="fl">0.6813725</span>  <span class="fl">0.3315495</span>   <span class="dv">6</span>                             </span>
+<span id="cb46-28"><a href="model-fitting.html#cb46-28" tabindex="-1"></a>[<span class="dv">15</span>]   <span class="fl">0.10615789</span>  <span class="fl">0.7096950</span>  <span class="fl">0.4041659</span>   <span class="dv">6</span>                             </span>
+<span id="cb46-29"><a href="model-fitting.html#cb46-29" tabindex="-1"></a></span>
+<span id="cb46-30"><a href="model-fitting.html#cb46-30" tabindex="-1"></a></span>
+<span id="cb46-31"><a href="model-fitting.html#cb46-31" tabindex="-1"></a><span class="co"># Plot Accuracy vs. cost for Regularized Logistic Regression Model (Adaptive CV)</span></span>
+<span id="cb46-32"><a href="model-fitting.html#cb46-32" tabindex="-1"></a><span class="fu">ggplot</span>(mod_regLogistic_cv<span class="sc">$</span>results, <span class="fu">aes</span>(<span class="at">x =</span> cost, <span class="at">y =</span> Accuracy)) <span class="sc">+</span></span>
+<span id="cb46-33"><a href="model-fitting.html#cb46-33" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb46-34"><a href="model-fitting.html#cb46-34" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb46-35"><a href="model-fitting.html#cb46-35" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Accuracy vs. Cost for </span><span class="sc">\n</span><span class="st">Regularized Logistic Regression Model (Adaptive CV)"</span>,</span>
+<span id="cb46-36"><a href="model-fitting.html#cb46-36" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Cost"</span>, <span class="at">y =</span> <span class="st">"Accuracy"</span>) <span class="sc">+</span></span>
+<span id="cb46-37"><a href="model-fitting.html#cb46-37" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-8-1.png" width="672"></div>
 </div>
 <div id="generalized-linear-models-glmnet" class="section level2" number="7.2">
 <h2>
 <span class="header-section-number">7.2</span> Generalized Linear Models (glmnet)<a class="anchor" aria-label="anchor" href="#generalized-linear-models-glmnet"><i class="fas fa-link"></i></a>
 </h2>
 <p>glmnet is a package in R that fits Generalized Linear Models with Lasso or Elastic-Net regularization. It’s particularly useful for microbiome data analysis due to its ability to handle high-dimensional datasets with sparse features.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="va">mod_glmnet_adcv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
-<span>             method <span class="op">=</span> <span class="st">"glmnet"</span>,</span>
-<span>             tuneLength <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>             trControl <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"adaptive_cv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Generalized Linear model performance during training (using metrics like accuracy)</strong></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="co">## Visualize the model performance</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># Plot Accuracy vs. lambda for glmnet Model (Adaptive CV)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mod_glmnet_adcv</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lambda</span>, y <span class="op">=</span> <span class="va">Accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. Lambda for glmnet Model (Adaptive CV)"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"Lambda"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-14-1.png" width="672"></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="model-fitting.html#cb47-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb47-2"><a href="model-fitting.html#cb47-2" tabindex="-1"></a>mod_glmnet_adcv <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> train_data,</span>
+<span id="cb47-3"><a href="model-fitting.html#cb47-3" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">"glmnet"</span>,</span>
+<span id="cb47-4"><a href="model-fitting.html#cb47-4" tabindex="-1"></a>             <span class="at">tuneLength =</span> <span class="dv">12</span>,</span>
+<span id="cb47-5"><a href="model-fitting.html#cb47-5" tabindex="-1"></a>             <span class="at">trControl =</span> caret<span class="sc">::</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"adaptive_cv"</span>))</span>
+<span id="cb47-6"><a href="model-fitting.html#cb47-6" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="model-fitting.html#cb47-7" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(<span class="fu">capture.output</span>(mod_glmnet_adcv), <span class="at">n =</span> <span class="dv">15</span>), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb47-8"><a href="model-fitting.html#cb47-8" tabindex="-1"></a> [<span class="dv">1</span>] glmnet                                                             </span>
+<span id="cb47-9"><a href="model-fitting.html#cb47-9" tabindex="-1"></a> [<span class="dv">2</span>]                                                                    </span>
+<span id="cb47-10"><a href="model-fitting.html#cb47-10" tabindex="-1"></a> [<span class="dv">3</span>] <span class="dv">179</span> samples                                                        </span>
+<span id="cb47-11"><a href="model-fitting.html#cb47-11" tabindex="-1"></a> [<span class="dv">4</span>] <span class="dv">143</span> predictors                                                     </span>
+<span id="cb47-12"><a href="model-fitting.html#cb47-12" tabindex="-1"></a> [<span class="dv">5</span>]   <span class="dv">2</span> classes<span class="sc">:</span> <span class="st">'0'</span>, <span class="st">'1'</span>                                              </span>
+<span id="cb47-13"><a href="model-fitting.html#cb47-13" tabindex="-1"></a> [<span class="dv">6</span>]                                                                    </span>
+<span id="cb47-14"><a href="model-fitting.html#cb47-14" tabindex="-1"></a> [<span class="dv">7</span>] No pre<span class="sc">-</span>processing                                                  </span>
+<span id="cb47-15"><a href="model-fitting.html#cb47-15" tabindex="-1"></a> [<span class="dv">8</span>] Resampling<span class="sc">:</span> Adaptively Cross<span class="sc">-</span><span class="fu">Validated</span> (<span class="dv">10</span> fold, repeated <span class="dv">1</span> times) </span>
+<span id="cb47-16"><a href="model-fitting.html#cb47-16" tabindex="-1"></a> [<span class="dv">9</span>] Summary of sample sizes<span class="sc">:</span> <span class="dv">161</span>, <span class="dv">162</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, ...         </span>
+<span id="cb47-17"><a href="model-fitting.html#cb47-17" tabindex="-1"></a>[<span class="dv">10</span>] Resampling results across tuning parameters<span class="sc">:</span>                       </span>
+<span id="cb47-18"><a href="model-fitting.html#cb47-18" tabindex="-1"></a>[<span class="dv">11</span>]                                                                    </span>
+<span id="cb47-19"><a href="model-fitting.html#cb47-19" tabindex="-1"></a>[<span class="dv">12</span>]   alpha      lambda        Accuracy   Kappa       Resamples        </span>
+<span id="cb47-20"><a href="model-fitting.html#cb47-20" tabindex="-1"></a>[<span class="dv">13</span>]   <span class="fl">0.1000000</span>  <span class="fl">0.0001194437</span>  <span class="fl">0.9437908</span>  <span class="fl">0.88870667</span>   <span class="dv">5</span>               </span>
+<span id="cb47-21"><a href="model-fitting.html#cb47-21" tabindex="-1"></a>[<span class="dv">14</span>]   <span class="fl">0.1000000</span>  <span class="fl">0.0002425803</span>  <span class="fl">0.9437908</span>  <span class="fl">0.88870667</span>   <span class="dv">5</span>               </span>
+<span id="cb47-22"><a href="model-fitting.html#cb47-22" tabindex="-1"></a>[<span class="dv">15</span>]   <span class="fl">0.1000000</span>  <span class="fl">0.0004926607</span>  <span class="fl">0.9437908</span>  <span class="fl">0.88870667</span>   <span class="dv">5</span>               </span>
+<span id="cb47-23"><a href="model-fitting.html#cb47-23" tabindex="-1"></a></span>
+<span id="cb47-24"><a href="model-fitting.html#cb47-24" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb47-25"><a href="model-fitting.html#cb47-25" tabindex="-1"></a><span class="do">## Visualize the model performance</span></span>
+<span id="cb47-26"><a href="model-fitting.html#cb47-26" tabindex="-1"></a></span>
+<span id="cb47-27"><a href="model-fitting.html#cb47-27" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb47-28"><a href="model-fitting.html#cb47-28" tabindex="-1"></a></span>
+<span id="cb47-29"><a href="model-fitting.html#cb47-29" tabindex="-1"></a><span class="co"># Plot Accuracy vs. lambda for glmnet Model (Adaptive CV)</span></span>
+<span id="cb47-30"><a href="model-fitting.html#cb47-30" tabindex="-1"></a><span class="fu">ggplot</span>(mod_glmnet_adcv<span class="sc">$</span>results, <span class="fu">aes</span>(<span class="at">x =</span> lambda, <span class="at">y =</span> Accuracy)) <span class="sc">+</span></span>
+<span id="cb47-31"><a href="model-fitting.html#cb47-31" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb47-32"><a href="model-fitting.html#cb47-32" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb47-33"><a href="model-fitting.html#cb47-33" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Accuracy vs. Lambda for </span><span class="sc">\n</span><span class="st">glmnet Model (Adaptive CV)"</span>,</span>
+<span id="cb47-34"><a href="model-fitting.html#cb47-34" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Lambda"</span>, <span class="at">y =</span> <span class="st">"Accuracy"</span>) <span class="sc">+</span></span>
+<span id="cb47-35"><a href="model-fitting.html#cb47-35" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-9-1.png" width="672"></div>
 </div>
 <div id="random-forest" class="section level2" number="7.3">
 <h2>
 <span class="header-section-number">7.3</span> Random Forest<a class="anchor" aria-label="anchor" href="#random-forest"><i class="fas fa-link"></i></a>
 </h2>
 <p>Random Forest is an ensemble learning technique that combines multiple decision trees to improve predictive performance. It’s well-suited for handling the high-dimensional and nonlinear nature of microbiome data while mitigating overfitting.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="va">mod_rf_reptcv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
-<span>             method <span class="op">=</span> <span class="st">"rf"</span>,</span>
-<span>             tuneLength <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>             trControl <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"repeatedcv"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">mod_rf_adcv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
-<span>             method <span class="op">=</span> <span class="st">"rf"</span>,</span>
-<span>             tuneLength <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>             trControl <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"adaptive_cv"</span>,</span>
-<span>                      verboseIter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="model-fitting.html#cb48-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb48-2"><a href="model-fitting.html#cb48-2" tabindex="-1"></a>mod_rf_reptcv <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> train_data,</span>
+<span id="cb48-3"><a href="model-fitting.html#cb48-3" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">"rf"</span>,</span>
+<span id="cb48-4"><a href="model-fitting.html#cb48-4" tabindex="-1"></a>             <span class="at">tuneLength =</span> <span class="dv">12</span>,</span>
+<span id="cb48-5"><a href="model-fitting.html#cb48-5" tabindex="-1"></a>             <span class="at">trControl =</span> caret<span class="sc">::</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"repeatedcv"</span>))</span>
+<span id="cb48-6"><a href="model-fitting.html#cb48-6" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="model-fitting.html#cb48-7" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(<span class="fu">capture.output</span>(mod_rf_reptcv), <span class="at">n =</span> <span class="dv">15</span>), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb48-8"><a href="model-fitting.html#cb48-8" tabindex="-1"></a> [<span class="dv">1</span>] Random Forest                                              </span>
+<span id="cb48-9"><a href="model-fitting.html#cb48-9" tabindex="-1"></a> [<span class="dv">2</span>]                                                            </span>
+<span id="cb48-10"><a href="model-fitting.html#cb48-10" tabindex="-1"></a> [<span class="dv">3</span>] <span class="dv">179</span> samples                                                </span>
+<span id="cb48-11"><a href="model-fitting.html#cb48-11" tabindex="-1"></a> [<span class="dv">4</span>] <span class="dv">143</span> predictors                                             </span>
+<span id="cb48-12"><a href="model-fitting.html#cb48-12" tabindex="-1"></a> [<span class="dv">5</span>]   <span class="dv">2</span> classes<span class="sc">:</span> <span class="st">'0'</span>, <span class="st">'1'</span>                                      </span>
+<span id="cb48-13"><a href="model-fitting.html#cb48-13" tabindex="-1"></a> [<span class="dv">6</span>]                                                            </span>
+<span id="cb48-14"><a href="model-fitting.html#cb48-14" tabindex="-1"></a> [<span class="dv">7</span>] No pre<span class="sc">-</span>processing                                          </span>
+<span id="cb48-15"><a href="model-fitting.html#cb48-15" tabindex="-1"></a> [<span class="dv">8</span>] Resampling<span class="sc">:</span> Cross<span class="sc">-</span><span class="fu">Validated</span> (<span class="dv">10</span> fold, repeated <span class="dv">1</span> times)    </span>
+<span id="cb48-16"><a href="model-fitting.html#cb48-16" tabindex="-1"></a> [<span class="dv">9</span>] Summary of sample sizes<span class="sc">:</span> <span class="dv">161</span>, <span class="dv">162</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, ... </span>
+<span id="cb48-17"><a href="model-fitting.html#cb48-17" tabindex="-1"></a>[<span class="dv">10</span>] Resampling results across tuning parameters<span class="sc">:</span>               </span>
+<span id="cb48-18"><a href="model-fitting.html#cb48-18" tabindex="-1"></a>[<span class="dv">11</span>]                                                            </span>
+<span id="cb48-19"><a href="model-fitting.html#cb48-19" tabindex="-1"></a>[<span class="dv">12</span>]   mtry  Accuracy   Kappa                                   </span>
+<span id="cb48-20"><a href="model-fitting.html#cb48-20" tabindex="-1"></a>[<span class="dv">13</span>]     <span class="dv">2</span>   <span class="fl">0.9663399</span>  <span class="fl">0.9322683</span>                               </span>
+<span id="cb48-21"><a href="model-fitting.html#cb48-21" tabindex="-1"></a>[<span class="dv">14</span>]    <span class="dv">14</span>   <span class="fl">0.9549020</span>  <span class="fl">0.9085759</span>                               </span>
+<span id="cb48-22"><a href="model-fitting.html#cb48-22" tabindex="-1"></a>[<span class="dv">15</span>]    <span class="dv">27</span>   <span class="fl">0.9493464</span>  <span class="fl">0.8980417</span>                               </span>
+<span id="cb48-23"><a href="model-fitting.html#cb48-23" tabindex="-1"></a></span>
+<span id="cb48-24"><a href="model-fitting.html#cb48-24" tabindex="-1"></a><span class="do">## Visualize the model performance</span></span>
+<span id="cb48-25"><a href="model-fitting.html#cb48-25" tabindex="-1"></a></span>
+<span id="cb48-26"><a href="model-fitting.html#cb48-26" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb48-27"><a href="model-fitting.html#cb48-27" tabindex="-1"></a></span>
+<span id="cb48-28"><a href="model-fitting.html#cb48-28" tabindex="-1"></a></span>
+<span id="cb48-29"><a href="model-fitting.html#cb48-29" tabindex="-1"></a><span class="co"># Plot Accuracy vs. mtry for Random Forest Model (Repeated CV)</span></span>
+<span id="cb48-30"><a href="model-fitting.html#cb48-30" tabindex="-1"></a><span class="fu">ggplot</span>(mod_rf_reptcv<span class="sc">$</span>results, <span class="fu">aes</span>(<span class="at">x =</span> mtry, <span class="at">y =</span> Accuracy)) <span class="sc">+</span></span>
+<span id="cb48-31"><a href="model-fitting.html#cb48-31" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb48-32"><a href="model-fitting.html#cb48-32" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb48-33"><a href="model-fitting.html#cb48-33" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Accuracy vs. mtry for Random Forest Model (Repeated CV)"</span>,</span>
+<span id="cb48-34"><a href="model-fitting.html#cb48-34" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"mtry"</span>, <span class="at">y =</span> <span class="st">"Accuracy"</span>) <span class="sc">+</span></span>
+<span id="cb48-35"><a href="model-fitting.html#cb48-35" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-10-1.png" width="672"></div>
 <p><strong>Random Forest model performance during training (using metrics like accuracy)</strong></p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="co">## Visualize the model performance</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># Plot Accuracy vs. mtry for Random Forest Model (Repeated CV)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mod_rf_reptcv</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mtry</span>, y <span class="op">=</span> <span class="va">Accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. mtry for Random Forest Model (Repeated CV)"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"mtry"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-16-1.png" width="672"></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Plot Accuracy vs. mtry for Random Forest Model (Adaptive CV)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mod_rf_adcv</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mtry</span>, y <span class="op">=</span> <span class="va">Accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. mtry for Random Forest Model (Adaptive CV)"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"mtry"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-16-2.png" width="672"></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="model-fitting.html#cb49-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb49-2"><a href="model-fitting.html#cb49-2" tabindex="-1"></a><span class="do">## Visualize the model performance</span></span>
+<span id="cb49-3"><a href="model-fitting.html#cb49-3" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="model-fitting.html#cb49-4" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="model-fitting.html#cb49-5" tabindex="-1"></a>mod_rf_adcv <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> train_data,</span>
+<span id="cb49-6"><a href="model-fitting.html#cb49-6" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">"rf"</span>,</span>
+<span id="cb49-7"><a href="model-fitting.html#cb49-7" tabindex="-1"></a>             <span class="at">tuneLength =</span> <span class="dv">12</span>,</span>
+<span id="cb49-8"><a href="model-fitting.html#cb49-8" tabindex="-1"></a>             <span class="at">trControl =</span> caret<span class="sc">::</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"adaptive_cv"</span>,</span>
+<span id="cb49-9"><a href="model-fitting.html#cb49-9" tabindex="-1"></a>                      <span class="at">verboseIter =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb49-10"><a href="model-fitting.html#cb49-10" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="model-fitting.html#cb49-11" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(<span class="fu">capture.output</span>(mod_rf_adcv), <span class="at">n =</span> <span class="dv">15</span>), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb49-12"><a href="model-fitting.html#cb49-12" tabindex="-1"></a> [<span class="dv">1</span>] Random Forest                                                      </span>
+<span id="cb49-13"><a href="model-fitting.html#cb49-13" tabindex="-1"></a> [<span class="dv">2</span>]                                                                    </span>
+<span id="cb49-14"><a href="model-fitting.html#cb49-14" tabindex="-1"></a> [<span class="dv">3</span>] <span class="dv">179</span> samples                                                        </span>
+<span id="cb49-15"><a href="model-fitting.html#cb49-15" tabindex="-1"></a> [<span class="dv">4</span>] <span class="dv">143</span> predictors                                                     </span>
+<span id="cb49-16"><a href="model-fitting.html#cb49-16" tabindex="-1"></a> [<span class="dv">5</span>]   <span class="dv">2</span> classes<span class="sc">:</span> <span class="st">'0'</span>, <span class="st">'1'</span>                                              </span>
+<span id="cb49-17"><a href="model-fitting.html#cb49-17" tabindex="-1"></a> [<span class="dv">6</span>]                                                                    </span>
+<span id="cb49-18"><a href="model-fitting.html#cb49-18" tabindex="-1"></a> [<span class="dv">7</span>] No pre<span class="sc">-</span>processing                                                  </span>
+<span id="cb49-19"><a href="model-fitting.html#cb49-19" tabindex="-1"></a> [<span class="dv">8</span>] Resampling<span class="sc">:</span> Adaptively Cross<span class="sc">-</span><span class="fu">Validated</span> (<span class="dv">10</span> fold, repeated <span class="dv">1</span> times) </span>
+<span id="cb49-20"><a href="model-fitting.html#cb49-20" tabindex="-1"></a> [<span class="dv">9</span>] Summary of sample sizes<span class="sc">:</span> <span class="dv">161</span>, <span class="dv">162</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, ...         </span>
+<span id="cb49-21"><a href="model-fitting.html#cb49-21" tabindex="-1"></a>[<span class="dv">10</span>] Resampling results across tuning parameters<span class="sc">:</span>                       </span>
+<span id="cb49-22"><a href="model-fitting.html#cb49-22" tabindex="-1"></a>[<span class="dv">11</span>]                                                                    </span>
+<span id="cb49-23"><a href="model-fitting.html#cb49-23" tabindex="-1"></a>[<span class="dv">12</span>]   mtry  Accuracy   Kappa      Resamples                            </span>
+<span id="cb49-24"><a href="model-fitting.html#cb49-24" tabindex="-1"></a>[<span class="dv">13</span>]     <span class="dv">2</span>   <span class="fl">0.9663399</span>  <span class="fl">0.9322683</span>  <span class="dv">10</span>                                   </span>
+<span id="cb49-25"><a href="model-fitting.html#cb49-25" tabindex="-1"></a>[<span class="dv">14</span>]    <span class="dv">14</span>   <span class="fl">0.9542484</span>  <span class="fl">0.9072082</span>   <span class="dv">5</span>                                   </span>
+<span id="cb49-26"><a href="model-fitting.html#cb49-26" tabindex="-1"></a>[<span class="dv">15</span>]    <span class="dv">27</span>   <span class="fl">0.9431373</span>  <span class="fl">0.8849859</span>   <span class="dv">5</span>                                   </span>
+<span id="cb49-27"><a href="model-fitting.html#cb49-27" tabindex="-1"></a></span>
+<span id="cb49-28"><a href="model-fitting.html#cb49-28" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb49-29"><a href="model-fitting.html#cb49-29" tabindex="-1"></a></span>
+<span id="cb49-30"><a href="model-fitting.html#cb49-30" tabindex="-1"></a><span class="co"># Plot Accuracy vs. mtry for Random Forest Model (Adaptive CV)</span></span>
+<span id="cb49-31"><a href="model-fitting.html#cb49-31" tabindex="-1"></a><span class="fu">ggplot</span>(mod_rf_adcv<span class="sc">$</span>results, <span class="fu">aes</span>(<span class="at">x =</span> mtry, <span class="at">y =</span> Accuracy)) <span class="sc">+</span></span>
+<span id="cb49-32"><a href="model-fitting.html#cb49-32" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb49-33"><a href="model-fitting.html#cb49-33" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb49-34"><a href="model-fitting.html#cb49-34" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Accuracy vs. mtry for Random Forest Model (Adaptive CV)"</span>,</span>
+<span id="cb49-35"><a href="model-fitting.html#cb49-35" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"mtry"</span>, <span class="at">y =</span> <span class="st">"Accuracy"</span>) <span class="sc">+</span></span>
+<span id="cb49-36"><a href="model-fitting.html#cb49-36" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-11-1.png" width="672"></div>
 </div>
 <div id="k-nearest-neighbors-knn" class="section level2" number="7.4">
 <h2>
 <span class="header-section-number">7.4</span> k-Nearest Neighbors (kNN)<a class="anchor" aria-label="anchor" href="#k-nearest-neighbors-knn"><i class="fas fa-link"></i></a>
 </h2>
 <p>kNN is a simple yet effective algorithm for classification and regression tasks in microbiome studies. It works by assigning a class label to an unclassified sample based on the majority class of its k nearest neighbors in the feature space.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="va">mod_knn_reptcv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
-<span>                        method <span class="op">=</span> <span class="st">"knn"</span>,</span>
-<span>                        tuneLength <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>                        trControl <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"repeatedcv"</span>,</span>
-<span>                                                         repeats <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">mod_knn_adcv</span> <span class="op">&lt;-</span> <span class="fu">train</span><span class="op">(</span><span class="va">target</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">training_data</span>,</span>
-<span>                      method <span class="op">=</span> <span class="st">"knn"</span>,</span>
-<span>                      tuneLength <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>                      trControl <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"adaptive_cv"</span>,</span>
-<span>                                                       repeats <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>                                                       verboseIter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="model-fitting.html#cb50-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb50-2"><a href="model-fitting.html#cb50-2" tabindex="-1"></a>mod_knn_reptcv <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> train_data,</span>
+<span id="cb50-3"><a href="model-fitting.html#cb50-3" tabindex="-1"></a>                        <span class="at">method =</span> <span class="st">"knn"</span>,</span>
+<span id="cb50-4"><a href="model-fitting.html#cb50-4" tabindex="-1"></a>                        <span class="at">tuneLength =</span> <span class="dv">12</span>,</span>
+<span id="cb50-5"><a href="model-fitting.html#cb50-5" tabindex="-1"></a>                        <span class="at">trControl =</span> caret<span class="sc">::</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"repeatedcv"</span>,</span>
+<span id="cb50-6"><a href="model-fitting.html#cb50-6" tabindex="-1"></a>                                                         <span class="at">repeats =</span> <span class="dv">2</span>))</span>
+<span id="cb50-7"><a href="model-fitting.html#cb50-7" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(<span class="fu">capture.output</span>(mod_knn_reptcv), <span class="at">n =</span> <span class="dv">15</span>), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb50-8"><a href="model-fitting.html#cb50-8" tabindex="-1"></a> [<span class="dv">1</span>] k<span class="sc">-</span>Nearest Neighbors                                        </span>
+<span id="cb50-9"><a href="model-fitting.html#cb50-9" tabindex="-1"></a> [<span class="dv">2</span>]                                                            </span>
+<span id="cb50-10"><a href="model-fitting.html#cb50-10" tabindex="-1"></a> [<span class="dv">3</span>] <span class="dv">179</span> samples                                                </span>
+<span id="cb50-11"><a href="model-fitting.html#cb50-11" tabindex="-1"></a> [<span class="dv">4</span>] <span class="dv">143</span> predictors                                             </span>
+<span id="cb50-12"><a href="model-fitting.html#cb50-12" tabindex="-1"></a> [<span class="dv">5</span>]   <span class="dv">2</span> classes<span class="sc">:</span> <span class="st">'0'</span>, <span class="st">'1'</span>                                      </span>
+<span id="cb50-13"><a href="model-fitting.html#cb50-13" tabindex="-1"></a> [<span class="dv">6</span>]                                                            </span>
+<span id="cb50-14"><a href="model-fitting.html#cb50-14" tabindex="-1"></a> [<span class="dv">7</span>] No pre<span class="sc">-</span>processing                                          </span>
+<span id="cb50-15"><a href="model-fitting.html#cb50-15" tabindex="-1"></a> [<span class="dv">8</span>] Resampling<span class="sc">:</span> Cross<span class="sc">-</span><span class="fu">Validated</span> (<span class="dv">10</span> fold, repeated <span class="dv">2</span> times)    </span>
+<span id="cb50-16"><a href="model-fitting.html#cb50-16" tabindex="-1"></a> [<span class="dv">9</span>] Summary of sample sizes<span class="sc">:</span> <span class="dv">161</span>, <span class="dv">162</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, ... </span>
+<span id="cb50-17"><a href="model-fitting.html#cb50-17" tabindex="-1"></a>[<span class="dv">10</span>] Resampling results across tuning parameters<span class="sc">:</span>               </span>
+<span id="cb50-18"><a href="model-fitting.html#cb50-18" tabindex="-1"></a>[<span class="dv">11</span>]                                                            </span>
+<span id="cb50-19"><a href="model-fitting.html#cb50-19" tabindex="-1"></a>[<span class="dv">12</span>]   k   Accuracy   Kappa                                     </span>
+<span id="cb50-20"><a href="model-fitting.html#cb50-20" tabindex="-1"></a>[<span class="dv">13</span>]    <span class="dv">5</span>  <span class="fl">0.8153595</span>  <span class="fl">0.6319367</span>                                 </span>
+<span id="cb50-21"><a href="model-fitting.html#cb50-21" tabindex="-1"></a>[<span class="dv">14</span>]    <span class="dv">7</span>  <span class="fl">0.8125817</span>  <span class="fl">0.6284433</span>                                 </span>
+<span id="cb50-22"><a href="model-fitting.html#cb50-22" tabindex="-1"></a>[<span class="dv">15</span>]    <span class="dv">9</span>  <span class="fl">0.8066993</span>  <span class="fl">0.6175578</span>                                 </span>
+<span id="cb50-23"><a href="model-fitting.html#cb50-23" tabindex="-1"></a></span>
+<span id="cb50-24"><a href="model-fitting.html#cb50-24" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb50-25"><a href="model-fitting.html#cb50-25" tabindex="-1"></a></span>
+<span id="cb50-26"><a href="model-fitting.html#cb50-26" tabindex="-1"></a><span class="co"># Plot Accuracy vs. k for KNN Model (Repeated CV)</span></span>
+<span id="cb50-27"><a href="model-fitting.html#cb50-27" tabindex="-1"></a><span class="fu">ggplot</span>(mod_knn_reptcv<span class="sc">$</span>results, <span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> Accuracy)) <span class="sc">+</span></span>
+<span id="cb50-28"><a href="model-fitting.html#cb50-28" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb50-29"><a href="model-fitting.html#cb50-29" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb50-30"><a href="model-fitting.html#cb50-30" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Accuracy vs. k for KNN Model (Repeated CV)"</span>,</span>
+<span id="cb50-31"><a href="model-fitting.html#cb50-31" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"k"</span>, <span class="at">y =</span> <span class="st">"Accuracy"</span>) <span class="sc">+</span></span>
+<span id="cb50-32"><a href="model-fitting.html#cb50-32" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-12-1.png" width="672"></div>
 <p><strong>k-Nearest Neighbors model performance during training (using metrics like accuracy)</strong></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="co">## Visualize the model performance</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Plot Accuracy vs. k for KNN Model (Repeated CV)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mod_knn_reptcv</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">k</span>, y <span class="op">=</span> <span class="va">Accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. k for KNN Model (Repeated CV)"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"k"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-18-1.png" width="672"></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Plot Accuracy vs. k for KNN Model (Adaptive CV)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mod_knn_adcv</span><span class="op">$</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">k</span>, y <span class="op">=</span> <span class="va">Accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Accuracy vs. k for KNN Model (Adaptive CV)"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"k"</span>, y <span class="op">=</span> <span class="st">"Accuracy"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="figures/unnamed-chunk-18-2.png" width="672"></div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.exists</a></span><span class="op">(</span><span class="st">"models"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="st">"models"</span><span class="op">)</span><span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">mod_glmnet_adcv</span>, <span class="va">mod_regLogistic_cv</span>, <span class="va">mod_rf_adcv</span>, <span class="va">mod_rf_reptcv</span>, <span class="va">mod_knn_adcv</span>, <span class="va">mod_knn_reptcv</span>, file <span class="op">=</span> <span class="st">"models/models.rda"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="model-fitting.html#cb51-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb51-2"><a href="model-fitting.html#cb51-2" tabindex="-1"></a><span class="do">## Visualize the model performance</span></span>
+<span id="cb51-3"><a href="model-fitting.html#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="model-fitting.html#cb51-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb51-5"><a href="model-fitting.html#cb51-5" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="model-fitting.html#cb51-6" tabindex="-1"></a>mod_knn_adcv <span class="ot">&lt;-</span> <span class="fu">train</span>(target <span class="sc">~</span> ., <span class="at">data =</span> train_data,</span>
+<span id="cb51-7"><a href="model-fitting.html#cb51-7" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">"knn"</span>,</span>
+<span id="cb51-8"><a href="model-fitting.html#cb51-8" tabindex="-1"></a>                      <span class="at">tuneLength =</span> <span class="dv">12</span>,</span>
+<span id="cb51-9"><a href="model-fitting.html#cb51-9" tabindex="-1"></a>                      <span class="at">trControl =</span> caret<span class="sc">::</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"adaptive_cv"</span>,</span>
+<span id="cb51-10"><a href="model-fitting.html#cb51-10" tabindex="-1"></a>                                                       <span class="at">repeats =</span> <span class="dv">2</span>,</span>
+<span id="cb51-11"><a href="model-fitting.html#cb51-11" tabindex="-1"></a>                                                       <span class="at">verboseIter =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb51-12"><a href="model-fitting.html#cb51-12" tabindex="-1"></a></span>
+<span id="cb51-13"><a href="model-fitting.html#cb51-13" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(<span class="fu">capture.output</span>(mod_knn_adcv), <span class="at">n =</span> <span class="dv">15</span>), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb51-14"><a href="model-fitting.html#cb51-14" tabindex="-1"></a> [<span class="dv">1</span>] k<span class="sc">-</span>Nearest Neighbors                                                </span>
+<span id="cb51-15"><a href="model-fitting.html#cb51-15" tabindex="-1"></a> [<span class="dv">2</span>]                                                                    </span>
+<span id="cb51-16"><a href="model-fitting.html#cb51-16" tabindex="-1"></a> [<span class="dv">3</span>] <span class="dv">179</span> samples                                                        </span>
+<span id="cb51-17"><a href="model-fitting.html#cb51-17" tabindex="-1"></a> [<span class="dv">4</span>] <span class="dv">143</span> predictors                                                     </span>
+<span id="cb51-18"><a href="model-fitting.html#cb51-18" tabindex="-1"></a> [<span class="dv">5</span>]   <span class="dv">2</span> classes<span class="sc">:</span> <span class="st">'0'</span>, <span class="st">'1'</span>                                              </span>
+<span id="cb51-19"><a href="model-fitting.html#cb51-19" tabindex="-1"></a> [<span class="dv">6</span>]                                                                    </span>
+<span id="cb51-20"><a href="model-fitting.html#cb51-20" tabindex="-1"></a> [<span class="dv">7</span>] No pre<span class="sc">-</span>processing                                                  </span>
+<span id="cb51-21"><a href="model-fitting.html#cb51-21" tabindex="-1"></a> [<span class="dv">8</span>] Resampling<span class="sc">:</span> Adaptively Cross<span class="sc">-</span><span class="fu">Validated</span> (<span class="dv">10</span> fold, repeated <span class="dv">2</span> times) </span>
+<span id="cb51-22"><a href="model-fitting.html#cb51-22" tabindex="-1"></a> [<span class="dv">9</span>] Summary of sample sizes<span class="sc">:</span> <span class="dv">161</span>, <span class="dv">162</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, <span class="dv">161</span>, ...         </span>
+<span id="cb51-23"><a href="model-fitting.html#cb51-23" tabindex="-1"></a>[<span class="dv">10</span>] Resampling results across tuning parameters<span class="sc">:</span>                       </span>
+<span id="cb51-24"><a href="model-fitting.html#cb51-24" tabindex="-1"></a>[<span class="dv">11</span>]                                                                    </span>
+<span id="cb51-25"><a href="model-fitting.html#cb51-25" tabindex="-1"></a>[<span class="dv">12</span>]   k   Accuracy   Kappa      Resamples                              </span>
+<span id="cb51-26"><a href="model-fitting.html#cb51-26" tabindex="-1"></a>[<span class="dv">13</span>]    <span class="dv">5</span>  <span class="fl">0.8153595</span>  <span class="fl">0.6319367</span>  <span class="dv">20</span>                                     </span>
+<span id="cb51-27"><a href="model-fitting.html#cb51-27" tabindex="-1"></a>[<span class="dv">14</span>]    <span class="dv">7</span>  <span class="fl">0.7997199</span>  <span class="fl">0.6000193</span>   <span class="dv">7</span>                                     </span>
+<span id="cb51-28"><a href="model-fitting.html#cb51-28" tabindex="-1"></a>[<span class="dv">15</span>]    <span class="dv">9</span>  <span class="fl">0.8028322</span>  <span class="fl">0.6086850</span>   <span class="dv">6</span>                                     </span>
+<span id="cb51-29"><a href="model-fitting.html#cb51-29" tabindex="-1"></a></span>
+<span id="cb51-30"><a href="model-fitting.html#cb51-30" tabindex="-1"></a><span class="co"># Plot Accuracy vs. k for KNN Model (Adaptive CV)</span></span>
+<span id="cb51-31"><a href="model-fitting.html#cb51-31" tabindex="-1"></a><span class="fu">ggplot</span>(mod_knn_adcv<span class="sc">$</span>results, <span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> Accuracy)) <span class="sc">+</span></span>
+<span id="cb51-32"><a href="model-fitting.html#cb51-32" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb51-33"><a href="model-fitting.html#cb51-33" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb51-34"><a href="model-fitting.html#cb51-34" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Accuracy vs. k for KNN Model (Adaptive CV)"</span>,</span>
+<span id="cb51-35"><a href="model-fitting.html#cb51-35" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"k"</span>, <span class="at">y =</span> <span class="st">"Accuracy"</span>) <span class="sc">+</span></span>
+<span id="cb51-36"><a href="model-fitting.html#cb51-36" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="inline-figure"><img src="figures/unnamed-chunk-13-1.png" width="672"></div>
 </div>
 <div id="decision-trees" class="section level2" number="7.5">
 <h2>
@@ -293,63 +385,19 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
 </p>
 </blockquote>
 </div>
-</div>
-<div id="cross-validation-techniques" class="section level2" number="7.11">
-<h2>
-<span class="header-section-number">7.11</span> Cross-Validation Techniques<a class="anchor" aria-label="anchor" href="#cross-validation-techniques"><i class="fas fa-link"></i></a>
-</h2>
-<p>Cross-validation is a method used to evaluate the performance and generalization ability of predictive models. It involves partitioning the available data into multiple subsets, known as folds. The model is trained on a portion of the data (training set) and then evaluated on the remaining data (validation set). This process is repeated multiple times, with each fold serving as the validation set exactly once. Cross-validation provides a more robust estimate of the model’s performance compared to a single train-test split and helps identify overfitting.</p>
-<p>In this section, we will explore various cross-validation techniques. Understanding these methods is essential as they play a significant role in subsequent hyperparameter tuning. Cross-validation ensures robust model evaluation and assists in selecting optimal hyperparameters for improved model performance.</p>
-</div>
-<div id="k-fold-cross-validation" class="section level2" number="7.12">
-<h2>
-<span class="header-section-number">7.12</span> K-Fold Cross-Validation<a class="anchor" aria-label="anchor" href="#k-fold-cross-validation"><i class="fas fa-link"></i></a>
-</h2>
-<p>K-Fold Cross-Validation divides the data into K equal-sized folds. The model is trained K times, each time using K-1 folds as the training set and the remaining fold as the validation set.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example of K-Fold Cross-Validation</span></span>
-<span><span class="va">kfcv_ctrl</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div id="leave-one-out-cross-validation-loocv" class="section level2" number="7.13">
-<h2>
-<span class="header-section-number">7.13</span> Leave-One-Out Cross-Validation (LOOCV)<a class="anchor" aria-label="anchor" href="#leave-one-out-cross-validation-loocv"><i class="fas fa-link"></i></a>
-</h2>
-<p>Leave-One-Out Cross-Validation involves using a single observation as the validation set and the remaining observations as the training set. This process is repeated for each observation in the dataset.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example of Leave-One-Out Cross-Validation</span></span>
-<span><span class="va">loocv_ctrl</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"LOOCV"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div id="stratified-cross-validation" class="section level2" number="7.14">
-<h2>
-<span class="header-section-number">7.14</span> Stratified Cross-Validation<a class="anchor" aria-label="anchor" href="#stratified-cross-validation"><i class="fas fa-link"></i></a>
-</h2>
-<p>Stratified Cross-Validation ensures that each fold maintains the same class distribution as the original dataset. It is particularly useful for imbalanced datasets.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example of Stratified Cross-Validation</span></span>
-<span><span class="va">strcv_ctrl</span> <span class="op">&lt;-</span> <span class="fu">trainControl</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, </span>
-<span>                     number <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>                     classProbs <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>                     summaryFunction <span class="op">=</span> <span class="va">twoClassSummary</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div id="nested-cross-validation" class="section level2" number="7.15">
-<h2>
-<span class="header-section-number">7.15</span> Nested Cross-Validation<a class="anchor" aria-label="anchor" href="#nested-cross-validation"><i class="fas fa-link"></i></a>
-</h2>
-<p>Nested Cross-Validation is used to tune hyperparameters and evaluate model performance simultaneously. It involves an outer loop for model evaluation using K-Fold Cross-Validation and an inner loop for hyperparameter tuning.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example of Nested Cross-Validation</span></span>
-<span><span class="va">nestcv_ctrl_outer</span> <span class="op">&lt;-</span> <span class="fu">trainControl</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="va">netscv_ctrl_inner</span> <span class="op">&lt;-</span> <span class="fu">trainControl</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">mod_glmnet_adcv</span>, <span class="va">mod_regLogistic_cv</span>, <span class="va">mod_rf_adcv</span>, <span class="va">mod_rf_reptcv</span>, <span class="va">mod_knn_adcv</span>, <span class="va">mod_knn_reptcv</span>, file <span class="op">=</span> <span class="st">"models/models.rda"</span><span class="op">)</span></span></code></pre></div>
+
 </div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></div>
-<div class="next"><a href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></div>
+<div class="next"><a href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#model-fitting"><span class="header-section-number">7</span> Model Fitting</a></li>
-<li><a class="nav-link" href="#regularized-logistic-regression"><span class="header-section-number">7.1</span> Regularized Logistic Regression</a></li>
+<li><a class="nav-link" href="#regularized-logistic-regression-model"><span class="header-section-number">7.1</span> Regularized Logistic Regression Model</a></li>
 <li><a class="nav-link" href="#generalized-linear-models-glmnet"><span class="header-section-number">7.2</span> Generalized Linear Models (glmnet)</a></li>
 <li><a class="nav-link" href="#random-forest"><span class="header-section-number">7.3</span> Random Forest</a></li>
 <li><a class="nav-link" href="#k-nearest-neighbors-knn"><span class="header-section-number">7.4</span> k-Nearest Neighbors (kNN)</a></li>
@@ -359,17 +407,12 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
 <li><a class="nav-link" href="#gradient-boosting-machines-gbm"><span class="header-section-number">7.8</span> Gradient Boosting Machines (GBM)</a></li>
 <li><a class="nav-link" href="#adaboost"><span class="header-section-number">7.9</span> AdaBoost</a></li>
 <li><a class="nav-link" href="#naive-bayes"><span class="header-section-number">7.10</span> Naive Bayes</a></li>
-<li><a class="nav-link" href="#cross-validation-techniques"><span class="header-section-number">7.11</span> Cross-Validation Techniques</a></li>
-<li><a class="nav-link" href="#k-fold-cross-validation"><span class="header-section-number">7.12</span> K-Fold Cross-Validation</a></li>
-<li><a class="nav-link" href="#leave-one-out-cross-validation-loocv"><span class="header-section-number">7.13</span> Leave-One-Out Cross-Validation (LOOCV)</a></li>
-<li><a class="nav-link" href="#stratified-cross-validation"><span class="header-section-number">7.14</span> Stratified Cross-Validation</a></li>
-<li><a class="nav-link" href="#nested-cross-validation"><span class="header-section-number">7.15</span> Nested Cross-Validation</a></li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01b_ml_realdata_prototypes.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01b_ml_realdata_prototypes.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/03_model_training.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/03_model_training.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -382,7 +425,7 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-05</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">
@@ -391,6 +434,34 @@ output presents a sequence of values, such as 10^-3, 10^-2.5, 10^-2,
 
     </div>
   </div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

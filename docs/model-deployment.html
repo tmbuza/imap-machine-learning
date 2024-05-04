@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>10 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<title>11 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines</title>
 <meta name="author" content="Teresia Mrema-Buza">
 <meta name="description" content="Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring...">
 <meta name="generator" content="bookdown 0.39 with bs4_book()">
-<meta property="og:title" content="10 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:title" content="11 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/model-deployment.html">
 <meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
 <meta property="og:description" content="Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="10 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:title" content="11 Model Deployment | IMAP: Integrated Microbiome Analysis Pipelines">
 <meta name="twitter:description" content="Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring...">
 <meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -61,15 +61,17 @@
 <li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
 <li class="book-part">MODEL DEVELOPMENT</li>
 <li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li class="book-part">FEATURE ENGINEERING</li>
 <li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
 <li class="book-part">MODEL TRAINING</li>
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
-<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
+<li><a class="" href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></li>
+<li><a class="" href="model-validation.html"><span class="header-section-number">9</span> Model Validation</a></li>
+<li class="book-part">PARAMETER TUNING</li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="active" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
+<li><a class="active" href="model-deployment.html"><span class="header-section-number">11</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -83,65 +85,366 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="model-deployment" class="section level1" number="10">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="model-deployment" class="section level1" number="11">
 <h1>
-<span class="header-section-number">10</span> Model Deployment<a class="anchor" aria-label="anchor" href="#model-deployment"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11</span> Model Deployment<a class="anchor" aria-label="anchor" href="#model-deployment"><i class="fas fa-link"></i></a>
 </h1>
-<p>Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring mechanisms is crucial to track model performance over time and detect any deviations or anomalies. This ensures continued reliability and accuracy in microbiome data analysis.</p>
-<blockquote>
-<p>Shiny applications serve as interfaces for machine learning models, providing users with a convenient platform to upload their data and test the model’s performance efficiently.</p>
-</blockquote>
-<div id="data-processing" class="section level2" number="10.1">
+<p>Deploying the trained model such as the regularized logistic regression model and others is essential for predicting binary outcomes in microbiome studies. Additionally, implementing monitoring mechanisms is crucial to track model performance over time and detect any deviations or anomalies. This ensures continued reliability and accuracy in microbiome data analysis. Shiny applications serve as interfaces for machine learning models, providing users with a convenient platform to upload their data and test the model’s performance efficiently.</p>
+<div id="shiny-app-components" class="section level2" number="11.1">
 <h2>
-<span class="header-section-number">10.1</span> Data Processing<a class="anchor" aria-label="anchor" href="#data-processing"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.1</span> Shiny App components<a class="anchor" aria-label="anchor" href="#shiny-app-components"><i class="fas fa-link"></i></a>
 </h2>
-<ol style="list-style-type: decimal">
-<li>Conduct various tests to ensure the functionality of the system.</li>
-<li>Collect the results from these tests, which may involve multiple types of assessments.</li>
-<li>Determine whether the test should be accepted or rejected based on the collected data.</li>
-<li>Save the developed model for future use.</li>
-</ol>
-</div>
-<div id="application-process" class="section level2" number="10.2">
-<h2>
-<span class="header-section-number">10.2</span> Application Process<a class="anchor" aria-label="anchor" href="#application-process"><i class="fas fa-link"></i></a>
-</h2>
-<ol style="list-style-type: decimal">
-<li>Develop a regularized logistic regression model tailored to the task.</li>
-<li>Create a Shiny application incorporating the developed model.</li>
-<li>Enable users to upload their test data directly to the Shiny app.</li>
-<li>Visualize and download predictions generated by the model through the Shiny interface.</li>
-</ol>
-</div>
-<div id="creating-shiny-app" class="section level2" number="10.3">
-<h2>
-<span class="header-section-number">10.3</span> Creating Shiny App<a class="anchor" aria-label="anchor" href="#creating-shiny-app"><i class="fas fa-link"></i></a>
-</h2>
-<div id="load-trained-model" class="section level3" number="10.3.1">
+<div id="user-interface-ui" class="section level3" number="11.1.1">
 <h3>
-<span class="header-section-number">10.3.1</span> Load trained model<a class="anchor" aria-label="anchor" href="#load-trained-model"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.1.1</span> User Interface (UI)<a class="anchor" aria-label="anchor" href="#user-interface-ui"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="model-deployment.html#cb45-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"models/models.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb45-2"><a href="model-deployment.html#cb45-2" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
-<span id="cb45-3"><a href="model-deployment.html#cb45-3" tabindex="-1"></a>  mod_glmnet_adcv</span>
-<span id="cb45-4"><a href="model-deployment.html#cb45-4" tabindex="-1"></a>  mod_regLogistic_cv</span>
-<span id="cb45-5"><a href="model-deployment.html#cb45-5" tabindex="-1"></a>  mod_rf_adcv</span>
-<span id="cb45-6"><a href="model-deployment.html#cb45-6" tabindex="-1"></a>  mod_rf_reptcv</span>
-<span id="cb45-7"><a href="model-deployment.html#cb45-7" tabindex="-1"></a>  mod_knn_adcv</span>
-<span id="cb45-8"><a href="model-deployment.html#cb45-8" tabindex="-1"></a>  mod_knn_reptcv</span></code></pre></div>
+<ul>
+<li>The User Interface (UI) component in a Shiny application serves as the visual representation of the app and dictates how users interact with it. It encompasses various elements like buttons, sliders, text inputs, plots, and tables, which are organized using layout functions such as fluidPage(), navbarPage(), tabPanel(), etc.</li>
+<li>In Shiny, UI elements are created using functions from the shiny package, each serving a specific purpose. For instance, textInput() creates a field where users can input text, sliderInput() generates a slider for selecting numeric values, and plotOutput() reserves a space for displaying plots.</li>
+<li>These UI components are typically structured within the ui function, which acts as a container for assembling the app’s visual layout. Here’s an example of how UI components are defined within the ui function:</li>
+</ul>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="model-deployment.html#cb77-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb77-2"><a href="model-deployment.html#cb77-2" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="model-deployment.html#cb77-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"models/models.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-4"><a href="model-deployment.html#cb77-4" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb77-5"><a href="model-deployment.html#cb77-5" tabindex="-1"></a>  mod_glmnet_adcv</span>
+<span id="cb77-6"><a href="model-deployment.html#cb77-6" tabindex="-1"></a>  mod_regLogistic_cv</span>
+<span id="cb77-7"><a href="model-deployment.html#cb77-7" tabindex="-1"></a>  mod_rf_adcv</span>
+<span id="cb77-8"><a href="model-deployment.html#cb77-8" tabindex="-1"></a>  mod_rf_reptcv</span>
+<span id="cb77-9"><a href="model-deployment.html#cb77-9" tabindex="-1"></a>  mod_knn_adcv</span>
+<span id="cb77-10"><a href="model-deployment.html#cb77-10" tabindex="-1"></a>  mod_knn_reptcv</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">fluidPage</span><span class="op">(</span></span>
+<span>  <span class="fu">titlePanel</span><span class="op">(</span><span class="st">"My Shiny App"</span><span class="op">)</span>,  <span class="co"># Adds a title panel at the top of the app</span></span>
+<span>  <span class="fu">sidebarLayout</span><span class="op">(</span>               <span class="co"># Organizes content into a sidebar and main panel</span></span>
+<span>    <span class="fu">sidebarPanel</span><span class="op">(</span>              <span class="co"># Defines content for the sidebar</span></span>
+<span>      <span class="fu">textInput</span><span class="op">(</span><span class="st">"text_input"</span>, <span class="st">"Enter text:"</span><span class="op">)</span>  <span class="co"># Adds a text input field</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu">mainPanel</span><span class="op">(</span>                 <span class="co"># Defines content for the main panel</span></span>
+<span>      <span class="fu">plotOutput</span><span class="op">(</span><span class="st">"plot"</span><span class="op">)</span>       <span class="co"># Adds a placeholder for displaying plots</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="create-user-interfale-object" class="section level3" number="10.3.2">
+<div id="server-for-shiny-app" class="section level3" number="11.1.2">
 <h3>
-<span class="header-section-number">10.3.2</span> Create user interfale object<a class="anchor" aria-label="anchor" href="#create-user-interfale-object"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.1.2</span> Server for Shiny App<a class="anchor" aria-label="anchor" href="#server-for-shiny-app"><i class="fas fa-link"></i></a>
 </h3>
+<ul>
+<li>The server component is responsible for processing user inputs from the UI and generating outputs dynamically.</li>
+<li>It contains the logic and calculations needed to update the UI in response to user actions.</li>
+<li>The server component is defined within the server function.</li>
+<li>It consists of reactive expressions and functions that specify how inputs should be handled and how outputs should be generated.</li>
+<li>Server functions typically involve observing input values and updating reactive values accordingly.</li>
+</ul>
+<p>For example:</p>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu">renderPlot</span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">text</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">text_input</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"Histogram"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+</div>
+</div>
+<div id="shiny-app-deployment" class="section level2" number="11.2">
+<h2>
+<span class="header-section-number">11.2</span> Shiny App deployment<a class="anchor" aria-label="anchor" href="#shiny-app-deployment"><i class="fas fa-link"></i></a>
+</h2>
+<p>Once you have defined both the UI and server components of your Shiny application, you can proceed with the deployment process. Here’s what you can do next:</p>
+<div id="combine-ui-and-server" class="section level3" number="11.2.1">
+<h3>
+<span class="header-section-number">11.2.1</span> Combine UI and Server<a class="anchor" aria-label="anchor" href="#combine-ui-and-server"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Merge the UI and server components into a single Shiny application by passing them to the shinyApp() function.</li>
+</ul>
+</div>
+<div id="deploy-the-shiny-app" class="section level3" number="11.2.2">
+<h3>
+<span class="header-section-number">11.2.2</span> Deploy the Shiny App<a class="anchor" aria-label="anchor" href="#deploy-the-shiny-app"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Deploy your Shiny application to make it accessible to users. There are various deployment options available, including:
+<ul>
+<li>Hosting the app on shinyapps.io</li>
+<li>Deploying it on your own server</li>
+<li>Embedding it within a larger web application</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="test-and-monitor" class="section level3" number="11.2.3">
+<h3>
+<span class="header-section-number">11.2.3</span> Test and Monitor<a class="anchor" aria-label="anchor" href="#test-and-monitor"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Before releasing the app to users, thoroughly test its functionality to ensure it behaves as expected.</li>
+<li>Implement monitoring mechanisms to track the app’s performance and user interactions over time.</li>
+<li>Regularly update and maintain the app to address any issues or improvements.</li>
+</ul>
+</div>
+<div id="gather-feedback" class="section level3" number="11.2.4">
+<h3>
+<span class="header-section-number">11.2.4</span> Gather Feedback<a class="anchor" aria-label="anchor" href="#gather-feedback"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Encourage users to provide feedback on the app’s usability and features.</li>
+<li>Use this feedback to make iterative improvements and enhancements to the app.</li>
+</ul>
+</div>
+<div id="documentation-and-support" class="section level3" number="11.2.5">
+<h3>
+<span class="header-section-number">11.2.5</span> Documentation and Support<a class="anchor" aria-label="anchor" href="#documentation-and-support"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Provide clear documentation and instructions on how to use the app.</li>
+<li>Offer support channels for users to seek assistance or report issues.</li>
+</ul>
+</div>
+<div id="continuous-improvement" class="section level3" number="11.2.6">
+<h3>
+<span class="header-section-number">11.2.6</span> Continuous Improvement<a class="anchor" aria-label="anchor" href="#continuous-improvement"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Continuously iterate on the app based on user feedback and evolving requirements.</li>
+<li>Stay updated with Shiny and R developments to incorporate new features and best practices.</li>
+</ul>
 <blockquote>
-<p>This user interface object controls the layout and appearance of the app.</p>
+<p>By following these steps, you can successfully deploy your Shiny application and ensure its continued success and usefulness to your users.</p>
 </blockquote>
 </div>
 </div>
-<div id="example-app-with-qualitative-data-using-burro-package" class="section level2" number="10.4">
+<div id="extended-user-interface" class="section level2" number="11.3">
 <h2>
-<span class="header-section-number">10.4</span> Example APP with Qualitative data using Burro package<a class="anchor" aria-label="anchor" href="#example-app-with-qualitative-data-using-burro-package"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.3</span> Extended user interface<a class="anchor" aria-label="anchor" href="#extended-user-interface"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://rstudio.github.io/shinydashboard/">shinydashboard</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/shinythemes/">shinythemes</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># UI chunk</span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyUI.html">shinyUI</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardPage.html">dashboardPage</a></span><span class="op">(</span></span>
+<span>  skin <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardHeader.html">dashboardHeader</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">em</a></span><span class="op">(</span><span class="st">"Shiny Machine Learning App"</span>, style <span class="op">=</span> <span class="st">"text-align:center;color:#006600;font-size:100%"</span><span class="op">)</span>,</span>
+<span>    titleWidth <span class="op">=</span> <span class="fl">800</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardSidebar.html">dashboardSidebar</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">250</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/sidebarMenu.html">sidebarMenu</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/sidebarMenu.html">menuItem</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">em</a></span><span class="op">(</span><span class="st">"Upload Test Data"</span>, style <span class="op">=</span> <span class="st">"font-size:120%"</span><span class="op">)</span>, icon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html">icon</a></span><span class="op">(</span><span class="st">"upload"</span><span class="op">)</span>, tabName <span class="op">=</span> <span class="st">"data"</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/sidebarMenu.html">menuItem</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">em</a></span><span class="op">(</span><span class="st">"Download Predictions"</span>, style <span class="op">=</span> <span class="st">"font-size:120%"</span><span class="op">)</span>, icon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html">icon</a></span><span class="op">(</span><span class="st">"download"</span><span class="op">)</span>, tabName <span class="op">=</span> <span class="st">"download"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardBody.html">dashboardBody</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/tabItems.html">tabItems</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/tabItem.html">tabItem</a></span><span class="op">(</span></span>
+<span>        tabName <span class="op">=</span> <span class="st">"data"</span>,</span>
+<span>        <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span></span>
+<span>          <span class="st">"This shiny app allows you to upload your data, do prediction, and download results."</span>,</span>
+<span>          <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">em</a></span><span class="op">(</span><span class="st">"This example demonstrates a Regularized Logistic Regression."</span><span class="op">)</span>,</span>
+<span>          <span class="st">"You can predict whether an individual is healthy or unhealthy."</span>,</span>
+<span>          <span class="st">"By evaluating the results, you can make a decision if the model predicts correctly or poorly."</span>,</span>
+<span>          style <span class="op">=</span> <span class="st">"font-size:150%"</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span></span>
+<span>          <span class="st">"Start by uploading test data, preferably in "</span>,</span>
+<span>          <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">code</a></span><span class="op">(</span><span class="st">"csv format"</span><span class="op">)</span>,</span>
+<span>          style <span class="op">=</span> <span class="st">"font-size:150%"</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span></span>
+<span>          <span class="st">"Then, go to the "</span>,</span>
+<span>          <span class="va">tags</span><span class="op">$</span><span class="fu">span</span><span class="op">(</span><span class="st">"Download Predictions"</span>, style <span class="op">=</span> <span class="st">"color:red"</span><span class="op">)</span>,</span>
+<span>          <span class="st">" section in the sidebar to download the predictions."</span>,</span>
+<span>          style <span class="op">=</span> <span class="st">"font-size:150%"</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span></span>
+<span>          width <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fileInput.html">fileInput</a></span><span class="op">(</span></span>
+<span>            <span class="st">'file1'</span>,</span>
+<span>            <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">em</a></span><span class="op">(</span><span class="st">'Upload test data in csv format'</span>, style <span class="op">=</span> <span class="st">"text-align:center;color:blue;font-size:150%"</span><span class="op">)</span>,</span>
+<span>            multiple <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>            accept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'.csv'</span><span class="op">)</span></span>
+<span>          <span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html">uiOutput</a></span><span class="op">(</span><span class="st">"sample_input_data_heading"</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">tableOutput</a></span><span class="op">(</span><span class="st">"sample_input_data"</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/tabItem.html">tabItem</a></span><span class="op">(</span></span>
+<span>        tabName <span class="op">=</span> <span class="st">"download"</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidRow</a></span><span class="op">(</span></span>
+<span>          <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span></span>
+<span>            width <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>            <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span></span>
+<span>              <span class="st">"After you upload a test dataset, you can download the predictions in csv format by clicking the button below."</span>,</span>
+<span>              style <span class="op">=</span> <span class="st">"font-size:200%"</span></span>
+<span>            <span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>          <span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidRow</a></span><span class="op">(</span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span></span>
+<span>            width <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/downloadButton.html">downloadButton</a></span><span class="op">(</span></span>
+<span>              <span class="st">"downloadData"</span>,</span>
+<span>              <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">em</a></span><span class="op">(</span><span class="st">'Download Predictions'</span>, style <span class="op">=</span> <span class="st">"text-align:center;color:blue;font-size:150%"</span><span class="op">)</span></span>
+<span>            <span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">'plot_predictions'</span><span class="op">)</span></span>
+<span>          <span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span></span>
+<span>            width <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html">uiOutput</a></span><span class="op">(</span><span class="st">"sample_prediction_heading"</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">tableOutput</a></span><span class="op">(</span><span class="st">"sample_predictions"</span><span class="op">)</span></span>
+<span>          <span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="extended-server" class="section level2" number="11.4">
+<h2>
+<span class="header-section-number">11.4</span> Extended server<a class="anchor" aria-label="anchor" href="#extended-server"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="model-deployment.html#cb81-1" tabindex="-1"></a></span>
+<span id="cb81-2"><a href="model-deployment.html#cb81-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"models/models.rda"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-3"><a href="model-deployment.html#cb81-3" tabindex="-1"></a>Loading objects<span class="sc">:</span></span>
+<span id="cb81-4"><a href="model-deployment.html#cb81-4" tabindex="-1"></a>  mod_glmnet_adcv</span>
+<span id="cb81-5"><a href="model-deployment.html#cb81-5" tabindex="-1"></a>  mod_regLogistic_cv</span>
+<span id="cb81-6"><a href="model-deployment.html#cb81-6" tabindex="-1"></a>  mod_rf_adcv</span>
+<span id="cb81-7"><a href="model-deployment.html#cb81-7" tabindex="-1"></a>  mod_rf_reptcv</span>
+<span id="cb81-8"><a href="model-deployment.html#cb81-8" tabindex="-1"></a>  mod_knn_adcv</span>
+<span id="cb81-9"><a href="model-deployment.html#cb81-9" tabindex="-1"></a>  mod_knn_reptcv</span>
+<span id="cb81-10"><a href="model-deployment.html#cb81-10" tabindex="-1"></a></span>
+<span id="cb81-11"><a href="model-deployment.html#cb81-11" tabindex="-1"></a><span class="co"># Server chunk</span></span>
+<span id="cb81-12"><a href="model-deployment.html#cb81-12" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb81-13"><a href="model-deployment.html#cb81-13" tabindex="-1"></a>  </span>
+<span id="cb81-14"><a href="model-deployment.html#cb81-14" tabindex="-1"></a>  <span class="co"># Set maximum web request size to 80MB</span></span>
+<span id="cb81-15"><a href="model-deployment.html#cb81-15" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">shiny.maxRequestSize =</span> <span class="dv">800</span> <span class="sc">*</span> <span class="dv">1024</span><span class="sc">^</span><span class="dv">2</span>) </span>
+<span id="cb81-16"><a href="model-deployment.html#cb81-16" tabindex="-1"></a>  </span>
+<span id="cb81-17"><a href="model-deployment.html#cb81-17" tabindex="-1"></a>  <span class="co"># Render UI elements for sample input data heading and table</span></span>
+<span id="cb81-18"><a href="model-deployment.html#cb81-18" tabindex="-1"></a>  output<span class="sc">$</span>sample_input_data_heading <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb81-19"><a href="model-deployment.html#cb81-19" tabindex="-1"></a>    inFile <span class="ot">&lt;-</span> input<span class="sc">$</span>file1</span>
+<span id="cb81-20"><a href="model-deployment.html#cb81-20" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(inFile)) {</span>
+<span id="cb81-21"><a href="model-deployment.html#cb81-21" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb81-22"><a href="model-deployment.html#cb81-22" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb81-23"><a href="model-deployment.html#cb81-23" tabindex="-1"></a>      tags<span class="sc">$</span><span class="fu">h4</span>(<span class="st">'Sample Input Data'</span>)</span>
+<span id="cb81-24"><a href="model-deployment.html#cb81-24" tabindex="-1"></a>    }</span>
+<span id="cb81-25"><a href="model-deployment.html#cb81-25" tabindex="-1"></a>  })</span>
+<span id="cb81-26"><a href="model-deployment.html#cb81-26" tabindex="-1"></a>  </span>
+<span id="cb81-27"><a href="model-deployment.html#cb81-27" tabindex="-1"></a>  output<span class="sc">$</span>sample_input_data <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
+<span id="cb81-28"><a href="model-deployment.html#cb81-28" tabindex="-1"></a>    inFile <span class="ot">&lt;-</span> input<span class="sc">$</span>file1</span>
+<span id="cb81-29"><a href="model-deployment.html#cb81-29" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(inFile)) {</span>
+<span id="cb81-30"><a href="model-deployment.html#cb81-30" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb81-31"><a href="model-deployment.html#cb81-31" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb81-32"><a href="model-deployment.html#cb81-32" tabindex="-1"></a>      input_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(input<span class="sc">$</span>file1<span class="sc">$</span>datapath, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-33"><a href="model-deployment.html#cb81-33" tabindex="-1"></a>      <span class="fu">colnames</span>(input_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Label"</span>, <span class="st">"Test1"</span>, <span class="st">"Test2"</span>)</span>
+<span id="cb81-34"><a href="model-deployment.html#cb81-34" tabindex="-1"></a>      input_data<span class="sc">$</span>Label <span class="ot">&lt;-</span> <span class="fu">factor</span>(input_data<span class="sc">$</span>Label, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"African American"</span>, <span class="st">"African"</span>))</span>
+<span id="cb81-35"><a href="model-deployment.html#cb81-35" tabindex="-1"></a>      <span class="fu">head</span>(input_data)</span>
+<span id="cb81-36"><a href="model-deployment.html#cb81-36" tabindex="-1"></a>    }</span>
+<span id="cb81-37"><a href="model-deployment.html#cb81-37" tabindex="-1"></a>  })</span>
+<span id="cb81-38"><a href="model-deployment.html#cb81-38" tabindex="-1"></a>  </span>
+<span id="cb81-39"><a href="model-deployment.html#cb81-39" tabindex="-1"></a>  <span class="co"># Perform predictions on uploaded data</span></span>
+<span id="cb81-40"><a href="model-deployment.html#cb81-40" tabindex="-1"></a>  predictions <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb81-41"><a href="model-deployment.html#cb81-41" tabindex="-1"></a>    inFile <span class="ot">&lt;-</span> input<span class="sc">$</span>file1</span>
+<span id="cb81-42"><a href="model-deployment.html#cb81-42" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(inFile)) {</span>
+<span id="cb81-43"><a href="model-deployment.html#cb81-43" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb81-44"><a href="model-deployment.html#cb81-44" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb81-45"><a href="model-deployment.html#cb81-45" tabindex="-1"></a>      <span class="fu">withProgress</span>(<span class="at">message =</span> <span class="st">'Predictions in progress. Please wait ...'</span>, {</span>
+<span id="cb81-46"><a href="model-deployment.html#cb81-46" tabindex="-1"></a>        input_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(input<span class="sc">$</span>file1<span class="sc">$</span>datapath, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-47"><a href="model-deployment.html#cb81-47" tabindex="-1"></a>        <span class="fu">colnames</span>(input_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Label"</span>, <span class="st">"Test1"</span>, <span class="st">"Test2"</span>)</span>
+<span id="cb81-48"><a href="model-deployment.html#cb81-48" tabindex="-1"></a>        input_data<span class="sc">$</span>Label <span class="ot">&lt;-</span> <span class="fu">factor</span>(input_data<span class="sc">$</span>Label, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"African American"</span>, <span class="st">"African"</span>))</span>
+<span id="cb81-49"><a href="model-deployment.html#cb81-49" tabindex="-1"></a>        mapped <span class="ot">&lt;-</span> <span class="fu">feat_map</span>(input_data)</span>
+<span id="cb81-50"><a href="model-deployment.html#cb81-50" tabindex="-1"></a>        df_final <span class="ot">&lt;-</span> <span class="fu">cbind</span>(input_data, mapped)</span>
+<span id="cb81-51"><a href="model-deployment.html#cb81-51" tabindex="-1"></a>        prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_regLogistic_cv, df_final)</span>
+<span id="cb81-52"><a href="model-deployment.html#cb81-52" tabindex="-1"></a>        input_data_with_prediction <span class="ot">&lt;-</span> <span class="fu">cbind</span>(input_data, prediction)</span>
+<span id="cb81-53"><a href="model-deployment.html#cb81-53" tabindex="-1"></a>        input_data_with_prediction</span>
+<span id="cb81-54"><a href="model-deployment.html#cb81-54" tabindex="-1"></a>      })</span>
+<span id="cb81-55"><a href="model-deployment.html#cb81-55" tabindex="-1"></a>    }</span>
+<span id="cb81-56"><a href="model-deployment.html#cb81-56" tabindex="-1"></a>  })</span>
+<span id="cb81-57"><a href="model-deployment.html#cb81-57" tabindex="-1"></a>  </span>
+<span id="cb81-58"><a href="model-deployment.html#cb81-58" tabindex="-1"></a>  <span class="co"># Render UI elements for sample predictions heading and table</span></span>
+<span id="cb81-59"><a href="model-deployment.html#cb81-59" tabindex="-1"></a>  output<span class="sc">$</span>sample_prediction_heading <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb81-60"><a href="model-deployment.html#cb81-60" tabindex="-1"></a>    inFile <span class="ot">&lt;-</span> input<span class="sc">$</span>file1</span>
+<span id="cb81-61"><a href="model-deployment.html#cb81-61" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(inFile)) {</span>
+<span id="cb81-62"><a href="model-deployment.html#cb81-62" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb81-63"><a href="model-deployment.html#cb81-63" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb81-64"><a href="model-deployment.html#cb81-64" tabindex="-1"></a>      tags<span class="sc">$</span><span class="fu">h4</span>(<span class="st">'Input with Predictions'</span>)</span>
+<span id="cb81-65"><a href="model-deployment.html#cb81-65" tabindex="-1"></a>    }</span>
+<span id="cb81-66"><a href="model-deployment.html#cb81-66" tabindex="-1"></a>  })</span>
+<span id="cb81-67"><a href="model-deployment.html#cb81-67" tabindex="-1"></a>  </span>
+<span id="cb81-68"><a href="model-deployment.html#cb81-68" tabindex="-1"></a>  output<span class="sc">$</span>sample_predictions <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
+<span id="cb81-69"><a href="model-deployment.html#cb81-69" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">predictions</span>()</span>
+<span id="cb81-70"><a href="model-deployment.html#cb81-70" tabindex="-1"></a>    <span class="fu">head</span>(pred)</span>
+<span id="cb81-71"><a href="model-deployment.html#cb81-71" tabindex="-1"></a>  })</span>
+<span id="cb81-72"><a href="model-deployment.html#cb81-72" tabindex="-1"></a>  </span>
+<span id="cb81-73"><a href="model-deployment.html#cb81-73" tabindex="-1"></a>  <span class="co"># Render plot of predictions</span></span>
+<span id="cb81-74"><a href="model-deployment.html#cb81-74" tabindex="-1"></a>  output<span class="sc">$</span>plot_predictions <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb81-75"><a href="model-deployment.html#cb81-75" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">predictions</span>()</span>
+<span id="cb81-76"><a href="model-deployment.html#cb81-76" tabindex="-1"></a>    cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"African American"</span> <span class="ot">=</span> <span class="st">"green4"</span>, <span class="st">"African"</span> <span class="ot">=</span> <span class="st">"red"</span>)</span>
+<span id="cb81-77"><a href="model-deployment.html#cb81-77" tabindex="-1"></a>    pred <span class="sc">%&gt;%</span> </span>
+<span id="cb81-78"><a href="model-deployment.html#cb81-78" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Test1, <span class="at">y =</span> Test2, <span class="at">color =</span> <span class="fu">factor</span>(prediction))) <span class="sc">+</span> </span>
+<span id="cb81-79"><a href="model-deployment.html#cb81-79" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">19</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb81-80"><a href="model-deployment.html#cb81-80" tabindex="-1"></a>      <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> cols, </span>
+<span id="cb81-81"><a href="model-deployment.html#cb81-81" tabindex="-1"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"African American"</span>, <span class="st">"African"</span>), </span>
+<span id="cb81-82"><a href="model-deployment.html#cb81-82" tabindex="-1"></a>                          <span class="at">name =</span> <span class="st">"Variable"</span>) <span class="sc">+</span></span>
+<span id="cb81-83"><a href="model-deployment.html#cb81-83" tabindex="-1"></a>      <span class="fu">theme_bw</span>()</span>
+<span id="cb81-84"><a href="model-deployment.html#cb81-84" tabindex="-1"></a>  })</span>
+<span id="cb81-85"><a href="model-deployment.html#cb81-85" tabindex="-1"></a>  </span>
+<span id="cb81-86"><a href="model-deployment.html#cb81-86" tabindex="-1"></a>  <span class="co"># Downloadable CSV of predictions</span></span>
+<span id="cb81-87"><a href="model-deployment.html#cb81-87" tabindex="-1"></a>  output<span class="sc">$</span>downloadData <span class="ot">&lt;-</span> <span class="fu">downloadHandler</span>(</span>
+<span id="cb81-88"><a href="model-deployment.html#cb81-88" tabindex="-1"></a>    <span class="at">filename =</span> <span class="cf">function</span>() {</span>
+<span id="cb81-89"><a href="model-deployment.html#cb81-89" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">"input_data_with_predictions"</span>, <span class="st">".csv"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb81-90"><a href="model-deployment.html#cb81-90" tabindex="-1"></a>    },</span>
+<span id="cb81-91"><a href="model-deployment.html#cb81-91" tabindex="-1"></a>    <span class="at">content =</span> <span class="cf">function</span>(file) {</span>
+<span id="cb81-92"><a href="model-deployment.html#cb81-92" tabindex="-1"></a>      <span class="fu">write.csv</span>(<span class="fu">predictions</span>(), file, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb81-93"><a href="model-deployment.html#cb81-93" tabindex="-1"></a>    }</span>
+<span id="cb81-94"><a href="model-deployment.html#cb81-94" tabindex="-1"></a>  )</span>
+<span id="cb81-95"><a href="model-deployment.html#cb81-95" tabindex="-1"></a>  </span>
+<span id="cb81-96"><a href="model-deployment.html#cb81-96" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="calling-shiny-app" class="section level2" number="11.5">
+<h2>
+<span class="header-section-number">11.5</span> Calling Shiny App<a class="anchor" aria-label="anchor" href="#calling-shiny-app"><i class="fas fa-link"></i></a>
+</h2>
+<pre><code>
+# Deployment chunk
+shinyApp(ui = ui, server = server)</code></pre>
+<ul>
+<li><p><strong>Using shinyApp function</strong></p></li>
+<li><p><strong>App directory:</strong> If the application resides in a specific app_directory, you could launch it with:</p></li>
+</ul>
+<pre><code>runApp("app_directory")
+  </code></pre>
+<ul>
+<li>
+<strong>Shiny app object:</strong> If you’ve created a Shiny app object at the console by calling shinyApp(), you can pass that app object to runApp() like so:</li>
+</ul>
+<pre><code># Create app object (assume ui and server are defined)
+app &lt;- shinyApp(ui, server)
+
+runApp(app)</code></pre>
+<pre><code>app
+</code></pre>
+</div>
+<div id="example-app-with-qualitative-data-using-burro-package" class="section level2" number="11.6">
+<h2>
+<span class="header-section-number">11.6</span> Example APP with Qualitative data using Burro package<a class="anchor" aria-label="anchor" href="#example-app-with-qualitative-data-using-burro-package"><i class="fas fa-link"></i></a>
 </h2>
 <div class="infoicon">
 <p>
@@ -181,27 +484,38 @@ outcome_var=outcome)
 
 
   <div class="chapter-nav">
-<div class="prev"><a href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></div>
+<div class="prev"><a href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></div>
 <div class="next"><a href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#model-deployment"><span class="header-section-number">10</span> Model Deployment</a></li>
-<li><a class="nav-link" href="#data-processing"><span class="header-section-number">10.1</span> Data Processing</a></li>
-<li><a class="nav-link" href="#application-process"><span class="header-section-number">10.2</span> Application Process</a></li>
+<li><a class="nav-link" href="#model-deployment"><span class="header-section-number">11</span> Model Deployment</a></li>
 <li>
-<a class="nav-link" href="#creating-shiny-app"><span class="header-section-number">10.3</span> Creating Shiny App</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#load-trained-model"><span class="header-section-number">10.3.1</span> Load trained model</a></li>
-<li><a class="nav-link" href="#create-user-interfale-object"><span class="header-section-number">10.3.2</span> Create user interfale object</a></li>
+<a class="nav-link" href="#shiny-app-components"><span class="header-section-number">11.1</span> Shiny App components</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#user-interface-ui"><span class="header-section-number">11.1.1</span> User Interface (UI)</a></li>
+<li><a class="nav-link" href="#server-for-shiny-app"><span class="header-section-number">11.1.2</span> Server for Shiny App</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#example-app-with-qualitative-data-using-burro-package"><span class="header-section-number">10.4</span> Example APP with Qualitative data using Burro package</a></li>
+<li>
+<a class="nav-link" href="#shiny-app-deployment"><span class="header-section-number">11.2</span> Shiny App deployment</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#combine-ui-and-server"><span class="header-section-number">11.2.1</span> Combine UI and Server</a></li>
+<li><a class="nav-link" href="#deploy-the-shiny-app"><span class="header-section-number">11.2.2</span> Deploy the Shiny App</a></li>
+<li><a class="nav-link" href="#test-and-monitor"><span class="header-section-number">11.2.3</span> Test and Monitor</a></li>
+<li><a class="nav-link" href="#gather-feedback"><span class="header-section-number">11.2.4</span> Gather Feedback</a></li>
+<li><a class="nav-link" href="#documentation-and-support"><span class="header-section-number">11.2.5</span> Documentation and Support</a></li>
+<li><a class="nav-link" href="#continuous-improvement"><span class="header-section-number">11.2.6</span> Continuous Improvement</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#extended-user-interface"><span class="header-section-number">11.3</span> Extended user interface</a></li>
+<li><a class="nav-link" href="#extended-server"><span class="header-section-number">11.4</span> Extended server</a></li>
+<li><a class="nav-link" href="#calling-shiny-app"><span class="header-section-number">11.5</span> Calling Shiny App</a></li>
+<li><a class="nav-link" href="#example-app-with-qualitative-data-using-burro-package"><span class="header-section-number">11.6</span> Example APP with Qualitative data using Burro package</a></li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01b_ml_realdata_prototypes.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01b_ml_realdata_prototypes.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/06_model_deployment.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/06_model_deployment.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -214,7 +528,7 @@ outcome_var=outcome)
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-05</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">
@@ -223,6 +537,34 @@ outcome_var=outcome)
 
     </div>
   </div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

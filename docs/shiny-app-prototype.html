@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>12 Shiny App prototype | IMAP: Integrated Microbiome Analysis Pipelines</title>
+<meta name="author" content="Teresia Mrema-Buza">
+<meta name="description" content='12.1 Shiny user interfale library(shiny) library(shinydashboard) library(shinythemes) library(htmltools) ui &lt;- dashboardPage(skin="black",           dashboardHeader(title=tags$em("Shiny Machine...'>
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="12 Shiny App prototype | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://tmbuza.github.io/imap-machine-learning/shiny-app-prototype.html">
+<meta property="og:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<meta property="og:description" content='12.1 Shiny user interfale library(shiny) library(shinydashboard) library(shinythemes) library(htmltools) ui &lt;- dashboardPage(skin="black",           dashboardHeader(title=tags$em("Shiny Machine...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="12 Shiny App prototype | IMAP: Integrated Microbiome Analysis Pipelines">
+<meta name="twitter:description" content='12.1 Shiny user interfale library(shiny) library(shinydashboard) library(shinythemes) library(htmltools) ui &lt;- dashboardPage(skin="black",           dashboardHeader(title=tags$em("Shiny Machine...'>
+<meta name="twitter:image" content="https://tmbuza.github.io/imap-machine-learning/images/planning.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Sen-0.4.9/font.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM%20Mono&amp;display=swap" rel="stylesheet">
+<link href="libs/Bitter-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="libs/d3-3.3.8/d3.min.js"></script><script src="libs/dagre-0.4.0/dagre-d3.min.js"></script><link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/chromatography-0.1/chromatography.js"></script><script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="End-to-End Practical User Guides Using Integrated Approaches"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a>:
+        <small class="text-muted">End-to-End Practical User Guides Using Integrated Approaches</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">IMAP-Part 10: Predictive Modeling Using Microbiome Data</a></li>
+<li class="book-part">ML COMPONENTS</li>
+<li><a class="" href="key-components-of-microbiome-machine-learning.html"><span class="header-section-number">1</span> Key Components of Microbiome Machine Learning</a></li>
+<li class="book-part">ML FRAMEWORKS</li>
+<li><a class="" href="ml-framework_R.html"><span class="header-section-number">2</span> Machine Learning Framework in R: From Data Acquisition to Model Deployment</a></li>
+<li class="book-part">ML PROTOTYPES</li>
+<li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
+<li class="book-part">MODEL DEVELOPMENT</li>
+<li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li class="book-part">FEATURE ENGINEERING</li>
+<li><a class="" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
+<li class="book-part">MODEL TRAINING</li>
+<li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
+<li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
+<li><a class="" href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></li>
+<li><a class="" href="model-validation.html"><span class="header-section-number">9</span> Model Validation</a></li>
+<li class="book-part">PARAMETER TUNING</li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></li>
+<li class="book-part">MODEL DEPLOYMENT</li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">11</span> Model Deployment</a></li>
+<li><a class="active" href="shiny-app-prototype.html"><span class="header-section-number">12</span> Shiny App prototype</a></li>
+<li class="book-part">APPENDIX</li>
+<li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
+<li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
+<li><a class="" href="imap-github-repos.html"><span class="header-section-number">C</span> IMAP GitHub Repos</a></li>
+<li><a class="" href="session-information.html"><span class="header-section-number">D</span> Session Information</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/tmbuza/imap-machine-learning">View book source <i class="fas fa-air-freshener"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="shiny-app-prototype" class="section level1" number="12">
+<h1>
+<span class="header-section-number">12</span> Shiny App prototype<a class="anchor" aria-label="anchor" href="#shiny-app-prototype"><i class="fas fa-link"></i></a>
+</h1>
+<div id="shiny-user-interfale" class="section level2" number="12.1">
+<h2>
+<span class="header-section-number">12.1</span> Shiny user interfale<a class="anchor" aria-label="anchor" href="#shiny-user-interfale"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://rstudio.github.io/shinydashboard/">shinydashboard</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/shinythemes/">shinythemes</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/htmltools">htmltools</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardPage.html">dashboardPage</a></span><span class="op">(</span>skin<span class="op">=</span><span class="st">"black"</span>,</span>
+<span>                    <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardHeader.html">dashboardHeader</a></span><span class="op">(</span>title<span class="op">=</span><span class="va">tags</span><span class="op">$</span><span class="fu">em</span><span class="op">(</span><span class="st">"Shiny Machine Learning App"</span>, style<span class="op">=</span><span class="st">"text-align:center;color:#006600;font-size:100%"</span><span class="op">)</span>,titleWidth <span class="op">=</span> <span class="fl">800</span><span class="op">)</span>,</span>
+<span>                    </span>
+<span>                    <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardSidebar.html">dashboardSidebar</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">250</span>,</span>
+<span>                                     <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/sidebarMenu.html">sidebarMenu</a></span><span class="op">(</span></span>
+<span>                                       <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                       <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/sidebarMenu.html">menuItem</a></span><span class="op">(</span><span class="va">tags</span><span class="op">$</span><span class="fu">em</span><span class="op">(</span><span class="st">"Upload Test Data"</span>,style<span class="op">=</span><span class="st">"font-size:120%"</span><span class="op">)</span>,icon<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html">icon</a></span><span class="op">(</span><span class="st">"upload"</span><span class="op">)</span>,tabName<span class="op">=</span><span class="st">"data"</span><span class="op">)</span>,</span>
+<span>                                       <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/sidebarMenu.html">menuItem</a></span><span class="op">(</span><span class="va">tags</span><span class="op">$</span><span class="fu">em</span><span class="op">(</span><span class="st">"Download Predictions"</span>,style<span class="op">=</span><span class="st">"font-size:120%"</span><span class="op">)</span>,icon<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html">icon</a></span><span class="op">(</span><span class="st">"download"</span><span class="op">)</span>,tabName<span class="op">=</span><span class="st">"download"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                    <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/dashboardBody.html">dashboardBody</a></span><span class="op">(</span></span>
+<span>                      <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/tabItems.html">tabItems</a></span><span class="op">(</span></span>
+<span>                        <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/tabItem.html">tabItem</a></span><span class="op">(</span>tabName<span class="op">=</span><span class="st">"data"</span>,</span>
+<span>                                <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span><span class="st">"This shiny app allows you to upload your data, then do prediction and download results.</span></span>
+<span><span class="st">                                  This exampe demonstrate a Regularized Logistic Regression. </span></span>
+<span><span class="st">                                  You can predict whether, for example, an individual is healthy or unhealthy. </span></span>
+<span><span class="st">                                  So, by evaluating the results, you can make decision if the model predicts correctly of poorly."</span>, style<span class="op">=</span><span class="st">"font-size:150%"</span><span class="op">)</span>,</span>
+<span>                                <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span><span class="st">"Start by uploading test data, preferably in `csv format`"</span>, style<span class="op">=</span><span class="st">"font-size:150%"</span><span class="op">)</span>,</span>
+<span>                                <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span><span class="st">"Then, go to the"</span>, <span class="va">tags</span><span class="op">$</span><span class="fu">span</span><span class="op">(</span><span class="st">"Download Predictions"</span>,style<span class="op">=</span><span class="st">"color:red"</span><span class="op">)</span>,</span>
+<span>                                        <span class="va">tags</span><span class="op">$</span><span class="fu">span</span><span class="op">(</span><span class="st">"section in the sidebar to  download the predictions."</span><span class="op">)</span>, style<span class="op">=</span><span class="st">"font-size:150%"</span><span class="op">)</span>,</span>
+<span>                                <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                                       <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fileInput.html">fileInput</a></span><span class="op">(</span><span class="st">'file1'</span>, <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">em</a></span><span class="op">(</span><span class="st">'Upload test data in csv format '</span>,style<span class="op">=</span><span class="st">"text-align:center;color:blue;font-size:150%"</span><span class="op">)</span>,multiple <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                                 accept<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'.csv'</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                       </span>
+<span>                                       <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html">uiOutput</a></span><span class="op">(</span><span class="st">"sample_input_data_heading"</span><span class="op">)</span>,</span>
+<span>                                       <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">tableOutput</a></span><span class="op">(</span><span class="st">"sample_input_data"</span><span class="op">)</span>,</span>
+<span>                                       <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                       <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                       <span class="op">)</span>,</span>
+<span>                                <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>                                <span class="op">)</span>,</span>
+<span>                        </span>
+<span>                        </span>
+<span>                        <span class="fu"><a href="https://rdrr.io/pkg/shinydashboard/man/tabItem.html">tabItem</a></span><span class="op">(</span>tabName<span class="op">=</span><span class="st">"download"</span>,</span>
+<span>                                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidRow</a></span><span class="op">(</span></span>
+<span>                                  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>                                         <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span><span class="st">"After you upload a test dataset, you can download the predictions in csv format by</span></span>
+<span><span class="st">                                    clicking the button below."</span>, </span>
+<span>                                                 style<span class="op">=</span><span class="st">"font-size:200%"</span><span class="op">)</span>,</span>
+<span>                                         <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                                         <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">br</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>                                  <span class="op">)</span><span class="op">)</span>,</span>
+<span>                                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidRow</a></span><span class="op">(</span></span>
+<span>                                  </span>
+<span>                                  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>                                         <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/downloadButton.html">downloadButton</a></span><span class="op">(</span><span class="st">"downloadData"</span>, <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html">em</a></span><span class="op">(</span><span class="st">'Download Predictions'</span>,style<span class="op">=</span><span class="st">"text-align:center;color:blue;font-size:150%"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                         <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">'plot_predictions'</span><span class="op">)</span></span>
+<span>                                  <span class="op">)</span>,</span>
+<span>                                  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html">column</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                                         <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html">uiOutput</a></span><span class="op">(</span><span class="st">"sample_prediction_heading"</span><span class="op">)</span>,</span>
+<span>                                         <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">tableOutput</a></span><span class="op">(</span><span class="st">"sample_predictions"</span><span class="op">)</span></span>
+<span>                                         <span class="op">)</span></span>
+<span>                                  <span class="op">)</span></span>
+<span>                                <span class="op">)</span></span>
+<span>                        <span class="op">)</span></span>
+<span>                      <span class="op">)</span></span>
+<span>                    <span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">LiblineaR</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org">readr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"models/models.rda"</span><span class="op">)</span>    <span class="co"># Load saved model</span></span>
+<span></span>
+<span><span class="co"># source("featureMapping.R") </span></span>
+<span></span>
+<span><span class="va">feat_map</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">new_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">temp</span> <span class="op">=</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Test1</span><span class="op">)</span><span class="op">^</span><span class="va">i</span> <span class="op">+</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Test2</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">i</span><span class="op">-</span><span class="va">j</span><span class="op">)</span></span>
+<span>      <span class="va">new_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">new_data</span>, <span class="va">temp</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">new_data</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">new_data</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">new_data</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co">#  a function for feature engineering. </span></span>
+<span><span class="co">#  You can include data imputation, data manipulation, data cleaning,</span></span>
+<span><span class="co">#  feature transformation, etc.,  functions</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>shiny.maxRequestSize <span class="op">=</span> <span class="fl">800</span><span class="op">*</span><span class="fl">1024</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>   <span class="co"># This is a number which specifies the maximum web request size, </span></span>
+<span>  <span class="co"># which serves as a size limit for file uploads. </span></span>
+<span>  <span class="co"># If unset, the maximum request size defaults to 5MB.</span></span>
+<span>  <span class="co"># The value I have put here is 80MB</span></span>
+<span>  </span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">sample_input_data_heading</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderUI.html">renderUI</a></span><span class="op">(</span><span class="op">{</span>   <span class="co"># show only if data has been uploaded</span></span>
+<span>    <span class="va">inFile</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">file1</span></span>
+<span>    </span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="kw">else</span><span class="op">{</span></span>
+<span>      <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span><span class="st">'Sample input data'</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">sample_input_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">renderTable</a></span><span class="op">(</span><span class="op">{</span>    <span class="co"># show sample of uploaded data</span></span>
+<span>    <span class="va">inFile</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">file1</span></span>
+<span>    </span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="kw">else</span><span class="op">{</span></span>
+<span>      <span class="va">input_data</span> <span class="op">=</span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">file1</span><span class="op">$</span><span class="va">datapath</span>, col_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">input_data</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Label"</span>,<span class="st">"Test1"</span>, <span class="st">"Test2"</span><span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="va">input_data</span><span class="op">$</span><span class="va">Label</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">input_data</span><span class="op">$</span><span class="va">Label</span> <span class="op">)</span></span>
+<span>      </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">input_data</span><span class="op">$</span><span class="va">Label</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"African American"</span>, <span class="st">"African"</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">input_data</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span></span>
+<span>  <span class="va">predictions</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">inFile</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">file1</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="kw">else</span><span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/withProgress.html">withProgress</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">'Predictions in progress. Please wait ...'</span>, <span class="op">{</span></span>
+<span>        <span class="va">input_data</span> <span class="op">=</span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">file1</span><span class="op">$</span><span class="va">datapath</span>, col_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>        </span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">input_data</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Label"</span>,<span class="st">"Test1"</span>, <span class="st">"Test2"</span><span class="op">)</span></span>
+<span>        </span>
+<span>        <span class="va">input_data</span><span class="op">$</span><span class="va">Label</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">input_data</span><span class="op">$</span><span class="va">Label</span> <span class="op">)</span></span>
+<span>        </span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">input_data</span><span class="op">$</span><span class="va">Label</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"African American"</span>, <span class="st">"African"</span><span class="op">)</span></span>
+<span>        </span>
+<span>        <span class="va">mapped</span> <span class="op">=</span> <span class="fu">feature_mapping</span><span class="op">(</span><span class="va">input_data</span><span class="op">)</span></span>
+<span>        </span>
+<span>        <span class="va">df_final</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">input_data</span>, <span class="va">mapped</span><span class="op">)</span></span>
+<span>        <span class="va">prediction</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">rlreg_model</span>, <span class="va">df_final</span><span class="op">)</span></span>
+<span>        </span>
+<span>        <span class="va">input_data_with_prediction</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">input_data</span>,<span class="va">prediction</span> <span class="op">)</span></span>
+<span>        <span class="va">input_data_with_prediction</span></span>
+<span>        </span>
+<span>      <span class="op">}</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">sample_prediction_heading</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderUI.html">renderUI</a></span><span class="op">(</span><span class="op">{</span>  <span class="co"># show only if data has been uploaded</span></span>
+<span>    <span class="va">inFile</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">file1</span></span>
+<span>    </span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="kw">else</span><span class="op">{</span></span>
+<span>      <span class="va">tags</span><span class="op">$</span><span class="fu">h4</span><span class="op">(</span><span class="st">'Input with Predictions'</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">sample_predictions</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">renderTable</a></span><span class="op">(</span><span class="op">{</span>   <span class="co"># the last 6 rows to show</span></span>
+<span>    <span class="va">pred</span> <span class="op">=</span> <span class="fu">predictions</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">plot_predictions</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span>   <span class="co"># the last 6 rows to show</span></span>
+<span>    <span class="va">pred</span> <span class="op">=</span> <span class="fu">predictions</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"African American"</span> <span class="op">=</span> <span class="st">"green4"</span>, <span class="st">"African"</span> <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
+<span>    <span class="va">pred</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Test1</span>, y <span class="op">=</span> <span class="va">Test2</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">prediction</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span>, shape <span class="op">=</span> <span class="fl">19</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols</span>, </span>
+<span>                          labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"African American"</span>, <span class="st">"African"</span><span class="op">)</span>, </span>
+<span>                          name<span class="op">=</span><span class="st">"Variable"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  </span>
+<span>  <span class="co"># Downloadable csv of predictions ----</span></span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">downloadData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/downloadHandler.html">downloadHandler</a></span><span class="op">(</span></span>
+<span>    filename <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"input_data_with_predictions"</span>, <span class="st">".csv"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    content <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">file</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu">predictions</span><span class="op">(</span><span class="op">)</span>, <span class="va">file</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
+</div>
+<div id="deploying-shiny-app" class="section level2" number="12.2">
+<h2>
+<span class="header-section-number">12.2</span> Deploying Shiny App<a class="anchor" aria-label="anchor" href="#deploying-shiny-app"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p><strong>Using shinyApp function</strong></p></li>
+<li><p><strong>App directory:</strong> If the application resides in a specific app_directory, you could launch it with:</p></li>
+</ul>
+<pre><code>runApp("app_directory")
+  </code></pre>
+<ul>
+<li>
+<strong>Shiny app object:</strong> If you’ve created a Shiny app object at the console by calling shinyApp(), you can pass that app object to runApp() like so:</li>
+</ul>
+<pre><code># Create app object (assume ui and server are defined)
+app &lt;- shinyApp(ui, server)
+
+runApp(app)</code></pre>
+<pre><code>app
+</code></pre>
+</div>
+<div id="example-app-with-qualitative-data-using-burro-package" class="section level2" number="12.3">
+<h2>
+<span class="header-section-number">12.3</span> Example APP with Qualitative data using Burro package<a class="anchor" aria-label="anchor" href="#example-app-with-qualitative-data-using-burro-package"><i class="fas fa-link"></i></a>
+</h2>
+<div class="infoicon">
+<p>
+library(burro)
+</p>
+<p>
+library(NHANES)
+</p>
+<p>
+data(NHANES)
+</p>
+<p>
+NHANES %&gt;% mutate(gr = 1) %&gt;% ggplot(aes_string(x =
+“AgeDecade”, fill = “AgeDecade”)) + geom_bar(aes(y = ..count..), color =
+“black”) + viridis::scale_fill_viridis(discrete = TRUE, option =
+“magma”) + geom_text(aes(group = gr, label = scales::percent(..prop..),
+y = ..count..), stat = “count”, vjust = -0.5) + theme(axis.text.x =
+element_text(angle = 90), legend.position = “none”)
+</p>
+<p>
+data_dict &lt;-
+readr::read_csv(system.file(“nhanes/data_dictionary.csv”,
+package=“burro”))
+</p>
+<p>
+outcome &lt;- c(“Depressed”)
+</p>
+<p>
+explore_data(dataset=NHANES, data_dictionary=data_dict,
+outcome_var=outcome)
+</p>
+</div>
+
+</div>
+</div>
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="model-deployment.html"><span class="header-section-number">11</span> Model Deployment</a></div>
+<div class="next"><a href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#shiny-app-prototype"><span class="header-section-number">12</span> Shiny App prototype</a></li>
+<li><a class="nav-link" href="#shiny-user-interfale"><span class="header-section-number">12.1</span> Shiny user interfale</a></li>
+<li><a class="nav-link" href="#deploying-shiny-app"><span class="header-section-number">12.2</span> Deploying Shiny App</a></li>
+<li><a class="nav-link" href="#example-app-with-qualitative-data-using-burro-package"><span class="header-section-number">12.3</span> Example APP with Qualitative data using Burro package</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01b_ml_realdata_prototypes.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01b_ml_realdata_prototypes.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mt-3">
+        <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-04</b>.</p>
+<br>
+</div>
+      <div class="col-12 col-md-6 mt-3">
+        <p>Note: This practical guide was created using the <a class="text-light" href="https://bookdown.org/yihui/bookdown/">bookdown</a> R package, styled with the modern bs4_book format.</p>
+      </div>
+
+    </div>
+  </div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

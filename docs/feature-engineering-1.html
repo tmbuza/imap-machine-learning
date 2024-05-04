@@ -61,15 +61,17 @@
 <li><a class="" href="machine-learning-prototypes-streamlining-microbiome-model-development-and-deployment.html"><span class="header-section-number">3</span> Machine Learning Prototypes: Streamlining Microbiome Model Development and Deployment</a></li>
 <li class="book-part">MODEL DEVELOPMENT</li>
 <li><a class="" href="exploratory-data-analysis-eda.html"><span class="header-section-number">4</span> Exploratory Data Analysis (EDA)</a></li>
+<li class="book-part">FEATURE ENGINEERING</li>
 <li><a class="active" href="feature-engineering-1.html"><span class="header-section-number">5</span> Feature Engineering</a></li>
 <li class="book-part">MODEL TRAINING</li>
 <li><a class="" href="data-splitting.html"><span class="header-section-number">6</span> Data Splitting</a></li>
 <li><a class="" href="model-fitting.html"><span class="header-section-number">7</span> Model Fitting</a></li>
-<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">8</span> Hyperparameter Tuning</a></li>
-<li class="book-part">PERFORMANCE METRICS</li>
-<li><a class="" href="computing-confusion-matrix.html"><span class="header-section-number">9</span> Computing Confusion Matrix</a></li>
+<li><a class="" href="model-evaluation.html"><span class="header-section-number">8</span> Model Evaluation</a></li>
+<li><a class="" href="model-validation.html"><span class="header-section-number">9</span> Model Validation</a></li>
+<li class="book-part">PARAMETER TUNING</li>
+<li><a class="" href="hyperparameter-tuning.html"><span class="header-section-number">10</span> Hyperparameter Tuning</a></li>
 <li class="book-part">MODEL DEPLOYMENT</li>
-<li><a class="" href="model-deployment.html"><span class="header-section-number">10</span> Model Deployment</a></li>
+<li><a class="" href="model-deployment.html"><span class="header-section-number">11</span> Model Deployment</a></li>
 <li class="book-part">APPENDIX</li>
 <li><a class="" href="modeling-ideas.html"><span class="header-section-number">A</span> Modeling Ideas</a></li>
 <li><a class="" href="using-ml-helper-function.html"><span class="header-section-number">B</span> Using ML helper function</a></li>
@@ -88,121 +90,74 @@
 <span class="header-section-number">5</span> Feature Engineering<a class="anchor" aria-label="anchor" href="#feature-engineering-1"><i class="fas fa-link"></i></a>
 </h1>
 <p>Feature engineering is a crucial step in the machine learning pipeline where raw data is transformed into a format that enhances the performance of predictive models. This process involves creating new features, selecting relevant features, and transforming existing features to improve the model’s ability to capture patterns and make accurate predictions.</p>
-<p>Some common techniques used in feature engineering include:</p>
-<ul>
-<li>
-<strong>Feature Creation:</strong> Generating new features from existing ones, such as extracting information from text, dates, or categorical variables, or creating interaction terms between variables.</li>
-<li>
-<strong>Feature Selection:</strong> Identifying the most relevant features that contribute the most to the predictive power of the model while reducing dimensionality and computational complexity.</li>
-<li>
-<strong>Feature Transformation:</strong> Applying transformations to features to make the data more suitable for modeling, such as scaling numeric features, encoding categorical variables, or handling missing values.</li>
-</ul>
+<blockquote>
 <p>By performing effective feature engineering, we can improve the performance, interpretability, and robustness of machine learning models, ultimately leading to better predictions and insights from the data.</p>
-<div id="processing-data-for-machine-learning" class="section level2" number="5.1">
-<h2>
-<span class="header-section-number">5.1</span> Processing data for machine learning<a class="anchor" aria-label="anchor" href="#processing-data-for-machine-learning"><i class="fas fa-link"></i></a>
-</h2>
-<p>This section outlines the preprocessing steps involved in preparing data subsets tailored for machine learning analysis. The code segments transform raw data into structured formats suitable for predictive modeling. Specifically, the subsets created encompass various combinations of taxonomic or metabolic features alongside binary labels representing selected features. Each subset undergoes specific preprocessing steps, including data selection, transformation, and encoding, to ensure compatibility with machine learning algorithms.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Subset for machine learning analysis: Taxonomic genus features with disease states</span></span>
-<span></span>
-<span><span class="va">ml_genus_dsestate</span> <span class="op">&lt;-</span> <span class="va">composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">taxonomy</span>, enttype <span class="op">=</span> <span class="va">Enterotype</span>, <span class="va">rel_abund</span>, dsestate <span class="op">=</span> <span class="va">Disease_State</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from<span class="op">=</span><span class="va">taxonomy</span>, values_from <span class="op">=</span> <span class="va">rel_abund</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">sample_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>enttype <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">enttype</span> <span class="op">==</span> <span class="st">"Enterotype_1"</span>, <span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dsestate <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">dsestate</span> <span class="op">==</span> <span class="st">"pHTN"</span> <span class="op">|</span> <span class="va">dsestate</span> <span class="op">==</span> <span class="st">"HTN"</span> , <span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">enttype</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">dsestate</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Subset for machine learning analysis: Taxonomic genus features with enterotypes</span></span>
-<span><span class="va">ml_genus_enttype</span> <span class="op">&lt;-</span> <span class="va">composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">taxonomy</span>, enttype <span class="op">=</span> <span class="va">Enterotype</span>, <span class="va">rel_abund</span>, dsestate <span class="op">=</span> <span class="va">Disease_State</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from<span class="op">=</span><span class="va">taxonomy</span>, values_from <span class="op">=</span> <span class="va">rel_abund</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">sample_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>enttype <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">enttype</span> <span class="op">==</span> <span class="st">"Enterotype_1"</span>, <span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dsestate <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">dsestate</span> <span class="op">==</span> <span class="st">"pHTN"</span> <span class="op">|</span> <span class="va">dsestate</span> <span class="op">==</span> <span class="st">"HTN"</span> , <span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">dsestate</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">enttype</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># Dietswap dataset: Subset for machine learning analysis: Taxonomic genus features with nationality and body mass index group</span></span>
-<span></span>
-<span><span class="co"># Nationality feature</span></span>
-<span><span class="va">ml_genus_nationality</span> <span class="op">&lt;-</span> <span class="va">ps_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">taxon</span>, <span class="va">nationality</span>, <span class="va">rel_abund</span>, <span class="va">bmi</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    taxon <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">taxon</span>, <span class="st">"\\*"</span>, <span class="st">""</span><span class="op">)</span>,</span>
-<span>    nationality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">nationality</span> <span class="op">==</span> <span class="st">"AAM"</span>, <span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    bmi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">==</span> <span class="st">"overweight"</span> <span class="op">|</span> <span class="va">bmi</span> <span class="op">==</span> <span class="st">"obese"</span>, <span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">taxon</span>, <span class="va">nationality</span>, <span class="va">bmi</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>rel_abund <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">rel_abund</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">taxon</span>, values_from <span class="op">=</span> <span class="va">rel_abund</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">nationality</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># Remove rows with NA in the 'nationality' column</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">bmi</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"rel_abund"</span><span class="op">)</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Body mass index feature</span></span>
-<span><span class="va">ml_genus_bmi</span> <span class="op">&lt;-</span> <span class="va">ps_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">taxon</span>, <span class="va">nationality</span>, <span class="va">rel_abund</span>, <span class="va">bmi</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    taxon <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">taxon</span>, <span class="st">"\\*"</span>, <span class="st">""</span><span class="op">)</span>,</span>
-<span>    nationality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">nationality</span> <span class="op">==</span> <span class="st">"AAM"</span>, <span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    bmi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">==</span> <span class="st">"overweight"</span> <span class="op">|</span> <span class="va">bmi</span> <span class="op">==</span> <span class="st">"obese"</span>, <span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">taxon</span>, <span class="va">nationality</span>, <span class="va">bmi</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>rel_abund <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">rel_abund</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">taxon</span>, values_from <span class="op">=</span> <span class="va">rel_abund</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">bmi</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># Remove rows with NA in the 'bmi' column</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">nationality</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"rel_abund"</span><span class="op">)</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Save the processed data objects into an RDA file for downstream analysis</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">composite</span>,</span>
-<span>     <span class="va">metabo_composite</span>,</span>
-<span>     <span class="va">ml_genus_dsestate</span>,</span>
-<span>     <span class="va">ps_df</span>,</span>
-<span>     <span class="va">ml_genus_enttype</span>, </span>
-<span>     <span class="va">ml_genus_nationality</span>, </span>
-<span>     <span class="va">ml_genus_bmi</span>, </span>
-<span>     file <span class="op">=</span> <span class="st">"data/ml_n_composite_object.rda"</span><span class="op">)</span></span></code></pre></div>
-<div class="alerticon">
-<p>
-<strong>Note for users:</strong>
-</p>
-<blockquote>
-<p>
-If you encounter issues during data processing where pivot_wider()
-returns values as &lt;list&gt;, it may be due to multiple values for the
-same combination of identifiers (e.g., sample ID and feature). In such
-cases, consider aggregating the values using group_by() and summarise()
-before pivoting.
-</p>
 </blockquote>
-<p>
-Example:
-</p>
-<p>
-ps_df %&gt;% select(sample_id, taxon, nationality, rel_abund, bmi)
-%&gt;% mutate(taxon = str_replace_all(taxon, “*“,”“)) %&gt;%
-group_by(sample_id, taxon, nationality, bmi) %&gt;% summarise(rel_abund
-= mean(rel_abund), .groups =”drop”) %&gt;% pivot_wider(names_from =
-taxon, values_from = rel_abund) %&gt;% mutate(nationality =
-if_else(nationality == “AAM”, “0”, “1”)) %&gt;% mutate(bmi = if_else(bmi
-== “overweight” | bmi == “obese” , “0”, “1”)) %&gt;%
-select(-c(sample_id, bmi))
-</p>
+<p>Some common techniques used in feature engineering include feature creation, selection and transformation.</p>
+<div id="feature-creation-simplified-example" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Feature Creation (Simplified Example)<a class="anchor" aria-label="anchor" href="#feature-creation-simplified-example"><i class="fas fa-link"></i></a>
+</h2>
+<p>Feature creation involves generating new features from existing ones. This can include extracting information from text, dates, or categorical variables, or creating interaction terms between variables.</p>
+<p>For example: In this simplified example, we demonstrate feature creation using demographic data.Here, we divide ages into three groups based on the ‘age’ column to create a new feature called ‘age_group’. We first load the necessary libraries, then create sample data containing information about age, gender, and income. We then create a new feature called <strong>age_group</strong> based on the ‘age’ column, dividing ages into three groups: “&lt;30”, “30-40”, and “&gt;40”. Finally, we display the DataFrame with the new feature included.</p>
+<div id="sample-dataframe" class="section level3" number="5.1.1">
+<h3>
+<span class="header-section-number">5.1.1</span> Sample dataframe<a class="anchor" aria-label="anchor" href="#sample-dataframe"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load necessary libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.2     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Sample data</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">30</span>, <span class="fl">35</span>, <span class="fl">40</span>, <span class="fl">45</span><span class="op">)</span>,</span>
+<span>  gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'male'</span>, <span class="st">'female'</span>, <span class="st">'male'</span>, <span class="st">'male'</span>, <span class="st">'female'</span><span class="op">)</span>,</span>
+<span>  income <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50000</span>, <span class="fl">60000</span>, <span class="fl">75000</span>, <span class="fl">80000</span>, <span class="fl">70000</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Creating a DataFrame</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##     age gender income
+##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+## 1    25 male    50000
+## 2    30 female  60000
+## 3    35 male    75000
+## 4    40 male    80000
+## 5    45 female  70000</code></pre>
+</div>
+<div id="creating-a-new-feature-age_group" class="section level3" number="5.1.2">
+<h3>
+<span class="header-section-number">5.1.2</span> Creating a new feature ‘age_group’<a class="anchor" aria-label="anchor" href="#creating-a-new-feature-age_group"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Feature creation example: creating a new feature 'age_group' based on age</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">age</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">40</span>, <span class="cn">Inf</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt;30"</span>, <span class="st">"30-40"</span>, <span class="st">"&gt;40"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Displaying the DataFrame with the new feature</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 5 × 4
+##     age gender income age_group
+##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;fct&gt;    
+## 1    25 male    50000 &lt;30      
+## 2    30 female  60000 &lt;30      
+## 3    35 male    75000 30-40    
+## 4    40 male    80000 30-40    
+## 5    45 female  70000 &gt;40</code></pre>
 <blockquote>
-<p>
-This ensures that the rel_abund values are properly aggregated before
-pivoting.
-</p>
+<p>While this example demonstrates feature creation using demographic data, the same principles apply to various types of data, including metagenomics and microbiome data.</p>
 </blockquote>
 </div>
 </div>
@@ -210,6 +165,7 @@ pivoting.
 <h2>
 <span class="header-section-number">5.2</span> Feature Selection<a class="anchor" aria-label="anchor" href="#feature-selection"><i class="fas fa-link"></i></a>
 </h2>
+<p>Identifying the most relevant features that contribute the most to the predictive power of the model while reducing dimensionality and computational complexity.</p>
 <ul>
 <li>
 <strong>Objective</strong>: Perform feature selection to identify relevant microbial taxa or functional pathways associated with the binary outcome of interest, such as disease status or treatment response.</li>
@@ -221,73 +177,277 @@ pivoting.
 <h2>
 <span class="header-section-number">5.3</span> Feature Selection Techniques<a class="anchor" aria-label="anchor" href="#feature-selection-techniques"><i class="fas fa-link"></i></a>
 </h2>
+<p>Feature selection techniques aim to identify the most relevant and informative features for modeling, reducing the dimensionality of the data while preserving predictive performance. Key techniques include:</p>
 <ul>
 <li>
-<strong>Variance Threshold</strong>: Identify features with low variance, which may be less informative for the model, and remove them from consideration.</li>
+<strong>Variance Threshold</strong>: Eliminates features with low variance, indicating little variability and potentially less relevance to the target variable.</li>
 <li>
-<strong>Univariate Selection</strong>: Evaluate the relationship between each feature and the target variable independently, selecting the most relevant features based on statistical tests.</li>
+<strong>Univariate Selection</strong>: Examines each feature’s relationship with the target variable independently, selecting those with the strongest statistical significance.</li>
 <li>
-<strong>Recursive Feature Elimination (RFE)</strong>: Iteratively remove the least significant features from the model until the optimal subset of features is achieved, based on model performance metrics.</li>
+<strong>Recursive Feature Elimination (RFE)</strong>: Sequentially removes the least important features, based on model performance, until an optimal subset is obtained.</li>
 <li>
-<strong>Principal Component Analysis (PCA)</strong>: Transform the original features into a lower-dimensional space while retaining most of the variance, effectively reducing the dimensionality of the data and identifying important patterns.</li>
+<strong>Principal Component Analysis (PCA)</strong>: Projects the original features into a lower-dimensional space, retaining the most critical information while reducing dimensionality.</li>
 <li>
-<strong>Feature Importance</strong>: Assess the importance of each feature based on its contribution to model performance, using techniques like Random Forest feature importance or permutation importance.</li>
+<strong>Feature Importance</strong>: Determines the importance of features by assessing their contribution to model performance. Techniques include Random Forest feature importance and permutation importance.</li>
+<li>
+<strong>Correlation Analysis</strong>: Identifies relationships between pairs of features, helping to detect redundant or highly correlated variables.</li>
+<li>
+<strong>Forward/Backward Selection</strong>: Iteratively adds or removes features from the model, based on their impact on performance, to arrive at the best subset.</li>
+<li>
+<strong>Least Absolute Shrinkage and Selection Operator (LASSO)</strong>: Penalizes the absolute size of feature coefficients, encouraging sparse solutions and automatic feature selection.</li>
 </ul>
+<blockquote>
+<p>These techniques facilitate the creation of more efficient and interpretable models by focusing on the most informative features while reducing redundancy and noise.</p>
+</blockquote>
+<div id="demo-using-variance-threshold" class="section level3" number="5.3.1">
+<h3>
+<span class="header-section-number">5.3.1</span> Demo using Variance threshold<a class="anchor" aria-label="anchor" href="#demo-using-variance-threshold"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>It involves calculating the variance of each feature.</li>
+<li>Only those features whose variance exceeds a predefined threshold are selected.</li>
+<li>This method is useful for filtering out features that have very low variance, indicating little variation in the data.</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/ml_n_composite_object.rda"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Loading objects:
+##   composite
+##   metabo_composite
+##   ml_genus_dsestate
+##   ps_df
+##   ml_genus_enttype
+##   ml_genus_nationality
+##   ml_genus_bmi</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example dataset (replace with your own data)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">ml_genus_nationality</span></span>
+<span><span class="co"># data &lt;- ml_genus_bmi</span></span>
+<span><span class="co"># data &lt;- ml_genus_enttype</span></span>
+<span><span class="co"># data &lt;- ml_genus_dsestate</span></span>
+<span></span>
+<span><span class="co"># Calculate variance for each feature</span></span>
+<span><span class="va">variances</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">2</span>, <span class="va">var</span><span class="op">)</span>  <span class="co"># Exclude the first column (nationality)</span></span>
+<span></span>
+<span><span class="co"># Set the threshold for variance</span></span>
+<span><span class="va">threshold</span> <span class="op">&lt;-</span> <span class="fl">0.0001</span>  <span class="co"># Adjust as needed</span></span>
+<span></span>
+<span><span class="co"># Identify features with variance above the threshold</span></span>
+<span><span class="va">selected_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">variances</span><span class="op">[</span><span class="va">variances</span> <span class="op">&gt;</span> <span class="va">threshold</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Remove NA values from selected_features</span></span>
+<span><span class="va">selected_features</span> <span class="op">&lt;-</span> <span class="va">selected_features</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">selected_features</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Add the first column (nationality) to the selected features</span></span>
+<span><span class="va">selected_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nationality"</span>, <span class="va">selected_features</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filter dataset to include selected features</span></span>
+<span><span class="va">filtered_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">selected_features</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Display filtered dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">filtered_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 × 5
+##   nationality Akkermansia Allistipes `Bacteroides fragilis` `Bacteroides ovatus`
+##   &lt;fct&gt;             &lt;dbl&gt;      &lt;dbl&gt;                  &lt;dbl&gt;                &lt;dbl&gt;
+## 1 0               0.00213    0.0397                 0.0524              0.0505  
+## 2 1               0.00724    0.00180                0.00151             0.000637
+## 3 1               0.136      0.00897                0.0729              0.00518</code></pre>
 </div>
-<div id="variance-threshold" class="section level2" number="5.4">
-<h2>
-<span class="header-section-number">5.4</span> Variance threshold<a class="anchor" aria-label="anchor" href="#variance-threshold"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="feature-engineering-1.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb10-2"><a href="feature-engineering-1.html#cb10-2" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="feature-engineering-1.html#cb10-3" tabindex="-1"></a><span class="co"># Example dataset (replace with your own data)</span></span>
-<span id="cb10-4"><a href="feature-engineering-1.html#cb10-4" tabindex="-1"></a>data <span class="ot">&lt;-</span> ml_genus_nationality</span>
-<span id="cb10-5"><a href="feature-engineering-1.html#cb10-5" tabindex="-1"></a><span class="co"># data &lt;- ml_genus_bmi</span></span>
-<span id="cb10-6"><a href="feature-engineering-1.html#cb10-6" tabindex="-1"></a><span class="co"># data &lt;- ml_genus_enttype</span></span>
-<span id="cb10-7"><a href="feature-engineering-1.html#cb10-7" tabindex="-1"></a><span class="co"># data &lt;- ml_genus_dsestate</span></span>
-<span id="cb10-8"><a href="feature-engineering-1.html#cb10-8" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="feature-engineering-1.html#cb10-9" tabindex="-1"></a><span class="co"># Calculate variance for each feature</span></span>
-<span id="cb10-10"><a href="feature-engineering-1.html#cb10-10" tabindex="-1"></a>variances <span class="ot">&lt;-</span> <span class="fu">apply</span>(data[, <span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, var)  <span class="co"># Exclude the first column (nationality)</span></span>
-<span id="cb10-11"><a href="feature-engineering-1.html#cb10-11" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="feature-engineering-1.html#cb10-12" tabindex="-1"></a><span class="co"># Set the threshold for variance</span></span>
-<span id="cb10-13"><a href="feature-engineering-1.html#cb10-13" tabindex="-1"></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.0001</span>  <span class="co"># Adjust as needed</span></span>
-<span id="cb10-14"><a href="feature-engineering-1.html#cb10-14" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="feature-engineering-1.html#cb10-15" tabindex="-1"></a><span class="co"># Identify features with variance above the threshold</span></span>
-<span id="cb10-16"><a href="feature-engineering-1.html#cb10-16" tabindex="-1"></a>selected_features <span class="ot">&lt;-</span> <span class="fu">names</span>(variances[variances <span class="sc">&gt;</span> threshold])</span>
-<span id="cb10-17"><a href="feature-engineering-1.html#cb10-17" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="feature-engineering-1.html#cb10-18" tabindex="-1"></a><span class="co"># Remove NA values from selected_features</span></span>
-<span id="cb10-19"><a href="feature-engineering-1.html#cb10-19" tabindex="-1"></a>selected_features <span class="ot">&lt;-</span> selected_features[<span class="sc">!</span><span class="fu">is.na</span>(selected_features)]</span>
-<span id="cb10-20"><a href="feature-engineering-1.html#cb10-20" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="feature-engineering-1.html#cb10-21" tabindex="-1"></a><span class="co"># Add the first column (nationality) to the selected features</span></span>
-<span id="cb10-22"><a href="feature-engineering-1.html#cb10-22" tabindex="-1"></a>selected_features <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"nationality"</span>, selected_features)</span>
-<span id="cb10-23"><a href="feature-engineering-1.html#cb10-23" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="feature-engineering-1.html#cb10-24" tabindex="-1"></a><span class="co"># Filter dataset to include selected features</span></span>
-<span id="cb10-25"><a href="feature-engineering-1.html#cb10-25" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> data[, <span class="fu">colnames</span>(data) <span class="sc">%in%</span> selected_features]</span>
-<span id="cb10-26"><a href="feature-engineering-1.html#cb10-26" tabindex="-1"></a></span>
-<span id="cb10-27"><a href="feature-engineering-1.html#cb10-27" tabindex="-1"></a><span class="co"># Display filtered dataset</span></span>
-<span id="cb10-28"><a href="feature-engineering-1.html#cb10-28" tabindex="-1"></a><span class="fu">head</span>(filtered_data[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
-<span id="cb10-29"><a href="feature-engineering-1.html#cb10-29" tabindex="-1"></a><span class="co"># A tibble: 6 × 5</span></span>
-<span id="cb10-30"><a href="feature-engineering-1.html#cb10-30" tabindex="-1"></a>  nationality Akkermansia Allistipes <span class="st">`</span><span class="at">Bacteroides fragilis</span><span class="st">`</span> <span class="st">`</span><span class="at">Bacteroides ovatus</span><span class="st">`</span></span>
-<span id="cb10-31"><a href="feature-engineering-1.html#cb10-31" tabindex="-1"></a>  <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>             <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>      <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>                  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>                <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb10-32"><a href="feature-engineering-1.html#cb10-32" tabindex="-1"></a><span class="dv">1</span> <span class="dv">0</span>              <span class="fl">0.00213</span>     <span class="fl">0.0397</span>                 <span class="fl">0.0524</span>              <span class="fl">0.0505</span>  </span>
-<span id="cb10-33"><a href="feature-engineering-1.html#cb10-33" tabindex="-1"></a><span class="dv">2</span> <span class="dv">1</span>              <span class="fl">0.00724</span>     <span class="fl">0.00180</span>                <span class="fl">0.00151</span>             <span class="fl">0.000637</span></span>
-<span id="cb10-34"><a href="feature-engineering-1.html#cb10-34" tabindex="-1"></a><span class="dv">3</span> <span class="dv">1</span>              <span class="fl">0.136</span>       <span class="fl">0.00897</span>                <span class="fl">0.0729</span>              <span class="fl">0.00518</span> </span>
-<span id="cb10-35"><a href="feature-engineering-1.html#cb10-35" tabindex="-1"></a><span class="dv">4</span> <span class="dv">1</span>              <span class="fl">0.00101</span>     <span class="fl">0.00299</span>                <span class="fl">0.00139</span>             <span class="fl">0.00112</span> </span>
-<span id="cb10-36"><a href="feature-engineering-1.html#cb10-36" tabindex="-1"></a><span class="dv">5</span> <span class="dv">1</span>              <span class="fl">0.00490</span>     <span class="fl">0.00713</span>                <span class="fl">0.00312</span>             <span class="fl">0.00279</span> </span>
-<span id="cb10-37"><a href="feature-engineering-1.html#cb10-37" tabindex="-1"></a><span class="dv">6</span> <span class="dv">1</span>              <span class="fl">0.000706</span>    <span class="fl">0.00116</span>                <span class="fl">0.00116</span>             <span class="fl">0.000899</span></span>
-<span id="cb10-38"><a href="feature-engineering-1.html#cb10-38" tabindex="-1"></a></span>
-<span id="cb10-39"><a href="feature-engineering-1.html#cb10-39" tabindex="-1"></a></span>
-<span id="cb10-40"><a href="feature-engineering-1.html#cb10-40" tabindex="-1"></a></span>
-<span id="cb10-41"><a href="feature-engineering-1.html#cb10-41" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb10-42"><a href="feature-engineering-1.html#cb10-42" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb10-43"><a href="feature-engineering-1.html#cb10-43" tabindex="-1"></a><span class="fu">library</span>(mikropml)</span>
-<span id="cb10-44"><a href="feature-engineering-1.html#cb10-44" tabindex="-1"></a></span>
-<span id="cb10-45"><a href="feature-engineering-1.html#cb10-45" tabindex="-1"></a>training_data <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
-<span id="cb10-46"><a href="feature-engineering-1.html#cb10-46" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">target =</span> nationality) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-47"><a href="feature-engineering-1.html#cb10-47" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">target =</span> <span class="fu">recode_factor</span>(target, <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"AAM"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"AFR"</span>))</span></code></pre></div>
+<div id="demo-using-correlation-analysis" class="section level3" number="5.3.2">
+<h3>
+<span class="header-section-number">5.3.2</span> Demo using Correlation Analysis<a class="anchor" aria-label="anchor" href="#demo-using-correlation-analysis"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>This method involves calculating the correlation between each feature and the target variable (or another feature).</li>
+<li>Features are then selected based on their correlation coefficients.</li>
+<li>A cutoff point for the correlation coefficient can be set to determine which features are considered relevant.</li>
+<li>Features with correlation coefficients above this cutoff are retained, while those below are discarded.</li>
+</ul>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example dataset (replace with your own data)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">ml_genus_nationality</span></span>
+<span></span>
+<span><span class="co"># Calculate point-biserial correlation between each feature and the categorical target variable</span></span>
+<span><span class="va">correlations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">nationality</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set the threshold for correlation</span></span>
+<span><span class="va">threshold</span> <span class="op">&lt;-</span> <span class="fl">0.3</span>  <span class="co"># Adjust as needed</span></span>
+<span></span>
+<span><span class="co"># Identify features with correlation above the threshold</span></span>
+<span><span class="va">selected_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">correlations</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">correlations</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">threshold</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add the target variable (nationality) to the selected features</span></span>
+<span><span class="va">selected_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nationality"</span>, <span class="va">selected_features</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filter dataset to include selected features</span></span>
+<span><span class="va">filtered_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">selected_features</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Display filtered dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">filtered_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 × 5
+##   nationality Allistipes `Anaerostipes caccae` `Bacteroides fragilis`
+##   &lt;fct&gt;            &lt;dbl&gt;                 &lt;dbl&gt;                  &lt;dbl&gt;
+## 1 0              0.0397                0.0288                 0.0524 
+## 2 1              0.00180               0.00168                0.00151
+## 3 1              0.00897               0.00168                0.0729 
+## # ℹ 1 more variable: `Bacteroides ovatus` &lt;dbl&gt;</code></pre>
 <blockquote>
 <p>Note: NA values must be removed from the selected_features vector before filtering the dataset to avoid errors.</p>
 </blockquote>
+</div>
+<div id="demo-with-wilcoxon-rank-sum-test" class="section level3" number="5.3.3">
+<h3>
+<span class="header-section-number">5.3.3</span> Demo with Wilcoxon rank sum test<a class="anchor" aria-label="anchor" href="#demo-with-wilcoxon-rank-sum-test"><i class="fas fa-link"></i></a>
+</h3>
+<p>The Wilcoxon rank sum test, also known as the Mann-Whitney U test, is a nonparametric test used to assess whether two independent samples have different distributions. It is particularly useful when the assumptions of the t-test are not met, such as when the data is not normally distributed or when the sample sizes are small</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">all_genera</span> <span class="op">&lt;-</span> <span class="va">composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="op">-</span><span class="va">taxonomy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>test <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/wilcox.test.html">wilcox.test</a></span><span class="op">(</span><span class="va">rel_abund</span> <span class="op">~</span> <span class="va">hyper</span>, data <span class="op">=</span> <span class="va">.x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">tidy</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span>, method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">sig_genera</span> <span class="op">&lt;-</span> <span class="va">all_genera</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">p.value</span> <span class="op">&lt;</span> <span class="fl">0.001</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">p.adjust</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="va">p.value</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Distribution of significant genera</strong></p>
+<ul>
+<li>Compute the significant genera, then</li>
+<li>P-values or Adjusted P-values (p.adjust) can be used to measure the significance levels.</li>
+<li>View the distribution of the significant genera</li>
+</ul>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">sig_genera</span>, by<span class="op">=</span><span class="st">"taxonomy"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rel_abund <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="op">(</span><span class="va">rel_abund</span> <span class="op">+</span> <span class="fl">1</span><span class="op">/</span><span class="fl">20000</span><span class="op">)</span>,</span>
+<span>         taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">"(.*)"</span>, <span class="st">"*\\1*"</span><span class="op">)</span>,</span>
+<span>         taxonomy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">taxonomy</span>, <span class="st">"\\*(.*)_unclassified\\*"</span>,</span>
+<span>                                <span class="st">"Unclassified&lt;br&gt;*\\1*"</span><span class="op">)</span>,</span>
+<span>         hyper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">hyper</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">T</span>, <span class="cn">F</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">rel_abund</span>, y<span class="op">=</span><span class="va">taxonomy</span>, color<span class="op">=</span><span class="va">hyper</span>, fill<span class="op">=</span><span class="va">hyper</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># geom_vline(xintercept = 100/10530, size=0.5, color="gray") +</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_jitterdodge.html">position_jitterdodge</a></span><span class="op">(</span>dodge.width <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>                                              jitter.width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>              shape<span class="op">=</span><span class="fl">21</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span>fun.data <span class="op">=</span> <span class="va">median_hilow</span>, fun.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>conf.int<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>               geom<span class="op">=</span><span class="st">"pointrange"</span>,</span>
+<span>               position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span>,</span>
+<span>               color<span class="op">=</span><span class="st">"black"</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Hypertension"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Hypertension"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span> <span class="st">"Relative abundance (%)"</span>, y<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02_feature_engineering_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"figures/significant_genera.tiff"</span>, width<span class="op">=</span><span class="fl">6</span>, height<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compute the significant pathways using `wilcox.test`.</span></span>
+<span><span class="va">all_metabopwy</span> <span class="op">&lt;-</span> <span class="va">metabo_composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="op">-</span><span class="va">metabopwy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>test <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.x<span class="op">=</span><span class="va">data</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/wilcox.test.html">wilcox.test</a></span><span class="op">(</span><span class="va">rel_abund</span><span class="op">~</span><span class="va">hyper</span>, data<span class="op">=</span><span class="va">.x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">tidy</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adjust <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span>, method<span class="op">=</span><span class="st">"BH"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sig_metabopwy</span> <span class="op">&lt;-</span> <span class="va">all_metabopwy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">p.value</span> <span class="op">&lt;</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># Typically, the best significant p-value is set at 0.05</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">metabopwy</span>, <span class="va">p.value</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Distribution of significant metabolic pathways</strong></p>
+<ul>
+<li>Compute the significant pathways, then</li>
+<li>P-values or Adjusted P-values (p.adjust) can be used to measure the significance levels.</li>
+<li>View the distribution of the significant pathways.</li>
+</ul>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">metabo_composite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">sig_metabopwy</span>, by<span class="op">=</span><span class="st">"metabopwy"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rel_abund <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="op">(</span><span class="va">rel_abund</span> <span class="op">+</span> <span class="fl">1</span><span class="op">/</span><span class="fl">20000</span><span class="op">)</span>,</span>
+<span>         metabopwy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">metabopwy</span>, <span class="st">"(.*)"</span>, <span class="st">"*\\1*"</span><span class="op">)</span>,</span>
+<span>         metabopwy <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">metabopwy</span>, <span class="st">"\\*(.*)_unclassified\\*"</span>,</span>
+<span>                                <span class="st">"Unclassified&lt;br&gt;*\\1*"</span><span class="op">)</span>,</span>
+<span>         hyper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">hyper</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">T</span>, <span class="cn">F</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">rel_abund</span>, y<span class="op">=</span><span class="va">metabopwy</span>, color<span class="op">=</span><span class="va">hyper</span>, fill<span class="op">=</span><span class="va">hyper</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_jitterdodge.html">position_jitterdodge</a></span><span class="op">(</span>dodge.width <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>                                              jitter.width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>              shape<span class="op">=</span><span class="fl">21</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span>fun.data <span class="op">=</span> <span class="va">median_hilow</span>, fun.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>conf.int<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>               geom<span class="op">=</span><span class="st">"pointrange"</span>,</span>
+<span>               position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span>,</span>
+<span>               color<span class="op">=</span><span class="st">"black"</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Hypertension"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Hypertension"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span> <span class="st">"Relative abundance (%)"</span>, y<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02_feature_engineering_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="st">"figures/significant_genera.tiff"</span>, width<span class="op">=</span><span class="fl">6</span>, height<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p>Here we filter the metabolic pathways at a lesser stringent <code>p.values</code> (p &lt; 0.25) for demo purposes.</p>
+</blockquote>
+</div>
+</div>
+<div id="feature-transformation" class="section level2" number="5.4">
+<h2>
+<span class="header-section-number">5.4</span> Feature Transformation:<a class="anchor" aria-label="anchor" href="#feature-transformation"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>Applying transformations to features to make the data more suitable for modeling.</li>
+<li>Scaling numeric features ensures that all features contribute equally to the analysis by bringing them to a similar scale.</li>
+<li>Encoding categorical variables converts categorical data into a numerical format, allowing algorithms to work with categorical data.</li>
+<li>Handling missing values involves strategies such as imputation or removal of missing data to ensure completeness of the dataset.</li>
+</ul>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="feature-engineering-1.html#cb39-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb39-2"><a href="feature-engineering-1.html#cb39-2" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="feature-engineering-1.html#cb39-3" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb39-4"><a href="feature-engineering-1.html#cb39-4" tabindex="-1"></a>data <span class="ot">&lt;-</span> ml_genus_nationality <span class="sc">%&gt;%</span> </span>
+<span id="cb39-5"><a href="feature-engineering-1.html#cb39-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">target =</span> nationality)</span>
+<span id="cb39-6"><a href="feature-engineering-1.html#cb39-6" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="feature-engineering-1.html#cb39-7" tabindex="-1"></a><span class="co"># Check for missing values</span></span>
+<span id="cb39-8"><a href="feature-engineering-1.html#cb39-8" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(data))</span>
+<span id="cb39-9"><a href="feature-engineering-1.html#cb39-9" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="feature-engineering-1.html#cb39-10" tabindex="-1"></a><span class="co"># Impute missing values with zeros</span></span>
+<span id="cb39-11"><a href="feature-engineering-1.html#cb39-11" tabindex="-1"></a>data_imputed <span class="ot">&lt;-</span> <span class="fu">replace</span>(data, <span class="fu">is.na</span>(data), <span class="dv">0</span>)</span>
+<span id="cb39-12"><a href="feature-engineering-1.html#cb39-12" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="feature-engineering-1.html#cb39-13" tabindex="-1"></a><span class="co"># Display the first few rows of the imputed dataset</span></span>
+<span id="cb39-14"><a href="feature-engineering-1.html#cb39-14" tabindex="-1"></a><span class="fu">head</span>(data_imputed[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb39-15"><a href="feature-engineering-1.html#cb39-15" tabindex="-1"></a><span class="co"># A tibble: 3 × 5</span></span>
+<span id="cb39-16"><a href="feature-engineering-1.html#cb39-16" tabindex="-1"></a>  target Actinobacteria Akkermansia <span class="st">`</span><span class="at">Alcaligenes faecalis</span><span class="st">`</span> Allistipes</span>
+<span id="cb39-17"><a href="feature-engineering-1.html#cb39-17" tabindex="-1"></a>  <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>           <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>                  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>      <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb39-18"><a href="feature-engineering-1.html#cb39-18" tabindex="-1"></a><span class="dv">1</span> <span class="dv">0</span>            <span class="fl">0.00121</span>      <span class="fl">0.00213</span>               <span class="fl">0.000118</span>    <span class="fl">0.0397</span> </span>
+<span id="cb39-19"><a href="feature-engineering-1.html#cb39-19" tabindex="-1"></a><span class="dv">2</span> <span class="dv">1</span>            <span class="fl">0.000533</span>     <span class="fl">0.00724</span>               <span class="fl">0.000406</span>    <span class="fl">0.00180</span></span>
+<span id="cb39-20"><a href="feature-engineering-1.html#cb39-20" tabindex="-1"></a><span class="dv">3</span> <span class="dv">1</span>            <span class="fl">0.00123</span>      <span class="fl">0.136</span>                 <span class="fl">0.000420</span>    <span class="fl">0.00897</span></span>
+<span id="cb39-21"><a href="feature-engineering-1.html#cb39-21" tabindex="-1"></a></span>
+<span id="cb39-22"><a href="feature-engineering-1.html#cb39-22" tabindex="-1"></a><span class="fu">save</span>(data_imputed, <span class="at">file =</span> <span class="st">"data/data_imputed.rda"</span>)</span></code></pre></div>
+
 </div>
 </div>
 
@@ -300,16 +460,27 @@ pivoting.
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#feature-engineering-1"><span class="header-section-number">5</span> Feature Engineering</a></li>
-<li><a class="nav-link" href="#processing-data-for-machine-learning"><span class="header-section-number">5.1</span> Processing data for machine learning</a></li>
+<li>
+<a class="nav-link" href="#feature-creation-simplified-example"><span class="header-section-number">5.1</span> Feature Creation (Simplified Example)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#sample-dataframe"><span class="header-section-number">5.1.1</span> Sample dataframe</a></li>
+<li><a class="nav-link" href="#creating-a-new-feature-age_group"><span class="header-section-number">5.1.2</span> Creating a new feature ‘age_group’</a></li>
+</ul>
+</li>
 <li><a class="nav-link" href="#feature-selection"><span class="header-section-number">5.2</span> Feature Selection</a></li>
-<li><a class="nav-link" href="#feature-selection-techniques"><span class="header-section-number">5.3</span> Feature Selection Techniques</a></li>
-<li><a class="nav-link" href="#variance-threshold"><span class="header-section-number">5.4</span> Variance threshold</a></li>
+<li>
+<a class="nav-link" href="#feature-selection-techniques"><span class="header-section-number">5.3</span> Feature Selection Techniques</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#demo-using-variance-threshold"><span class="header-section-number">5.3.1</span> Demo using Variance threshold</a></li>
+<li><a class="nav-link" href="#demo-using-correlation-analysis"><span class="header-section-number">5.3.2</span> Demo using Correlation Analysis</a></li>
+<li><a class="nav-link" href="#demo-with-wilcoxon-rank-sum-test"><span class="header-section-number">5.3.3</span> Demo with Wilcoxon rank sum test</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#feature-transformation"><span class="header-section-number">5.4</span> Feature Transformation:</a></li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/01b_ml_realdata_prototypes.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/01b_ml_realdata_prototypes.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
+<li><a id="book-source" href="https://github.com/tmbuza/imap-machine-learning/blob/gh-pages/02_feature_engineering.Rmd">View source <i class="fas fa-air-freshener"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/tmbuza/imap-machine-learning/edit/gh-pages/02_feature_engineering.Rmd">Edit this page <i class="fas fa-air-freshener"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -322,7 +493,7 @@ pivoting.
     <div class="row">
       <div class="col-12 col-md-6 mt-3">
         <p><strong><u><a class="text-light" href="https://microbiome.complexdatainsights.com"><big>IMAP:</big> Integrated Microbiome Analysis Pipelines</a></u></strong>: End-to-End Practical User Guides Using Integrated Approaches</p>
-<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-02</b>.</p>
+<br><p>Authored by Teresia Mrema-Buza, Last updated: <b>2024-05-05</b>.</p>
 <br>
 </div>
       <div class="col-12 col-md-6 mt-3">
@@ -331,6 +502,34 @@ pivoting.
 
     </div>
   </div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>
