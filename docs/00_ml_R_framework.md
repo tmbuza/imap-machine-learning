@@ -70,8 +70,8 @@ end
 ```
 
 ```{=html}
-<div id="htmlwidget-bbb1e3faccc298479706" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bbb1e3faccc298479706">{"x":{"diagram":"graph TD\n\nsubgraph A\n\nA[Data Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Feature Selection]\nC --> D[Feature Balancing]\nD --> E[Multi-Model Testing]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c418521c8124e7a5bea9" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c418521c8124e7a5bea9">{"x":{"diagram":"graph TD\n\nsubgraph A\n\nA[Data Cleaning and Transformation] --> B[Exploratory Analysis]\nB --> C[Feature Selection]\nC --> D[Feature Balancing]\nD --> E[Multi-Model Testing]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -97,8 +97,8 @@ end
 ```
 
 ```{=html}
-<div id="htmlwidget-15b0a49dd89634ecb2d1" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-15b0a49dd89634ecb2d1">{"x":{"diagram":"graph TD\n\nsubgraph B\n\nE[Machine Learning Model Development] --> F[Model Selection]\nF --> G[Parameters Tuning]\nG --> H[Parameter Cross-Validation]\nH --> I[Model Training]\nI --> J[Model Testing]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f3bb95d52587acbc609c" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f3bb95d52587acbc609c">{"x":{"diagram":"graph TD\n\nsubgraph B\n\nE[Machine Learning Model Development] --> F[Model Selection]\nF --> G[Parameters Tuning]\nG --> H[Parameter Cross-Validation]\nH --> I[Model Training]\nI --> J[Model Testing]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -124,8 +124,8 @@ end
 ```
 
 ```{=html}
-<div id="htmlwidget-24d16a6b5af6d3e7cc62" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-24d16a6b5af6d3e7cc62">{"x":{"diagram":"graph TD\n\nsubgraph C\n\nJ[Model Evaluation and Interpretation] --> K[Performance Metrics]\nK --> L[Model Comparison]\nL --> M[Interpretation and Insights]\nM --> N[Deployment]\nN --> O[Validation]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-949405682a5325b16533" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-949405682a5325b16533">{"x":{"diagram":"graph TD\n\nsubgraph C\n\nJ[Model Evaluation and Interpretation] --> K[Performance Metrics]\nK --> L[Model Comparison]\nL --> M[Interpretation and Insights]\nM --> N[Deployment]\nN --> O[Validation]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
 ```
 
 
@@ -153,7 +153,7 @@ end
 ```
 
 ```{=html}
-<div id="htmlwidget-cd3067f91d5d91304476" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cd3067f91d5d91304476">{"x":{"diagram":"graph LR\n\nsubgraph D\n\nK{Model Evaluation} --> P[ROC: Receiver Operating Characteristic Curve]\nK --> Q[Precision Recall Curve]\nK --> R[F1 Score]\nK --> S[Confusion Matrix]\nK --> T[Accuracy]\nK --> U[Recall]\nK --> V[Precision]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7b3e95f7f219133ed6f8" style="width:1000px;height:800px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7b3e95f7f219133ed6f8">{"x":{"diagram":"graph LR\n\nsubgraph D\n\nK{Model Evaluation} --> P[ROC: Receiver Operating Characteristic Curve]\nK --> Q[Precision Recall Curve]\nK --> R[F1 Score]\nK --> S[Confusion Matrix]\nK --> T[Accuracy]\nK --> U[Recall]\nK --> V[Precision]\nend\n\n"},"evals":[],"jsHooks":[]}</script>
 ```
 
